@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Metadata Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}" />
+  </head>
+  <body>
+    <div class="card">
+      <h2>GitHub Metadata Extractor</h2>
+      <p class="description">Extract comprehensive metadata from GitHub repositories including commits, issues, pull requests, and repository statistics.</p>
+      
+      <form id="extractionForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="repoUrl">GitHub Repository URL:</label>
+          <input 
+            type="url" 
+            id="repoUrl" 
+            name="repoUrl" 
+            placeholder="https://github.com/owner/repository"
+            required 
+          />
+          <small class="help-text">Enter the full GitHub repository URL</small>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="commitLimit">Commits Limit:</label>
+            <input 
+              type="number" 
+              id="commitLimit" 
+              name="commitLimit" 
+              value="50" 
+              min="1" 
+              max="1000"
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="issuesLimit">Issues Limit:</label>
+            <input 
+              type="number" 
+              id="issuesLimit" 
+              name="issuesLimit" 
+              value="50" 
+              min="1" 
+              max="1000"
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="prLimit">Pull Requests Limit:</label>
+            <input 
+              type="number" 
+              id="prLimit" 
+              name="prLimit" 
+              value="50" 
+              min="1" 
+              max="1000"
+            />
+          </div>
+        </div>
+        
+        <button id="extractButton" type="submit">Extract Metadata</button>
+      </form>
+      
+      <div id="progressSection" class="progress-section" style="display: none;">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <p class="progress-text">Extracting metadata from repository...</p>
+      </div>
+    </div>
+    
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <div class="success-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <h2>Metadata Extraction Completed!</h2>
+        <div id="extractionResults" class="extraction-results">
+          <!-- Results will be populated here -->
+        </div>
+        <div class="modal-actions">
+          <a
+            id="dashboard-link"
+            class="btn btn-primary"
+            target="_blank"
+            href="http://{{ workflow_ui_host }}:{{ workflow_ui_port }}/namespaces/default/workflows"
+            >View in Temporal UI</a
+          >
+          <button id="closeModal" class="btn btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="errorModal" class="modal error-modal">
+      <div class="modal-content">
+        <div class="error-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <h2>Extraction Failed</h2>
+        <p id="errorMessage">An error occurred during metadata extraction.</p>
+        <div class="modal-actions">
+          <button id="closeErrorModal" class="btn btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="{{ url_for('static', path='script.js') }}"></script>
+  </body>
+</html>

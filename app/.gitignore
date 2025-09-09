@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+*.egg
+
+# Byte-compiled / optimized / DLL files
+*$py.class
+
+# Testing
+.coverage*
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Packaging / build
+build/
+dist/
+.wheelhouse/
+*.whl
+pip-wheel-metadata/
+
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# IDE / Editor
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+.mypy_cache/
+.pdm-build/
+
+# uv / poetry / pipenv
+.uv/
+poetry.lock
+Pipfile.lock
+
+# Local data
+*.sqlite3
+
+# Node (if any UI assets later)
+node_modules/
+
+# Atlan/SDK related
+.dapr/
+.dapr-components/ 
