@@ -1,1 +1,8 @@
-{"repo_url": "https://github.com/microsoft/vscode", "commit_limit": 100, "issues_limit": 50, "pr_limit": 50, "application_name": "github-metadata-extractor", "workflow_id": "db462074-ded3-4f34-af76-9fd6d27cd472"}
+{
+    "repo_url": "https://github.com/VatsalBhuva11/EcoBloom/",
+    "commit_limit": 100,
+    "issues_limit": 50,
+    "pr_limit": 50,
+    "application_name": "github-metadata-extractor",
+    "workflow_id": "db462074-ded3-4f34-af76-9fd6d27cd472"
+}

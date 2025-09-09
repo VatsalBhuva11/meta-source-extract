@@ -45,23 +45,14 @@ class GitHubMetadataActivities(ActivitiesInterface):
     async def get_workflow_args(self, workflow_config: Dict[str, Any]) -> Dict[str, Any]:
         """Get workflow arguments from configuration."""
         logger.info(f"Received workflow_config: {workflow_config}")
-        logger.info(f"Type of workflow_config: {type(workflow_config)}")
         
-        # The workflow_config might be wrapped in another structure
-        # Let's check if it contains the actual parameters
         if isinstance(workflow_config, dict):
-            # Check if the parameters are directly in workflow_config
             if "repo_url" in workflow_config:
-                logger.info("Found repo_url directly in workflow_config")
                 return workflow_config
-            
-            # Check if there's a nested structure
             for key, value in workflow_config.items():
                 if isinstance(value, dict) and "repo_url" in value:
-                    logger.info(f"Found repo_url in nested structure under key: {key}")
                     return value
             
-            # If no repo_url found, log the structure for debugging
             logger.warning(f"No repo_url found in workflow_config. Available keys: {list(workflow_config.keys())}")
             logger.warning(f"Full workflow_config content: {json.dumps(workflow_config, indent=2)}")
         
@@ -77,38 +68,18 @@ class GitHubMetadataActivities(ActivitiesInterface):
             repo = self.github.get_repo(f"{owner}/{repo_name}")
             
             metadata = {
-                "url": repo_url,
-                "owner": owner,
-                "name": repo_name,
-                "full_name": repo.full_name,
-                "description": repo.description,
-                "language": repo.language,
-                "languages": list(repo.get_languages().keys()),
-                "stars": repo.stargazers_count,
-                "forks": repo.forks_count,
-                "watchers": repo.watchers_count,
-                "open_issues": repo.open_issues_count,
-                "created_at": repo.created_at.isoformat() if repo.created_at else None,
-                "updated_at": repo.updated_at.isoformat() if repo.updated_at else None,
-                "pushed_at": repo.pushed_at.isoformat() if repo.pushed_at else None,
-                "size": repo.size,
-                "default_branch": repo.default_branch,
-                "topics": repo.get_topics(),
-                "license": repo.license.name if repo.license else None,
-                "archived": repo.archived,
-                "disabled": repo.disabled,
-                "private": repo.private,
-                "visibility": repo.visibility,
-                "homepage": repo.homepage,
-                "has_issues": repo.has_issues,
-                "has_projects": repo.has_projects,
-                "has_wiki": repo.has_wiki,
-                "has_pages": repo.has_pages,
-                "has_downloads": repo.has_downloads,
-                "allow_squash_merge": repo.allow_squash_merge,
-                "allow_merge_commit": repo.allow_merge_commit,
-                "allow_rebase_merge": repo.allow_rebase_merge,
-                "extraction_timestamp": datetime.now().isoformat(),
+                "url": repo_url, "owner": owner, "name": repo_name, "full_name": repo.full_name,
+                "description": repo.description, "language": repo.language, "languages": list(repo.get_languages().keys()),
+                "stars": repo.stargazers_count, "forks": repo.forks_count, "watchers": repo.watchers_count,
+                "open_issues": repo.open_issues_count, "created_at": repo.created_at.isoformat() if repo.created_at else None,
+                "updated_at": repo.updated_at.isoformat() if repo.updated_at else None, "pushed_at": repo.pushed_at.isoformat() if repo.pushed_at else None,
+                "size": repo.size, "default_branch": repo.default_branch, "topics": repo.get_topics(),
+                "license": repo.license.name if repo.license else None, "archived": repo.archived,
+                "disabled": repo.disabled, "private": repo.private, "visibility": repo.visibility,
+                "homepage": repo.homepage, "has_issues": repo.has_issues, "has_projects": repo.has_projects,
+                "has_wiki": repo.has_wiki, "has_pages": repo.has_pages, "has_downloads": repo.has_downloads,
+                "allow_squash_merge": repo.allow_squash_merge, "allow_merge_commit": repo.allow_merge_commit,
+                "allow_rebase_merge": repo.allow_rebase_merge, "extraction_timestamp": datetime.now().isoformat(),
             }
             
             logger.info(f"Successfully extracted metadata for {repo.full_name}")
@@ -119,8 +90,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    async def extract_commit_metadata(self, repo_url: str, limit: int = 50) -> List[Dict[str, Any]]:
+    async def extract_commit_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """Extract recent commit metadata."""
+        repo_url, limit = args
         logger.info(f"Extracting commit metadata for repository: {repo_url}")
         
         try:
@@ -130,24 +102,11 @@ class GitHubMetadataActivities(ActivitiesInterface):
             commits = []
             for commit in repo.get_commits()[:limit]:
                 commit_data = {
-                    "sha": commit.sha,
-                    "message": commit.commit.message,
-                    "author": {
-                        "name": commit.commit.author.name,
-                        "email": commit.commit.author.email,
-                        "date": commit.commit.author.date.isoformat() if commit.commit.author.date else None,
-                    },
-                    "committer": {
-                        "name": commit.commit.committer.name,
-                        "email": commit.commit.committer.email,
-                        "date": commit.commit.committer.date.isoformat() if commit.commit.committer.date else None,
-                    },
+                    "sha": commit.sha, "message": commit.commit.message,
+                    "author": {"name": commit.commit.author.name, "email": commit.commit.author.email, "date": commit.commit.author.date.isoformat() if commit.commit.author.date else None},
+                    "committer": {"name": commit.commit.committer.name, "email": commit.commit.committer.email, "date": commit.commit.committer.date.isoformat() if commit.commit.committer.date else None},
                     "url": commit.html_url,
-                    "stats": {
-                        "additions": commit.stats.additions if commit.stats else 0,
-                        "deletions": commit.stats.deletions if commit.stats else 0,
-                        "total": commit.stats.total if commit.stats else 0,
-                    } if commit.stats else None,
+                    "stats": {"additions": commit.stats.additions, "deletions": commit.stats.deletions, "total": commit.stats.total} if commit.stats else None,
                 }
                 commits.append(commit_data)
             
@@ -159,8 +118,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    async def extract_issues_metadata(self, repo_url: str, limit: int = 50) -> List[Dict[str, Any]]:
+    async def extract_issues_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """Extract issues metadata."""
+        repo_url, limit = args
         logger.info(f"Extracting issues metadata for repository: {repo_url}")
         
         try:
@@ -170,28 +130,14 @@ class GitHubMetadataActivities(ActivitiesInterface):
             issues = []
             for issue in repo.get_issues(state="all")[:limit]:
                 issue_data = {
-                    "number": issue.number,
-                    "title": issue.title,
-                    "body": issue.body,
-                    "state": issue.state,
-                    "user": {
-                        "login": issue.user.login,
-                        "id": issue.user.id,
-                        "type": issue.user.type,
-                    } if issue.user else None,
+                    "number": issue.number, "title": issue.title, "body": issue.body, "state": issue.state,
+                    "user": {"login": issue.user.login, "id": issue.user.id, "type": issue.user.type} if issue.user else None,
                     "labels": [{"name": label.name, "color": label.color} for label in issue.labels],
                     "assignees": [{"login": assignee.login, "id": assignee.id} for assignee in issue.assignees],
-                    "milestone": {
-                        "title": issue.milestone.title,
-                        "number": issue.milestone.number,
-                        "state": issue.milestone.state,
-                    } if issue.milestone else None,
-                    "created_at": issue.created_at.isoformat() if issue.created_at else None,
-                    "updated_at": issue.updated_at.isoformat() if issue.updated_at else None,
-                    "closed_at": issue.closed_at.isoformat() if issue.closed_at else None,
-                    "url": issue.html_url,
-                    "comments": issue.comments,
-                    "is_pull_request": issue.pull_request is not None,
+                    "milestone": {"title": issue.milestone.title, "number": issue.milestone.number, "state": issue.milestone.state} if issue.milestone else None,
+                    "created_at": issue.created_at.isoformat() if issue.created_at else None, "updated_at": issue.updated_at.isoformat() if issue.updated_at else None,
+                    "closed_at": issue.closed_at.isoformat() if issue.closed_at else None, "url": issue.html_url,
+                    "comments": issue.comments, "is_pull_request": issue.pull_request is not None,
                 }
                 issues.append(issue_data)
             
@@ -203,8 +149,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    async def extract_pull_requests_metadata(self, repo_url: str, limit: int = 50) -> List[Dict[str, Any]]:
+    async def extract_pull_requests_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """Extract pull requests metadata."""
+        repo_url, limit = args
         logger.info(f"Extracting pull requests metadata for repository: {repo_url}")
         
         try:
@@ -214,48 +161,19 @@ class GitHubMetadataActivities(ActivitiesInterface):
             pull_requests = []
             for pr in repo.get_pulls(state="all")[:limit]:
                 pr_data = {
-                    "number": pr.number,
-                    "title": pr.title,
-                    "body": pr.body,
-                    "state": pr.state,
-                    "user": {
-                        "login": pr.user.login,
-                        "id": pr.user.id,
-                        "type": pr.user.type,
-                    } if pr.user else None,
-                    "head": {
-                        "ref": pr.head.ref,
-                        "sha": pr.head.sha,
-                        "label": pr.head.label,
-                    },
-                    "base": {
-                        "ref": pr.base.ref,
-                        "sha": pr.base.sha,
-                        "label": pr.base.label,
-                    },
+                    "number": pr.number, "title": pr.title, "body": pr.body, "state": pr.state,
+                    "user": {"login": pr.user.login, "id": pr.user.id, "type": pr.user.type} if pr.user else None,
+                    "head": {"ref": pr.head.ref, "sha": pr.head.sha, "label": pr.head.label},
+                    "base": {"ref": pr.base.ref, "sha": pr.base.sha, "label": pr.base.label},
                     "labels": [{"name": label.name, "color": label.color} for label in pr.labels],
                     "assignees": [{"login": assignee.login, "id": assignee.id} for assignee in pr.assignees],
-                    "milestone": {
-                        "title": pr.milestone.title,
-                        "number": pr.milestone.number,
-                        "state": pr.milestone.state,
-                    } if pr.milestone else None,
-                    "created_at": pr.created_at.isoformat() if pr.created_at else None,
-                    "updated_at": pr.updated_at.isoformat() if pr.updated_at else None,
-                    "closed_at": pr.closed_at.isoformat() if pr.closed_at else None,
-                    "merged_at": pr.merged_at.isoformat() if pr.merged_at else None,
-                    "url": pr.html_url,
-                    "comments": pr.comments,
-                    "review_comments": pr.review_comments,
-                    "commits": pr.commits,
-                    "additions": pr.additions,
-                    "deletions": pr.deletions,
-                    "changed_files": pr.changed_files,
-                    "draft": pr.draft,
-                    "mergeable": pr.mergeable,
-                    "mergeable_state": pr.mergeable_state,
-                    "merged": pr.merged,
-                    "mergeable": pr.mergeable,
+                    "milestone": {"title": pr.milestone.title, "number": pr.milestone.number, "state": pr.milestone.state} if pr.milestone else None,
+                    "created_at": pr.created_at.isoformat() if pr.created_at else None, "updated_at": pr.updated_at.isoformat() if pr.updated_at else None,
+                    "closed_at": pr.closed_at.isoformat() if pr.closed_at else None, "merged_at": pr.merged_at.isoformat() if pr.merged_at else None,
+                    "url": pr.html_url, "comments": pr.comments, "review_comments": pr.review_comments,
+                    "commits": pr.commits, "additions": pr.additions, "deletions": pr.deletions,
+                    "changed_files": pr.changed_files, "draft": pr.draft, "mergeable": pr.mergeable,
+                    "mergeable_state": pr.mergeable_state, "merged": pr.merged,
                 }
                 pull_requests.append(pr_data)
             
@@ -267,8 +185,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    async def save_metadata_to_file(self, metadata: Dict[str, Any], repo_url: str) -> str:
+    async def save_metadata_to_file(self, args: List[Any]) -> str:
         """Save extracted metadata to JSON file."""
+        metadata, repo_url = args  # <-- FIXED: Unpack arguments from the list
         logger.info(f"Saving metadata to file for repository: {repo_url}")
         
         try:
@@ -287,27 +206,23 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    async def get_extraction_summary(self, repo_url: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
+    async def get_extraction_summary(self, args: List[Any]) -> Dict[str, Any]:
         """Generate a summary of the extraction process."""
+        repo_url, metadata = args # <-- FIXED: Unpack arguments from the list
         logger.info(f"Generating extraction summary for repository: {repo_url}")
         
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             
             summary = {
-                "repository": f"{owner}/{repo_name}",
-                "url": repo_url,
-                "extraction_timestamp": datetime.now().isoformat(),
+                "repository": f"{owner}/{repo_name}", "url": repo_url, "extraction_timestamp": datetime.now().isoformat(),
                 "total_commits_extracted": len(metadata.get("commits", [])),
                 "total_issues_extracted": len(metadata.get("issues", [])),
                 "total_pull_requests_extracted": len(metadata.get("pull_requests", [])),
                 "repository_stats": {
-                    "stars": metadata.get("stars", 0),
-                    "forks": metadata.get("forks", 0),
-                    "watchers": metadata.get("watchers", 0),
-                    "open_issues": metadata.get("open_issues", 0),
-                    "size": metadata.get("size", 0),
-                    "languages": metadata.get("languages", []),
+                    "stars": metadata.get("stars", 0), "forks": metadata.get("forks", 0),
+                    "watchers": metadata.get("watchers", 0), "open_issues": metadata.get("open_issues", 0),
+                    "size": metadata.get("size", 0), "languages": metadata.get("languages", []),
                 },
                 "file_saved": metadata.get("file_path", "Not saved"),
             }

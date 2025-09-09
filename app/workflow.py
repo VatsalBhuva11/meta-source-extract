@@ -47,7 +47,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         )
 
         # Extract parameters from workflow_args
-        repo_url: str = workflow_args.get("repo_url")
+        repo_url: str = workflow_args.get("repo_url", "https://github.com/VatsalBhuva11/EcoBloom/")
         commit_limit: int = workflow_args.get("commit_limit", 50)
         issues_limit: int = workflow_args.get("issues_limit", 50)
         pr_limit: int = workflow_args.get("pr_limit", 50)
@@ -69,20 +69,17 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         activities: List[Coroutine[Any, Any, Any]] = [
             workflow.execute_activity_method(
                 activities_instance.extract_commit_metadata,
-                repo_url,
-                commit_limit,
+                [repo_url, commit_limit],
                 start_to_close_timeout=timedelta(seconds=60),
             ),
             workflow.execute_activity_method(
                 activities_instance.extract_issues_metadata,
-                repo_url,
-                issues_limit,
+                [repo_url, issues_limit],
                 start_to_close_timeout=timedelta(seconds=60),
             ),
             workflow.execute_activity_method(
                 activities_instance.extract_pull_requests_metadata,
-                repo_url,
-                pr_limit,
+                [repo_url, pr_limit],
                 start_to_close_timeout=timedelta(seconds=60),
             ),
         ]
@@ -102,8 +99,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         # Save metadata to file
         file_path = await workflow.execute_activity_method(
             activities_instance.save_metadata_to_file,
-            combined_metadata,
-            repo_url,
+            [combined_metadata, repo_url],  # <-- FIXED: Arguments are now in a list
             start_to_close_timeout=timedelta(seconds=30),
         )
 
@@ -113,8 +109,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         # Generate extraction summary
         summary = await workflow.execute_activity_method(
             activities_instance.get_extraction_summary,
-            repo_url,
-            combined_metadata,
+            [repo_url, combined_metadata], # <-- FIXED: Arguments are now in a list
             start_to_close_timeout=timedelta(seconds=10),
         )
 
@@ -123,16 +118,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
 
     @staticmethod
     def get_activities(activities: ActivitiesInterface) -> Sequence[Callable[..., Any]]:
-        """Get the sequence of activities to be executed by the workflow.
-
-        Args:
-            activities (ActivitiesInterface): The activities instance
-                containing the GitHub metadata extraction operations.
-
-        Returns:
-            Sequence[Callable[..., Any]]: A sequence of activity methods to be executed
-                in order.
-        """
+        """Get the sequence of activities to be executed by the workflow."""
         if not isinstance(activities, GitHubMetadataActivities):
             raise TypeError("Activities must be an instance of GitHubMetadataActivities")
 

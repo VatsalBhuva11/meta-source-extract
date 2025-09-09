@@ -7,7 +7,7 @@ class TestGitHubMetadataActivities:
         activities = GitHubMetadataActivities()
         
         # Test valid GitHub URL
-        owner, repo = activities._extract_repo_info_from_url("https://github.com/microsoft/vscode")
+        owner, repo = activities._extract_repo_info_from_url("https://github.com/VatsalBhuva11/EcoBloom/")
         assert owner == "microsoft"
         assert repo == "vscode"
         

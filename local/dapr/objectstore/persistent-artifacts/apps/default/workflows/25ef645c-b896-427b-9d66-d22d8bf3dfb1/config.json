@@ -1,0 +1,8 @@
+{
+    "repo_url": "https://github.com/VatsalBhuva11/EcoBloom/",
+    "commit_limit": 50,
+    "issues_limit": 50,
+    "pr_limit": 50,
+    "application_name": "github-metadata-extractor",
+    "workflow_id": "25ef645c-b896-427b-9d66-d22d8bf3dfb1"
+}

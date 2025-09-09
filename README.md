@@ -81,7 +81,7 @@ You can configure how much data to extract:
 
 ### Using the Web Interface
 
-1. Enter a GitHub repository URL (e.g., `https://github.com/microsoft/vscode`)
+1. Enter a GitHub repository URL (e.g., `https://github.com/VatsalBhuva11/EcoBloom/`)
 2. Configure extraction limits (optional)
 3. Click "Extract Metadata"
 4. Wait for the extraction to complete
@@ -95,7 +95,7 @@ You can also trigger extractions programmatically:
 curl -X POST http://localhost:3000/workflows/v1/start \
   -H "Content-Type: application/json" \
   -d '{
-    "repo_url": "https://github.com/microsoft/vscode",
+    "repo_url": "https://github.com/VatsalBhuva11/EcoBloom/",
     "commit_limit": 100,
     "issues_limit": 50,
     "pr_limit": 50
