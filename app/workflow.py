@@ -47,7 +47,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         )
 
         # Extract parameters from workflow_args
-        repo_url: str = workflow_args.get("repo_url", "https://github.com/VatsalBhuva11/EcoBloom/")
+        repo_url: str = workflow_args.get("repo_url", "https://github.com/rtyley/small-test-repo")
         commit_limit: int = workflow_args.get("commit_limit", 50)
         issues_limit: int = workflow_args.get("issues_limit", 50)
         pr_limit: int = workflow_args.get("pr_limit", 50)

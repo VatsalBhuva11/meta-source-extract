@@ -1,0 +1,86 @@
+{
+  "commits": [
+    {
+      "author": "Roberto Tyley",
+      "date": "2024-02-11T12:40:35+00:00",
+      "message": "Put da stuff",
+      "sha": "916f7dbaa50350fc9c510beba3111af9e318ed8a"
+    },
+    {
+      "author": "Roberto Tyley",
+      "date": "2024-02-11T12:39:07+00:00",
+      "message": "Put da stuff",
+      "sha": "347a81b55551bdff514a9df2d8a231e9bb716c5e"
+    },
+    {
+      "author": "Roberto Tyley",
+      "date": "2024-02-11T12:32:39+00:00",
+      "message": "Put da stuff",
+      "sha": "590bfab9d8a65b6da3765d309bbd12117a360b69"
+    },
+    {
+      "author": "Roberto Tyley",
+      "date": "2024-02-11T12:31:38+00:00",
+      "message": "Put da stuff",
+      "sha": "d68715419746c86dff455e6d6c36e00c815d1b13"
+    },
+    {
+      "author": "Roberto Tyley",
+      "date": "2024-02-11T09:17:31+00:00",
+      "message": "Put da stuff",
+      "sha": "ee3bb07b26fe2cfa8b8aa2ae6d8db311cfdd9f12"
+    }
+  ],
+  "created_at": "2011-08-26T21:05:24+00:00",
+  "default_branch": "master",
+  "description": null,
+  "extraction_timestamp": "2025-09-10T20:16:20.503477",
+  "forks": 107,
+  "issues": [
+    {
+      "author": "wittyparth",
+      "closed_at": null,
+      "created_at": "2025-06-27T11:04:17+00:00",
+      "labels": [],
+      "number": 44,
+      "state": "open",
+      "title": "Bugfix/navbar issue"
+    },
+    {
+      "author": "mohammadBilal03",
+      "closed_at": "2025-05-13T16:34:17+00:00",
+      "created_at": "2025-05-13T16:33:19+00:00",
+      "labels": [],
+      "number": 43,
+      "state": "closed",
+      "title": "tate changes smth"
+    },
+    {
+      "author": "asskourmohamed",
+      "closed_at": null,
+      "created_at": "2025-05-11T22:17:40+00:00",
+      "labels": [],
+      "number": 42,
+      "state": "open",
+      "title": "some message"
+    }
+  ],
+  "last_updated": "2025-06-10T14:27:37+00:00",
+  "open_issues": 16,
+  "primary_language": null,
+  "pull_requests": [
+    {
+      "author": "wittyparth",
+      "closed_at": null,
+      "created_at": "2025-06-27T11:04:17+00:00",
+      "merged": false,
+      "merged_at": null,
+      "number": 44,
+      "state": "open",
+      "title": "Bugfix/navbar issue"
+    }
+  ],
+  "repository": "rtyley/small-test-repo",
+  "stars": 11,
+  "url": "https://github.com/rtyley/small-test-repo"
+}
