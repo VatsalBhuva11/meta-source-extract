@@ -55,6 +55,7 @@ from app.utils import (
     estimate_language_loc_from_files,
     generate_extraction_id,
 )
+from app.resilience import with_resilience
 
 logger = get_logger(__name__)
 activity.logger = logger
@@ -82,7 +83,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
         filename = f"{owner}_{repo_name}_schema{SCHEMA_VERSION}_{extraction_id}_{ts}.json"
         return os.path.join(self.data_dir, filename)
 
-    # Retry decorator for GitHub calls
+    # Retry decorator for GitHub calls - now with circuit breaker and rate limiting
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10), retry=retry_if_exception_type(Exception))
     def _get_repo(self, full_name: str):
         # Use PyGithub to get repo, will raise on errors and be retried
@@ -100,6 +101,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
         return workflow_config
 
     @activity.defn
+    
     async def extract_repository_metadata(self, args: List[Any]) -> Dict[str, Any]:
         """
         args: [repo_url, extraction_id]
@@ -161,6 +163,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @with_resilience("commit_metadata", cache_ttl=900)  # 15 minutes cache
     async def extract_commit_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -195,6 +198,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @with_resilience("issues_metadata", cache_ttl=900)  # 15 minutes cache
     async def extract_issues_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -225,6 +229,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @with_resilience("pull_requests_metadata", cache_ttl=900)  # 15 minutes cache
     async def extract_pull_requests_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -256,6 +261,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @with_resilience("contributors", cache_ttl=1800)  # 30 minutes cache
     async def extract_contributors(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, extraction_id]
@@ -278,6 +284,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @with_resilience("dependencies", cache_ttl=3600)  # 1 hour cache
     async def extract_dependencies_from_repo(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         Best-effort: try to detect and fetch common manifest files from the default branch:

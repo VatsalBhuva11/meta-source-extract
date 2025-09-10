@@ -38,7 +38,8 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         extraction_id = generate_extraction_id()
         workflow_config.setdefault("extraction_id", extraction_id)
 
-        logger.info(f"Workflow start", extra={"extraction_id": extraction_id, "workflow_config": workflow_config})
+        # Debug logging
+        logger.info(f"Workflow start - Raw workflow_config: {workflow_config}", extra={"extraction_id": extraction_id})
 
         activities_instance = GitHubMetadataActivities()
 
@@ -49,11 +50,17 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             start_to_close_timeout=timedelta(seconds=10),
         )
 
+        # Debug logging
+        logger.info(f"Workflow args from activity: {workflow_args}", extra={"extraction_id": extraction_id})
+
         # Extract parameters from workflow_args with defaults
         repo_url: str = workflow_args.get("repo_url", workflow_config.get("repo_url", "https://github.com/VatsalBhuva11/EcoBloom"))
-        commit_limit: int = workflow_args.get("commit_limit", WORKFLOW_DEFAULT_COMMIT_LIMIT)
-        issues_limit: int = workflow_args.get("issues_limit", WORKFLOW_DEFAULT_ISSUES_LIMIT)
-        pr_limit: int = workflow_args.get("pr_limit", WORKFLOW_DEFAULT_PR_LIMIT)
+        commit_limit: int = workflow_args.get("commit_limit", workflow_config.get("commit_limit", WORKFLOW_DEFAULT_COMMIT_LIMIT))
+        issues_limit: int = workflow_args.get("issues_limit", workflow_config.get("issues_limit", WORKFLOW_DEFAULT_ISSUES_LIMIT))
+        pr_limit: int = workflow_args.get("pr_limit", workflow_config.get("pr_limit", WORKFLOW_DEFAULT_PR_LIMIT))
+
+        # Debug logging
+        logger.info(f"Extracted parameters - repo_url: {repo_url}, commit_limit: {commit_limit}, issues_limit: {issues_limit}, pr_limit: {pr_limit}", extra={"extraction_id": extraction_id})
 
         if not repo_url:
             logger.error("No repo_url found in workflow_args", extra={"workflow_args": workflow_args})
@@ -66,10 +73,10 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             repo_metadata = await workflow.execute_activity_method(
                 activities_instance.extract_repository_metadata,
                 [repo_url, extraction_id],
-                start_to_close_timeout=timedelta(seconds=30),
+                start_to_close_timeout=timedelta(seconds=120),  # Increased timeout
             )
         except Exception as e:
-            logger.error("Failed to extract repository metadata", exc_info=True, extra={"extraction_id": extraction_id})
+            logger.error("Failed to extract repository metadata", exc_info=e, extra={"extraction_id": extraction_id})
             # If basic repo metadata fails, abort - this is critical
             raise
 
