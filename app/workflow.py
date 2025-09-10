@@ -142,7 +142,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             file_path = await workflow.execute_activity_method(
                 activities_instance.save_metadata_to_file,
                 [combined_metadata, repo_url, extraction_id],
-                start_to_close_timeout=timedelta(seconds=30),
+                start_to_close_timeout=timedelta(seconds=120),
             )
             combined_metadata["file_path"] = file_path
         except Exception as e:

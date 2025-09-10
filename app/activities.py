@@ -55,7 +55,8 @@ from app.utils import (
     estimate_language_loc_from_files,
     generate_extraction_id,
 )
-from app.resilience import with_resilience
+# Only import caching, not circuit breaker or rate limiting
+from app.resilience import _get_from_cache, _set_cache
 
 logger = get_logger(__name__)
 activity.logger = logger
@@ -83,7 +84,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
         filename = f"{owner}_{repo_name}_schema{SCHEMA_VERSION}_{extraction_id}_{ts}.json"
         return os.path.join(self.data_dir, filename)
 
-    # Retry decorator for GitHub calls - now with circuit breaker and rate limiting
+    # Retry decorator for GitHub calls
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10), retry=retry_if_exception_type(Exception))
     def _get_repo(self, full_name: str):
         # Use PyGithub to get repo, will raise on errors and be retried
@@ -101,7 +102,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
         return workflow_config
 
     @activity.defn
-    
+    # No resilience decorator - critical path
     async def extract_repository_metadata(self, args: List[Any]) -> Dict[str, Any]:
         """
         args: [repo_url, extraction_id]
@@ -163,21 +164,24 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
-    @with_resilience("commit_metadata", cache_ttl=900)  # 15 minutes cache
+    # Only caching, no circuit breaker or rate limiting
     async def extract_commit_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
         """
         repo_url, limit, extraction_id = args
         logger.info("Extracting commit metadata", extra={"repo_url": repo_url, "limit": limit, "extraction_id": extraction_id})
+        
+        # Check cache first
+        cached_result = _get_from_cache(repo_url, "commit_metadata", limit=limit)
+        if cached_result is not None:
+            return cached_result
+        
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
 
             commits = []
-            # iterate over commits with PyGithub per_page and pagination - best-effort
-            commit_pager = repo.get_commits().get_page  # Not ideal; use get_commits() generator instead
-            # PyGithub supports get_commits() which is a PaginatedList we can iterate
             for commit in repo.get_commits():
                 if limit and len(commits) >= limit:
                     break
@@ -192,19 +196,28 @@ class GitHubMetadataActivities(ActivitiesInterface):
                     "date": safe_isoformat(commit.commit.author.date) if commit.commit.author and commit.commit.author.date else None,
                     "url": getattr(commit, "html_url", None),
                 })
+            
+            # Cache successful results
+            _set_cache(repo_url, "commit_metadata", commits, ttl=900, limit=limit)
             return commits
         except Exception as e:
             logger.error("Error extracting commits", exc_info=e, extra={"repo_url": repo_url})
             raise
 
     @activity.defn
-    @with_resilience("issues_metadata", cache_ttl=900)  # 15 minutes cache
+    # Only caching, no circuit breaker or rate limiting
     async def extract_issues_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
         """
         repo_url, limit, extraction_id = args
         logger.info("Extracting issues metadata", extra={"repo_url": repo_url, "limit": limit, "extraction_id": extraction_id})
+        
+        # Check cache first
+        cached_result = _get_from_cache(repo_url, "issues_metadata", limit=limit)
+        if cached_result is not None:
+            return cached_result
+        
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
@@ -223,19 +236,28 @@ class GitHubMetadataActivities(ActivitiesInterface):
                     "closed_at": safe_isoformat(issue.closed_at),
                     "url": issue.html_url,
                 })
+            
+            # Cache successful results
+            _set_cache(repo_url, "issues_metadata", issues, ttl=900, limit=limit)
             return issues
         except Exception as e:
             logger.error("Error extracting issues", exc_info=e, extra={"repo_url": repo_url})
             raise
 
     @activity.defn
-    @with_resilience("pull_requests_metadata", cache_ttl=900)  # 15 minutes cache
+    # Only caching, no circuit breaker or rate limiting
     async def extract_pull_requests_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
         """
         repo_url, limit, extraction_id = args
         logger.info("Extracting pull request metadata", extra={"repo_url": repo_url, "limit": limit, "extraction_id": extraction_id})
+        
+        # Check cache first
+        cached_result = _get_from_cache(repo_url, "pull_requests_metadata", limit=limit)
+        if cached_result is not None:
+            return cached_result
+        
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
@@ -255,19 +277,28 @@ class GitHubMetadataActivities(ActivitiesInterface):
                     "merged": pr.merged,
                     "url": pr.html_url,
                 })
+            
+            # Cache successful results
+            _set_cache(repo_url, "pull_requests_metadata", prs, ttl=900, limit=limit)
             return prs
         except Exception as e:
             logger.error("Error extracting PRs", exc_info=e, extra={"repo_url": repo_url})
             raise
 
     @activity.defn
-    @with_resilience("contributors", cache_ttl=1800)  # 30 minutes cache
+    # Only caching, no circuit breaker or rate limiting
     async def extract_contributors(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, extraction_id]
         """
         repo_url, extraction_id = args
         logger.info("Extracting contributors", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+        
+        # Check cache first
+        cached_result = _get_from_cache(repo_url, "contributors")
+        if cached_result is not None:
+            return cached_result
+        
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
@@ -278,13 +309,16 @@ class GitHubMetadataActivities(ActivitiesInterface):
                     "contributions": contributor.contributions,
                     "url": getattr(contributor, "html_url", None),
                 })
+            
+            # Cache successful results
+            _set_cache(repo_url, "contributors", contributors, ttl=1800)
             return contributors
         except Exception as e:
             logger.error("Error extracting contributors", exc_info=e, extra={"repo_url": repo_url})
             raise
 
     @activity.defn
-    @with_resilience("dependencies", cache_ttl=3600)  # 1 hour cache
+    # Only caching, no circuit breaker or rate limiting
     async def extract_dependencies_from_repo(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         Best-effort: try to detect and fetch common manifest files from the default branch:
@@ -296,6 +330,12 @@ class GitHubMetadataActivities(ActivitiesInterface):
         """
         repo_url, extraction_id = args
         logger.info("Extracting dependencies", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+        
+        # Check cache first
+        cached_result = _get_from_cache(repo_url, "dependencies")
+        if cached_result is not None:
+            return cached_result
+        
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
@@ -316,6 +356,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
                 except Exception:
                     # file not present or parsing failure - skip
                     continue
+            
+            # Cache successful results
+            _set_cache(repo_url, "dependencies", dependencies, ttl=3600)
             return dependencies
         except Exception as e:
             logger.error("Error extracting dependencies", exc_info=e, extra={"repo_url": repo_url})
