@@ -12,7 +12,13 @@ logger = get_logger(__name__)
 
 T = TypeVar('T')
 
+#
 # circuit breaker
+# - protects downstream calls when repeated failures occur
+# - states: closed (normal), open (short-circuit), half_open (trial)
+# - opens after failure_threshold errors; after recovery_timeout it permits a single trial
+# - a successful trial closes the breaker; a failed trial reopens it
+#
 class CircuitState(Enum):
     CLOSED = "closed"
     OPEN = "open"
@@ -31,7 +37,13 @@ class CircuitBreaker:
     def __call__(self, func: Callable[..., T]) -> Callable[..., T]:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs) -> T:
-            # check/open/half_open state without holding lock across await
+            #
+            # locking strategy
+            # - snapshot current state under a short critical section
+            # - release the lock before awaiting the wrapped coroutine
+            # - update counters/state only after the await completes
+            # this avoids holding locks across awaits and prevents deadlocks
+            #
             with self._lock:
                 state = self.state
                 if state == CircuitState.OPEN and not self._should_attempt_reset():
@@ -69,7 +81,11 @@ class CircuitBreaker:
                 self.state = CircuitState.OPEN
                 logger.warning(f"Circuit breaker {self.name} opened after {self.failure_count} failures")
 
+#
 # cache
+# - in-memory ttl cache keyed by repo_url + activity_type (+kwargs)
+# - used as a best-effort accelerator to avoid redundant api calls
+#
 _cache: Dict[str, Dict[str, Any]] = {}
 _cache_lock = threading.Lock()
 

@@ -90,6 +90,14 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     @activity.defn
     # critical path (no breaker)
+    #
+    # rationale
+    # - this activity fetches the foundational repository record; if it fails,
+    #   the workflow should surface the error immediately rather than being
+    #   blocked by a shared breaker
+    # - downstream activities can be skipped/fail independently, so the breaker
+    #   is applied there instead
+    #
     async def extract_repository_metadata(self, args: List[Any]) -> Dict[str, Any]:
         """
         args: [repo_url, extraction_id]
@@ -152,6 +160,11 @@ class GitHubMetadataActivities(ActivitiesInterface):
     # caching + breaker
     @activity.defn(name="extract_commit_metadata")
     @circuit_breaker
+    #
+    # rationale
+    # - this can produce many calls; failures should open the breaker to avoid
+    #   repeated pressure on the api; successful runs are cached by repo+limit
+    #
     async def extract_commit_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -192,6 +205,11 @@ class GitHubMetadataActivities(ActivitiesInterface):
     # caching + breaker
     @activity.defn(name="extract_issues_metadata")
     @circuit_breaker
+    #
+    # rationale
+    # - non-critical to the core repo fetch; protects against transient api
+    #   failures and benefits from caching per repo+limit
+    #
     async def extract_issues_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -231,6 +249,11 @@ class GitHubMetadataActivities(ActivitiesInterface):
     # caching + breaker
     @activity.defn(name="extract_pull_requests_metadata")
     @circuit_breaker
+    #
+    # rationale
+    # - similar to issues/commits; breaker limits repeated failures, cache
+    #   prevents redundant work within ttl
+    #
     async def extract_pull_requests_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -271,6 +294,10 @@ class GitHubMetadataActivities(ActivitiesInterface):
     # caching + breaker
     @activity.defn(name="extract_contributors")
     @circuit_breaker
+    #
+    # rationale
+    # - safe to gate behind breaker; cached to avoid repeated listing
+    #
     async def extract_contributors(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, extraction_id]
@@ -302,6 +329,11 @@ class GitHubMetadataActivities(ActivitiesInterface):
     # caching + breaker
     @activity.defn(name="extract_dependencies_from_repo")
     @circuit_breaker
+    #
+    # rationale
+    # - best-effort enrichment; breaker prevents repeated failures on manifest
+    #   endpoints; cached results reused during ttl
+    #
     async def extract_dependencies_from_repo(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, extraction_id]
@@ -442,6 +474,12 @@ class GitHubMetadataActivities(ActivitiesInterface):
                 await f.write(json.dumps(metadata, indent=2, default=str))
 
             # optional s3 upload
+            #
+            # rationale
+            # - controlled by env (METADATA_UPLOAD_TO_S3, S3_BUCKET) so local
+            #   development remains filesystem-only without extra deps
+            # - on success, the s3 path is recorded alongside the local path
+            #
             if self.s3 and METADATA_UPLOAD_TO_S3 and S3_BUCKET:
                 key = os.path.basename(filepath)
                 try:
