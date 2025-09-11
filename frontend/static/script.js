@@ -13,6 +13,28 @@ async function handleSubmit(event) {
   const issuesLimit = parseInt(document.getElementById("issuesLimit").value) || 50;
   const prLimit = parseInt(document.getElementById("prLimit").value) || 50;
   
+  const selections = {
+    repository: document.getElementById("optRepo").checked,
+    commits: document.getElementById("optCommits").checked,
+    issues: document.getElementById("optIssues").checked,
+    pull_requests: document.getElementById("optPRs").checked,
+    contributors: document.getElementById("optContributors").checked,
+    dependencies: document.getElementById("optDependencies").checked,
+    fork_lineage: document.getElementById("optForkLineage").checked,
+    commit_lineage: document.getElementById("optCommitLineage").checked,
+    bus_factor: document.getElementById("optBusFactor").checked,
+    pr_metrics: document.getElementById("optPrMetrics").checked,
+    issue_metrics: document.getElementById("optIssueMetrics").checked,
+    commit_activity: document.getElementById("optCommitActivity").checked,
+    release_cadence: document.getElementById("optReleaseCadence").checked,
+  };
+  
+  const anySelected = Object.values(selections).some(Boolean);
+  if (!anySelected) {
+    showError("Please select at least one metadata category to extract.");
+    return;
+  }
+  
   const extractButton = document.getElementById("extractButton");
   const progressSection = document.getElementById("progressSection");
   const successModal = document.getElementById("successModal");
@@ -38,6 +60,7 @@ async function handleSubmit(event) {
           commit_limit: commitLimit,
           issues_limit: issuesLimit,
           pr_limit: prLimit,
+          selections: selections,
         }),      
     });
 
@@ -47,7 +70,7 @@ async function handleSubmit(event) {
       progressSection.style.display = "none";
       
       // Show success modal with basic info
-      showSuccessModal(repoUrl, commitLimit, issuesLimit, prLimit);
+      showSuccessModal(repoUrl, commitLimit, issuesLimit, prLimit, selections);
     } else {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.message || "Extraction failed");
@@ -73,12 +96,29 @@ function isValidGitHubUrl(url) {
   }
 }
 
-function showSuccessModal(repoUrl, commitLimit, issuesLimit, prLimit) {
+function showSuccessModal(repoUrl, commitLimit, issuesLimit, prLimit, selections) {
   const successModal = document.getElementById("successModal");
   const extractionResults = document.getElementById("extractionResults");
   
   // Extract repository name from URL
   const repoName = repoUrl.split("/").slice(-2).join("/");
+  
+  const selectedBadges = [];
+  if (selections.repository) selectedBadges.push("Repository");
+  if (selections.commits) selectedBadges.push("Commits");
+  if (selections.issues) selectedBadges.push("Issues");
+  if (selections.pull_requests) selectedBadges.push("PRs");
+  if (selections.contributors) selectedBadges.push("Contributors");
+  if (selections.dependencies) selectedBadges.push("Dependencies");
+  if (selections.fork_lineage) selectedBadges.push("Fork lineage");
+  if (selections.commit_lineage) selectedBadges.push("Commit lineage");
+  if (selections.bus_factor) selectedBadges.push("Bus factor");
+  if (selections.pr_metrics) selectedBadges.push("PR metrics");
+  if (selections.issue_metrics) selectedBadges.push("Issue metrics");
+  if (selections.commit_activity) selectedBadges.push("Commit activity");
+  if (selections.release_cadence) selectedBadges.push("Release cadence");
+  
+  const badgesHtml = selectedBadges.map(b => `<span class="badge">${b}</span>`).join(" ");
   
   extractionResults.innerHTML = `
     <div class="result-item">
@@ -100,6 +140,7 @@ function showSuccessModal(repoUrl, commitLimit, issuesLimit, prLimit) {
       </div>
     </div>
     <div class="result-note">
+      <p>Selected: ${badgesHtml}</p>
       <p>📁 Metadata will be saved to the <code>extracted_metadata/</code> directory</p>
       <p>⏱️ The extraction process may take a few minutes depending on the repository size</p>
     </div>

@@ -62,6 +62,27 @@
           </div>
         </div>
         
+        <fieldset class="form-group">
+          <legend>Choose metadata to extract:</legend>
+          <div class="checkbox-row">
+            <label><input type="checkbox" id="optRepo" checked /> Repository</label>
+            <label><input type="checkbox" id="optCommits" checked /> Commits</label>
+            <label><input type="checkbox" id="optIssues" checked /> Issues</label>
+            <label><input type="checkbox" id="optPRs" checked /> Pull Requests</label>
+            <label><input type="checkbox" id="optContributors" checked /> Contributors</label>
+            <label><input type="checkbox" id="optDependencies" checked /> Dependencies</label>
+          </div>
+          <div class="checkbox-row">
+            <label><input type="checkbox" id="optForkLineage" /> Fork lineage</label>
+            <label><input type="checkbox" id="optCommitLineage" /> Commit lineage</label>
+            <label><input type="checkbox" id="optBusFactor" /> Bus factor</label>
+            <label><input type="checkbox" id="optPrMetrics" /> PR metrics</label>
+            <label><input type="checkbox" id="optIssueMetrics" /> Issue metrics</label>
+            <label><input type="checkbox" id="optCommitActivity" /> Commit activity</label>
+            <label><input type="checkbox" id="optReleaseCadence" /> Release cadence</label>
+          </div>
+        </fieldset>
+        
         <button id="extractButton" type="submit">Extract Metadata</button>
       </form>
       

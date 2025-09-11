@@ -388,3 +388,55 @@ button:disabled::after {
   content: " 🔄";
   animation: spin 1s linear infinite;
 }
+
+/* Checkbox styling */
+fieldset {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+legend {
+  font-weight: 600;
+  color: #333;
+  padding: 0 8px;
+}
+
+.checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.checkbox-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.checkbox-row label:hover {
+  background-color: #f5f5f5;
+}
+
+.checkbox-row input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 2px;
+}
