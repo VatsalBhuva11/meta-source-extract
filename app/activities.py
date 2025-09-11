@@ -4,11 +4,11 @@ import re
 import asyncio
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
-from urllib.parse import urlparse
 
 import aiofiles
 from application_sdk.activities import ActivitiesInterface
 from application_sdk.observability.logger_adaptor import get_logger
+from application_sdk.activities.common.utils import auto_heartbeater
 
 from temporalio import activity
 
@@ -30,15 +30,9 @@ except Exception:
     BotoCoreError = Exception
 
 try:
-    from github import Github, GithubException, RateLimitExceededException
+    from github import Github
 except Exception:
     raise RuntimeError("PyGithub (github) library is required. Add `PyGithub` to requirements.")
-
-# optional radon (best effort)
-try:
-    from radon.complexity import cc_visit
-except Exception:
-    cc_visit = None
 
 from app.config import (
     METADATA_DIR,
@@ -51,9 +45,6 @@ from app.config import (
 from app.utils import (
     safe_isoformat,
     parse_repo_url,
-    human_readable_timespan,
-    estimate_language_loc_from_files,
-    generate_extraction_id,
 )
 from app.resilience import _get_from_cache, _set_cache, circuit_breaker
 
@@ -90,14 +81,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     @activity.defn
     # critical path (no breaker)
-    #
-    # rationale
-    # - this activity fetches the foundational repository record; if it fails,
-    #   the workflow should surface the error immediately rather than being
-    #   blocked by a shared breaker
-    # - downstream activities can be skipped/fail independently, so the breaker
-    #   is applied there instead
-    #
+    @auto_heartbeater
     async def extract_repository_metadata(self, args: List[Any]) -> Dict[str, Any]:
         """
         args: [repo_url, extraction_id]
@@ -159,6 +143,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     # caching + breaker
     @activity.defn(name="extract_commit_metadata")
+    @auto_heartbeater
     @circuit_breaker
     #
     # rationale
@@ -204,6 +189,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     # caching + breaker
     @activity.defn(name="extract_issues_metadata")
+    @auto_heartbeater
     @circuit_breaker
     #
     # rationale
@@ -248,6 +234,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     # caching + breaker
     @activity.defn(name="extract_pull_requests_metadata")
+    @auto_heartbeater
     @circuit_breaker
     #
     # rationale
@@ -293,6 +280,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     # caching + breaker
     @activity.defn(name="extract_contributors")
+    @auto_heartbeater
     @circuit_breaker
     #
     # rationale
@@ -328,6 +316,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
 
     # caching + breaker
     @activity.defn(name="extract_dependencies_from_repo")
+    @auto_heartbeater
     @circuit_breaker
     #
     # rationale
@@ -452,6 +441,7 @@ class GitHubMetadataActivities(ActivitiesInterface):
             raise
 
     @activity.defn
+    @auto_heartbeater
     async def save_metadata_to_file(self, args: List[Any]) -> str:
         """
         save extracted metadata to a json file and optionally upload to s3.

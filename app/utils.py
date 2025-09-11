@@ -1,23 +1,8 @@
 import re
 import uuid
-from datetime import datetime, timezone
+from datetime import timezone
 from typing import Tuple
 from urllib.parse import urlparse
-
-def estimate_language_loc_from_files(languages_dict: dict) -> dict:
-    """
-    Estimate lines of code per language from GitHub languages API result.
-    GitHub returns bytes of code per language.
-    We'll use a heuristic: 50 bytes ~ 1 line (very rough).
-    """
-    if not languages_dict:
-        return {}
-    loc_estimates = {}
-    for lang, byte_count in languages_dict.items():
-        approx_loc = max(1, byte_count // 50)  # heuristic
-        loc_estimates[lang] = approx_loc
-    return loc_estimates
-
 
 def parse_repo_url(repo_url: str) -> Tuple[str, str]:
     """
@@ -56,16 +41,3 @@ def safe_isoformat(dt):
 
 def generate_extraction_id():
     return uuid.uuid4().hex[:12]
-
-def human_readable_timespan(seconds: float) -> str:
-    # basic conversion
-    if seconds is None:
-        return None
-    seconds = int(seconds)
-    if seconds < 60:
-        return f"{seconds}s"
-    m, s = divmod(seconds, 60)
-    if m < 60:
-        return f"{m}m{s}s"
-    h, m = divmod(m, 60)
-    return f"{h}h{m}m"
