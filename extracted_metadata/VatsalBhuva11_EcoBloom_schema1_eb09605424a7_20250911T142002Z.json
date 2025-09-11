@@ -1,0 +1,1858 @@
+{
+  "code_lineage": "--- File: .gitignore ---\n  - Commit: b8159ca by Vatsal Bhuva on 2024-09-07 04:38:05\n    Message: update\n    Changes: +1 / -0\n\n--- File: firebase.json ---\n  - Commit: b8159ca by Vatsal Bhuva on 2024-09-07 04:38:05\n    Message: update\n    Changes: +1 / -1\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +60 / -53\n\n--- File: frontend/package-lock.json ---\n  - Commit: b8159ca by Vatsal Bhuva on 2024-09-07 04:38:05\n    Message: update\n    Changes: +4 / -4\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1394 / -1561\n\n--- File: .github/workflows/firebase-hosting-merge.yml ---\n  - Commit: b768ba5 by Vatsal Bhuva on 2024-09-07 04:19:46\n    Message: Update firebase-hosting-merge.yml\n    Changes: +1 / -1\n  - Commit: 2db5353 by Vatsal Bhuva on 2024-09-07 04:15:16\n    Message: Update firebase-hosting-merge.yml\n    Changes: +1 / -1\n  - Commit: 0669d72 by Vatsal Bhuva on 2024-09-07 04:14:26\n    Message: Update firebase-hosting-merge.yml\n    Changes: +1 / -1\n  - Commit: 3dfeb91 by Vatsal Bhuva on 2024-09-07 04:12:20\n    Message: Update firebase-hosting-merge.yml\n    Changes: +0 / -1\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1 / -1\n\n--- File: .github/workflows/firebase-hosting-pull-request.yml ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +2 / -2\n\n--- File: README.md ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +83 / -100\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +7 / -0\n\n--- File: docker-compose.yml ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +28 / -0\n\n--- File: frontend/Dockerfile ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +23 / -0\n\n--- File: frontend/package.json ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicon.ico ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/android-chrome-192x192.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/android-chrome-512x512.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/apple-touch-icon.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/favicon-16x16.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/favicon-32x32.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/favicon.ico ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/favicons/site.webmanifest ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/public/index.html ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/App.css ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -4\n\n--- File: frontend/src/App.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/About.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/All_Home.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Card_line.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Carousel.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +153 / -0\n\n--- File: frontend/src/Components/ChatBubbleArrival.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1 / -1\n\n--- File: frontend/src/Components/ChatBubbleDept.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/ChatContextProvider.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -2\n\n--- File: frontend/src/Components/ChatLeftBar.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -12\n\n--- File: frontend/src/Components/ChatRightBar.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +5 / -1\n\n--- File: frontend/src/Components/Chatbar.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1 / -0\n\n--- File: frontend/src/Components/CreateCampaigns.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Footer.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Hero.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/JoinUs.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Maps_Campaign.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Maps_Dashboard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Navbar.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/NewPost.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/New_User_Dashboard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +6 / -6\n\n--- File: frontend/src/Components/Parallax.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/PastCampaigns.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/PastCampaignsCards.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/ProfileContextProvider.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/User_Dash2.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/User_dash3.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Components/Video.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -3\n\n--- File: frontend/src/Components/ViewPost.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/OrganizationAuth.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Activity_log.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1 / -3\n\n--- File: frontend/src/Pages/AddDesc.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Admin.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +16 / -24\n\n--- File: frontend/src/Pages/All_User_Communities.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Badha_Campaigns.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -3\n\n--- File: frontend/src/Pages/BasicDetails.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/CampaignProfile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +374 / -0\n\n--- File: frontend/src/Pages/Change_banner.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +53 / -49\n\n--- File: frontend/src/Pages/Change_profile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +53 / -49\n\n--- File: frontend/src/Pages/Change_profile_org.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +53 / -49\n\n--- File: frontend/src/Pages/Communities.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -2\n\n--- File: frontend/src/Pages/CommunityChat.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Community_Joined_Card.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/CreateCampaign.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +2 / -2\n\n--- File: frontend/src/Pages/Create_Account_Card.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Create_Campaign_Card.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Delhivery.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/EditPassword.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +153 / -0\n\n--- File: frontend/src/Pages/EditPasswordOrg.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +153 / -0\n\n--- File: frontend/src/Pages/Edit_Profile_Org.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +3 / -5\n\n--- File: frontend/src/Pages/ForgetPassword.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/FreshOrgSignUp.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/FreshUserSignUp.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Home.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +76 / -56\n\n--- File: frontend/src/Pages/HomePage.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/LeaveCommCard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Login.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Map_Card.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/MultiStep.css ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/MultiStep.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/OrgBasicDetails.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/OrgCampaignProfile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/OrgSignup.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Orgdashboard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +3 / -3\n\n--- File: frontend/src/Pages/Orgprofile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +8 / -10\n\n--- File: frontend/src/Pages/Quiz.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -2\n\n--- File: frontend/src/Pages/SignupInitial.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Store.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -2\n\n--- File: frontend/src/Pages/Store_Error.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Terms_Conditions.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/UnderConsruction.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Update_Contact_Number.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +137 / -0\n\n--- File: frontend/src/Pages/UploadDocs.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/UploadPhoto.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/UserDashboard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/UserProfile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +4 / -6\n\n--- File: frontend/src/Pages/UserSignup.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Verfication.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/VerifyDummy.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +402 / -0\n\n--- File: frontend/src/Pages/VerifyUsers.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/Verify_Email.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/VideoCard.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/Pages/logout_pop.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/UserAuth.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/Start Project Parallax Scrolling Website/index.html ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/Start Project Parallax Scrolling Website/script.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/Start Project Parallax Scrolling Website/style.css ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/Animation.gif ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/Animation2.gif ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/Campbg.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/Quiz_logo.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/Store_logo.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/about.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/arrow.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/authBg.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/bag.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/banner.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/banner1.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/banner1.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/bannerorg.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/beach_cleaning.avif ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/beach_cleaning.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/beach_cleaning_edited.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/book.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/campaign.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/campaignbanner.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/cap (2).png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/chat_logo.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/cleaning.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/construction.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/darkgreen.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/defaultOrgBanner.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/delete.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/emilychen.jpeg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/face.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/forget_password.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hero1.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hero2.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hero3.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hero4.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hill1.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hill2.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hill3.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hill4.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hill5.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/hoodie.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/james.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/joinUs.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/keychain (2).png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/leaf.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/leftArrow.svg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/login.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/logo.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/logo3.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/logo_commu.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/logo_new.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/logout_image.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/map.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/maria.jpeg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/member.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/message.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/moye_moye.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/org_logo.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p1.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p2.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p3.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p4.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p5.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/p6.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/pdf.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/person.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/plant.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/profile_bg.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/question.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/quiz_bg.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/raj.jpeg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/shirt.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/sky.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/tick.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/tree.png ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/underground.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/unknown.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/water-flowing-2.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/assets/images/water-flowing.jpg ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/firebase.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/index.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: frontend/src/output.css ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +5 / -74\n\n--- File: frontend/tailwind.config.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -0\n\n--- File: functions/Dockerfile ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +31 / -0\n\n--- File: functions/package.json ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +1 / -1\n\n--- File: src/Components/Carousel.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -151\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +4 / -4\n  - Commit: b28da56 by nijval21 on 2024-05-05 12:05:59\n    Message: Test. fixed\n    Changes: +4 / -4\n  - Commit: 22bdffc by Rishi Upadhyay on 2024-05-05 10:35:10\n    Message: chat frontend changed\n    Changes: +1 / -1\n\n--- File: src/Pages/CampaignProfile.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -346\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +301 / -329\n  - Commit: a57087e by rishika-g31 on 2024-05-05 11:52:02\n    Message: campaign profile fixed\n    Changes: +301 / -329\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n  - Commit: ed15016 by Vatsal Bhuva on 2024-05-05 06:35:43\n    Message: fix campaign profile pages\n    Changes: +1 / -1\n\n--- File: src/Pages/EditPassword.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -153\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +71 / -71\n\n--- File: src/Pages/EditPasswordOrg.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -153\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +71 / -71\n\n--- File: src/Pages/Update_Contact_Number.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -137\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +70 / -70\n\n--- File: src/Pages/VerifyDummy.js ---\n  - Commit: 5f4ce5f by Vatsal Bhuva on 2024-09-07 04:09:04\n    Message: docker, file changes\n    Changes: +0 / -387\n  - Commit: aa5ab33 by nijval21 on 2024-05-05 17:40:48\n    Message: fix\n    Changes: +225 / -245\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Components/New_User_Dashboard.js ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +31 / -43\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +595 / -495\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +1 / -1\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +495 / -546\n  - Commit: 193064c by rishika-g31 on 2024-05-05 08:04:46\n    Message: minor fixes\n    Changes: +3 / -3\n  - Commit: 5b51411 by rishika-g31 on 2024-05-05 08:02:24\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +24 / -24\n  - Commit: fb8f05f by Rishi Upadhyay on 2024-05-05 08:00:17\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +3 / -3\n  - Commit: f0493dd by Vatsal Bhuva on 2024-05-05 08:00:03\n    Message: fixes in user dashboard, create campaign (map button), org campaign profile (impressions)\n    Changes: +3 / -3\n  - Commit: 5da5314 by Vatsal Bhuva on 2024-05-05 07:38:52\n    Message: revert user dashboard\n    Changes: +8 / -8\n  - Commit: 4b16a17 by Vatsal Bhuva on 2024-05-05 07:32:18\n    Message: fixes\n    Changes: +18 / -18\n  - Commit: a7e305a by Vatsal Bhuva on 2024-05-05 06:54:23\n    Message: default banner logo urls, user dashboard\n    Changes: +29 / -24\n  - Commit: ed15016 by Vatsal Bhuva on 2024-05-05 06:35:43\n    Message: fix campaign profile pages\n    Changes: +6 / -1\n  - Commit: 0350c13 by Vatsal Bhuva on 2024-05-05 06:29:45\n    Message: add map to user dashboard\n    Changes: +541 / -488\n  - Commit: d169444 by nijval21 on 2024-05-04 22:16:10\n    Message: ALL user communities page created, integrated and routed\n    Changes: +8 / -6\n  - Commit: b553e7a by nijval21 on 2024-05-04 21:25:36\n    Message: New_dashboard Integrated and Routed\n    Changes: +441 / -41\n\n--- File: src/Pages/BasicDetails.js ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +1 / -1\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +20 / -13\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +3 / -2\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +171 / -147\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +171 / -147\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +0 / -1\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +0 / -1\n  - Commit: 193064c by rishika-g31 on 2024-05-05 08:04:46\n    Message: minor fixes\n    Changes: +24 / -14\n  - Commit: 5b51411 by rishika-g31 on 2024-05-05 08:02:24\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +2 / -4\n  - Commit: 8b315ce by Rishi Upadhyay on 2024-05-05 08:00:03\n    Message: user signup page done and duplicates folder created\n    Changes: +24 / -14\n  - Commit: 4b16a17 by Vatsal Bhuva on 2024-05-05 07:32:18\n    Message: fixes\n    Changes: +2 / -4\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +0 / -312\n\n--- File: src/Pages/OrgBasicDetails.js ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +1 / -1\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +20 / -13\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +166 / -154\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +27 / -15\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +27 / -15\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +295 / -0\n\n--- File: src/assets/images/Campbg.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/bannerorg.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/campaignbanner.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/hill5.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/map_img.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/member.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p1.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p2.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p3.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p4.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p5.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/p6.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/question.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/roots.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/rootz.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/rootz1.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: src/assets/images/rrootz.png ---\n  - Commit: 5017657 by Rishi Upadhyay on 2024-05-27 18:56:06\n    Message: Update README.md\n    Changes: +0 / -0\n\n--- File: functions/index.js ---\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +4 / -0\n\n--- File: src/Pages/Orgdashboard.js ---\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +1 / -1\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +479 / -438\n  - Commit: bec50ef by Rishi Upadhyay on 2024-05-05 17:01:15\n    Message: fixes in org dashboard\n    Changes: +1 / -1\n  - Commit: 3dbca91 by rishika-g31 on 2024-05-05 11:52:06\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +479 / -438\n  - Commit: 4e05a4b by Vatsal Bhuva on 2024-05-05 11:38:18\n    Message: fix logo and banner uploads, and name beside profile\n    Changes: +479 / -438\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +48 / -41\n\n--- File: src/Pages/UserDashboard.js ---\n  - Commit: 0862b52 by nijval21 on 2024-05-05 17:42:00\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +0 / -2\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: functions/controllers/orgAuth.controllers.js ---\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +10 / -2\n  - Commit: 3dbca91 by rishika-g31 on 2024-05-05 11:52:06\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +10 / -2\n  - Commit: 4e05a4b by Vatsal Bhuva on 2024-05-05 11:38:18\n    Message: fix logo and banner uploads, and name beside profile\n    Changes: +10 / -2\n  - Commit: a7e305a by Vatsal Bhuva on 2024-05-05 06:54:23\n    Message: default banner logo urls, user dashboard\n    Changes: +13 / -3\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +166 / -0\n\n--- File: src/Pages/All_User_Communities.js ---\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +0 / -3\n  - Commit: 3dbca91 by rishika-g31 on 2024-05-05 11:52:06\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +0 / -3\n  - Commit: 4e05a4b by Vatsal Bhuva on 2024-05-05 11:38:18\n    Message: fix logo and banner uploads, and name beside profile\n    Changes: +0 / -3\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +202 / -167\n  - Commit: e3261b4 by nijval21 on 2024-05-04 22:15:24\n    Message: ALL user communities page created, integrated and routed\n    Changes: +195 / -0\n\n--- File: src/Pages/VerifyUsers.js ---\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +0 / -5\n  - Commit: 3dbca91 by rishika-g31 on 2024-05-05 11:52:06\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +0 / -5\n  - Commit: 4e05a4b by Vatsal Bhuva on 2024-05-05 11:38:18\n    Message: fix logo and banner uploads, and name beside profile\n    Changes: +0 / -5\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/output.css ---\n  - Commit: a812a46 by Rishi Upadhyay on 2024-05-05 17:01:33\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +58 / -28\n  - Commit: b28da56 by nijval21 on 2024-05-05 12:05:59\n    Message: Test. fixed\n    Changes: +16 / -6\n  - Commit: a57087e by rishika-g31 on 2024-05-05 11:52:02\n    Message: campaign profile fixed\n    Changes: +42 / -22\n  - Commit: 8f3129f by Rishi Upadhyay on 2024-05-05 10:57:46\n    Message: admin page fixed\n    Changes: +3227 / -3373\n  - Commit: 22bdffc by Rishi Upadhyay on 2024-05-05 10:35:10\n    Message: chat frontend changed\n    Changes: +40 / -25\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +3382 / -3290\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +42 / -14\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +26 / -6\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +11 / -0\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +29 / -42\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +21 / -22\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +30 / -18\n  - Commit: 193064c by rishika-g31 on 2024-05-05 08:04:46\n    Message: minor fixes\n    Changes: +4 / -0\n  - Commit: 5b51411 by rishika-g31 on 2024-05-05 08:02:24\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +22 / -6\n  - Commit: 8b315ce by Rishi Upadhyay on 2024-05-05 08:00:03\n    Message: user signup page done and duplicates folder created\n    Changes: +4 / -0\n  - Commit: ba5a8e0 by rishika-g31 on 2024-05-05 07:58:44\n    Message: minor fixes\n    Changes: +9 / -10\n  - Commit: 4b16a17 by Vatsal Bhuva on 2024-05-05 07:32:18\n    Message: fixes\n    Changes: +26 / -6\n  - Commit: db633d9 by Vatsal Bhuva on 2024-05-05 07:12:42\n    Message: changes\n    Changes: +10 / -5\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +21 / -30\n  - Commit: a7e305a by Vatsal Bhuva on 2024-05-05 06:54:23\n    Message: default banner logo urls, user dashboard\n    Changes: +35 / -44\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +24 / -4\n  - Commit: d169444 by nijval21 on 2024-05-04 22:16:10\n    Message: ALL user communities page created, integrated and routed\n    Changes: +31 / -0\n  - Commit: b553e7a by nijval21 on 2024-05-04 21:25:36\n    Message: New_dashboard Integrated and Routed\n    Changes: +8 / -0\n  - Commit: e9f33d5 by rishika-g31 on 2024-05-04 20:44:20\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +16 / -6\n\n--- File: src/Pages/Admin.js ---\n  - Commit: 8f3129f by Rishi Upadhyay on 2024-05-05 10:57:46\n    Message: admin page fixed\n    Changes: +15 / -13\n  - Commit: db633d9 by Vatsal Bhuva on 2024-05-05 07:12:42\n    Message: changes\n    Changes: +23 / -3\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Pages/HomePage.js ---\n  - Commit: 8f3129f by Rishi Upadhyay on 2024-05-05 10:57:46\n    Message: admin page fixed\n    Changes: +1 / -1\n\n--- File: src/Components/ChatLeftBar.js ---\n  - Commit: 22bdffc by Rishi Upadhyay on 2024-05-05 10:35:10\n    Message: chat frontend changed\n    Changes: +6 / -6\n\n--- File: src/Components/ChatRightBar.js ---\n  - Commit: 22bdffc by Rishi Upadhyay on 2024-05-05 10:35:10\n    Message: chat frontend changed\n    Changes: +8 / -8\n\n--- File: src/Components/Chatbar.js ---\n  - Commit: 22bdffc by Rishi Upadhyay on 2024-05-05 10:35:10\n    Message: chat frontend changed\n    Changes: +1 / -1\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +1 / -0\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +1 / -0\n\n--- File: src/Pages/AddDesc.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +2 / -1\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +4 / -3\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +13 / -2\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +135 / -0\n\n--- File: src/Pages/FreshOrgSignUp.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +2 / -3\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +7 / -7\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +5 / -5\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +82 / -39\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +149 / -0\n\n--- File: src/Pages/FreshUserSignUp.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +62 / -84\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +79 / -79\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +79 / -79\n  - Commit: ba5a8e0 by rishika-g31 on 2024-05-05 07:58:44\n    Message: minor fixes\n    Changes: +135 / -135\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +1 / -1\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +55 / -26\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +18 / -0\n\n--- File: src/Pages/Login.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +1 / -1\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +405 / -377\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +405 / -377\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +1 / -1\n  - Commit: 2f39da1 by rishika-g31 on 2024-05-05 08:02:51\n    Message: minor fixes\n    Changes: +1 / -1\n  - Commit: 5b51411 by rishika-g31 on 2024-05-05 08:02:24\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +7 / -2\n  - Commit: 8b315ce by Rishi Upadhyay on 2024-05-05 08:00:03\n    Message: user signup page done and duplicates folder created\n    Changes: +5 / -14\n  - Commit: ba5a8e0 by rishika-g31 on 2024-05-05 07:58:44\n    Message: minor fixes\n    Changes: +373 / -396\n  - Commit: 4b16a17 by Vatsal Bhuva on 2024-05-05 07:32:18\n    Message: fixes\n    Changes: +14 / -5\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +12 / -21\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +8 / -7\n\n--- File: src/Pages/MultiStep.css ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +53 / -56\n  - Commit: ba5a8e0 by rishika-g31 on 2024-05-05 07:58:44\n    Message: minor fixes\n    Changes: +54 / -54\n\n--- File: src/Pages/UploadDocs.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +5 / -4\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +3 / -3\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +8 / -9\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +205 / -0\n\n--- File: src/Pages/UploadPhoto.js ---\n  - Commit: eed7a00 by Vatsal Bhuva on 2024-05-05 10:20:30\n    Message: sign up pages fixed\n    Changes: +118 / -101\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +4 / -0\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +0 / -1\n\n--- File: src/Pages/Change_banner.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +49 / -53\n\n--- File: src/Pages/Change_profile.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +49 / -53\n\n--- File: src/Pages/Change_profile_org.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +49 / -53\n\n--- File: src/Pages/Community_Joined_Card.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +33 / -33\n\n--- File: src/Pages/Create_Account_Card.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +3 / -3\n\n--- File: src/Pages/Create_Campaign_Card.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +22 / -22\n\n--- File: src/Pages/LeaveCommCard.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +29 / -29\n\n--- File: src/Pages/Map_Card.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +32 / -32\n\n--- File: src/Pages/Store_Error.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +30 / -32\n\n--- File: src/Pages/Terms_Conditions.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +344 / -135\n\n--- File: src/Pages/Verfication.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +33 / -33\n\n--- File: src/Pages/Verify_Email.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +35 / -35\n\n--- File: src/Pages/VideoCard.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +14 / -14\n\n--- File: src/Pages/logout_pop.js ---\n  - Commit: b68af41 by nijval21 on 2024-05-05 10:17:36\n    Message: All cards modified\n    Changes: +35 / -35\n\n--- File: src/Components/ChatBubbleArrival.js ---\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +1 / -0\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +1 / -0\n\n--- File: src/Components/ChatBubbleDept.js ---\n  - Commit: 80a1d6d by Rishi Upadhyay on 2024-05-05 09:42:03\n    Message: changes\n    Changes: +2 / -0\n  - Commit: 2d02a36 by Vatsal Bhuva on 2024-05-05 09:25:48\n    Message: chat name not displaying fix\n    Changes: +2 / -0\n\n--- File: src/Pages/Activity_log.js ---\n  - Commit: 3580300 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +1 / -1\n  - Commit: 0fa8a49 by Rishi Upadhyay on 2024-05-05 09:17:16\n    Message: signup pages completed\n    Changes: +1 / -1\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/App.js ---\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +1 / -1\n\n--- File: src/Components/Parallax.js ---\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +6 / -6\n\n--- File: src/Pages/Home.js ---\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +47 / -67\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +1 / -0\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +157 / -103\n  - Commit: d169444 by nijval21 on 2024-05-04 22:16:10\n    Message: ALL user communities page created, integrated and routed\n    Changes: +104 / -171\n  - Commit: b553e7a by nijval21 on 2024-05-04 21:25:36\n    Message: New_dashboard Integrated and Routed\n    Changes: +16 / -0\n  - Commit: e9f33d5 by rishika-g31 on 2024-05-04 20:44:20\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +185 / -115\n\n--- File: src/Pages/New_User_Dashboard.js ---\n  - Commit: 89c9d3f by nijval21 on 2024-05-05 09:13:48\n    Message: minor changes\n    Changes: +0 / -50\n\n--- File: src/Pages/CreateCampaign.js ---\n  - Commit: 193064c by rishika-g31 on 2024-05-05 08:04:46\n    Message: minor fixes\n    Changes: +48 / -46\n  - Commit: fb8f05f by Rishi Upadhyay on 2024-05-05 08:00:17\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +48 / -46\n  - Commit: f0493dd by Vatsal Bhuva on 2024-05-05 08:00:03\n    Message: fixes in user dashboard, create campaign (map button), org campaign profile (impressions)\n    Changes: +48 / -46\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +19 / -2\n\n--- File: src/Pages/OrgCampaignProfile.js ---\n  - Commit: 193064c by rishika-g31 on 2024-05-05 08:04:46\n    Message: minor fixes\n    Changes: +10 / -7\n  - Commit: fb8f05f by Rishi Upadhyay on 2024-05-05 08:00:17\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +10 / -7\n  - Commit: f0493dd by Vatsal Bhuva on 2024-05-05 08:00:03\n    Message: fixes in user dashboard, create campaign (map button), org campaign profile (impressions)\n    Changes: +10 / -7\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n  - Commit: ed15016 by Vatsal Bhuva on 2024-05-05 06:35:43\n    Message: fix campaign profile pages\n    Changes: +7 / -6\n\n--- File: functions/models/organization.model.js ---\n  - Commit: 5b51411 by rishika-g31 on 2024-05-05 08:02:24\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +1 / -1\n  - Commit: 4b16a17 by Vatsal Bhuva on 2024-05-05 07:32:18\n    Message: fixes\n    Changes: +1 / -1\n  - Commit: db633d9 by Vatsal Bhuva on 2024-05-05 07:12:42\n    Message: changes\n    Changes: +1 / -1\n  - Commit: a7e305a by Vatsal Bhuva on 2024-05-05 06:54:23\n    Message: default banner logo urls, user dashboard\n    Changes: +4 / -0\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +1 / -1\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +1 / -1\n\n--- File: src/Components/ChatContextProvider.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +1 / -1\n\n--- File: src/Components/Video.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Pages/Badha_Campaigns.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Pages/Communities.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Pages/CommunityChat.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +1 / -0\n\n--- File: src/Pages/Edit_Profile_Org.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/Pages/Orgprofile.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +12 / -8\n\n--- File: src/Pages/Quiz.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +3 / -0\n\n--- File: src/Pages/Store.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n  - Commit: 24f22de by Vatsal Bhuva on 2024-05-05 06:15:39\n    Message: desc and photo and docs optional in auth\n    Changes: +1 / -1\n\n--- File: src/Pages/UserProfile.js ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +3 / -0\n\n--- File: src/assets/images/Animation2.gif ---\n  - Commit: 2deb048 by Rishi Upadhyay on 2024-05-05 07:02:43\n    Message: login page updated and fixed\n    Changes: +0 / -0\n\n--- File: src/Components/Maps_Dashboard.js ---\n  - Commit: 0350c13 by Vatsal Bhuva on 2024-05-05 06:29:45\n    Message: add map to user dashboard\n    Changes: +3 / -3\n\n--- File: src/Components/CreateCampaigns.js ---\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +2 / -2\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +73 / -67\n\n--- File: src/Pages/SignupInitial.js ---\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +29 / -16\n\n--- File: src/assets/images/leftArrow.svg ---\n  - Commit: 2cda732 by Vatsal Bhuva on 2024-05-05 05:57:22\n    Message: fixes\n    Changes: +7 / -0\n\n--- File: functions/controllers/userAuth.controllers.js ---\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +59 / -58\n\n--- File: src/Components/JoinUs.js ---\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +53 / -50\n\n--- File: src/Pages/MultiStep.js ---\n  - Commit: feca1f6 by Vatsal Bhuva on 2024-05-05 05:31:06\n    Message: ORG AUTH DONE.\n    Changes: +5 / -16\n\n--- File: src/Components/User_dash3.js ---\n  - Commit: b553e7a by nijval21 on 2024-05-04 21:25:36\n    Message: New_dashboard Integrated and Routed\n    Changes: +8 / -0\n\n--- File: src/Components/Maps_Campaign.js ---\n  - Commit: e9f33d5 by rishika-g31 on 2024-05-04 20:44:20\n    Message: Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom\n    Changes: +1 / -1\n\n",
+  "code_quality_metrics": {
+    "file_churn": {
+      ".github/workflows/firebase-hosting-merge.yml": {
+        "additions": 4,
+        "changes": 9,
+        "deletions": 5
+      },
+      ".github/workflows/firebase-hosting-pull-request.yml": {
+        "additions": 2,
+        "changes": 4,
+        "deletions": 2
+      },
+      ".gitignore": {
+        "additions": 1,
+        "changes": 1,
+        "deletions": 0
+      },
+      "README.md": {
+        "additions": 90,
+        "changes": 190,
+        "deletions": 100
+      },
+      "docker-compose.yml": {
+        "additions": 28,
+        "changes": 28,
+        "deletions": 0
+      },
+      "firebase.json": {
+        "additions": 61,
+        "changes": 115,
+        "deletions": 54
+      },
+      "frontend/Dockerfile": {
+        "additions": 23,
+        "changes": 23,
+        "deletions": 0
+      },
+      "frontend/package-lock.json": {
+        "additions": 1398,
+        "changes": 2963,
+        "deletions": 1565
+      },
+      "frontend/package.json": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicon.ico": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/android-chrome-192x192.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/android-chrome-512x512.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/apple-touch-icon.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/favicon-16x16.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/favicon-32x32.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/favicon.ico": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/favicons/site.webmanifest": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/public/index.html": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/App.css": {
+        "additions": 0,
+        "changes": 4,
+        "deletions": 4
+      },
+      "frontend/src/App.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/About.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/All_Home.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Card_line.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Carousel.js": {
+        "additions": 153,
+        "changes": 153,
+        "deletions": 0
+      },
+      "frontend/src/Components/ChatBubbleArrival.js": {
+        "additions": 1,
+        "changes": 2,
+        "deletions": 1
+      },
+      "frontend/src/Components/ChatBubbleDept.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/ChatContextProvider.js": {
+        "additions": 0,
+        "changes": 2,
+        "deletions": 2
+      },
+      "frontend/src/Components/ChatLeftBar.js": {
+        "additions": 0,
+        "changes": 12,
+        "deletions": 12
+      },
+      "frontend/src/Components/ChatRightBar.js": {
+        "additions": 5,
+        "changes": 6,
+        "deletions": 1
+      },
+      "frontend/src/Components/Chatbar.js": {
+        "additions": 1,
+        "changes": 1,
+        "deletions": 0
+      },
+      "frontend/src/Components/CreateCampaigns.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Footer.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Hero.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/JoinUs.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Maps_Campaign.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Maps_Dashboard.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Navbar.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/NewPost.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/New_User_Dashboard.js": {
+        "additions": 6,
+        "changes": 12,
+        "deletions": 6
+      },
+      "frontend/src/Components/Parallax.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/PastCampaigns.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/PastCampaignsCards.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/ProfileContextProvider.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/User_Dash2.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/User_dash3.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Components/Video.js": {
+        "additions": 0,
+        "changes": 3,
+        "deletions": 3
+      },
+      "frontend/src/Components/ViewPost.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/OrganizationAuth.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Activity_log.js": {
+        "additions": 1,
+        "changes": 4,
+        "deletions": 3
+      },
+      "frontend/src/Pages/AddDesc.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Admin.js": {
+        "additions": 16,
+        "changes": 40,
+        "deletions": 24
+      },
+      "frontend/src/Pages/All_User_Communities.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Badha_Campaigns.js": {
+        "additions": 0,
+        "changes": 3,
+        "deletions": 3
+      },
+      "frontend/src/Pages/BasicDetails.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/CampaignProfile.js": {
+        "additions": 374,
+        "changes": 374,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Change_banner.js": {
+        "additions": 53,
+        "changes": 102,
+        "deletions": 49
+      },
+      "frontend/src/Pages/Change_profile.js": {
+        "additions": 53,
+        "changes": 102,
+        "deletions": 49
+      },
+      "frontend/src/Pages/Change_profile_org.js": {
+        "additions": 53,
+        "changes": 102,
+        "deletions": 49
+      },
+      "frontend/src/Pages/Communities.js": {
+        "additions": 0,
+        "changes": 2,
+        "deletions": 2
+      },
+      "frontend/src/Pages/CommunityChat.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Community_Joined_Card.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/CreateCampaign.js": {
+        "additions": 2,
+        "changes": 4,
+        "deletions": 2
+      },
+      "frontend/src/Pages/Create_Account_Card.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Create_Campaign_Card.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Delhivery.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/EditPassword.js": {
+        "additions": 153,
+        "changes": 153,
+        "deletions": 0
+      },
+      "frontend/src/Pages/EditPasswordOrg.js": {
+        "additions": 153,
+        "changes": 153,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Edit_Profile_Org.js": {
+        "additions": 3,
+        "changes": 8,
+        "deletions": 5
+      },
+      "frontend/src/Pages/ForgetPassword.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/FreshOrgSignUp.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/FreshUserSignUp.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Home.js": {
+        "additions": 76,
+        "changes": 132,
+        "deletions": 56
+      },
+      "frontend/src/Pages/HomePage.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/LeaveCommCard.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Login.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Map_Card.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/MultiStep.css": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/MultiStep.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/OrgBasicDetails.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/OrgCampaignProfile.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/OrgSignup.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Orgdashboard.js": {
+        "additions": 3,
+        "changes": 6,
+        "deletions": 3
+      },
+      "frontend/src/Pages/Orgprofile.js": {
+        "additions": 8,
+        "changes": 18,
+        "deletions": 10
+      },
+      "frontend/src/Pages/Quiz.js": {
+        "additions": 0,
+        "changes": 2,
+        "deletions": 2
+      },
+      "frontend/src/Pages/SignupInitial.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Store.js": {
+        "additions": 0,
+        "changes": 2,
+        "deletions": 2
+      },
+      "frontend/src/Pages/Store_Error.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Terms_Conditions.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/UnderConsruction.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Update_Contact_Number.js": {
+        "additions": 137,
+        "changes": 137,
+        "deletions": 0
+      },
+      "frontend/src/Pages/UploadDocs.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/UploadPhoto.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/UserDashboard.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/UserProfile.js": {
+        "additions": 4,
+        "changes": 10,
+        "deletions": 6
+      },
+      "frontend/src/Pages/UserSignup.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Verfication.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/VerifyDummy.js": {
+        "additions": 402,
+        "changes": 402,
+        "deletions": 0
+      },
+      "frontend/src/Pages/VerifyUsers.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/Verify_Email.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/VideoCard.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/Pages/logout_pop.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/UserAuth.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/Start Project Parallax Scrolling Website/index.html": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/Start Project Parallax Scrolling Website/script.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/Start Project Parallax Scrolling Website/style.css": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/Animation.gif": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/Animation2.gif": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/Campbg.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/Quiz_logo.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/Store_logo.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/about.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/arrow.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/authBg.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/bag.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/banner.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/banner1.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/banner1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/bannerorg.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/beach_cleaning.avif": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/beach_cleaning.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/beach_cleaning_edited.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/book.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/campaign.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/campaignbanner.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/cap (2).png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/chat_logo.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/cleaning.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/construction.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/darkgreen.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/defaultOrgBanner.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/delete.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/emilychen.jpeg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/face.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/forget_password.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hero1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hero2.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hero3.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hero4.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hill1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hill2.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hill3.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hill4.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hill5.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/hoodie.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/james.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/joinUs.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/keychain (2).png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/leaf.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/leftArrow.svg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/login.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/logo.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/logo3.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/logo_commu.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/logo_new.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/logout_image.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/map.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/maria.jpeg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/member.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/message.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/moye_moye.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/org_logo.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p2.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p3.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p4.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p5.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/p6.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/pdf.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/person.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/plant.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/profile_bg.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/question.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/quiz_bg.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/raj.jpeg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/shirt.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/sky.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/tick.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/tree.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/underground.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/unknown.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/water-flowing-2.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/assets/images/water-flowing.jpg": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/firebase.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/index.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "frontend/src/output.css": {
+        "additions": 5,
+        "changes": 79,
+        "deletions": 74
+      },
+      "frontend/tailwind.config.js": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "functions/Dockerfile": {
+        "additions": 31,
+        "changes": 31,
+        "deletions": 0
+      },
+      "functions/controllers/orgAuth.controllers.js": {
+        "additions": 209,
+        "changes": 218,
+        "deletions": 9
+      },
+      "functions/controllers/userAuth.controllers.js": {
+        "additions": 59,
+        "changes": 117,
+        "deletions": 58
+      },
+      "functions/index.js": {
+        "additions": 4,
+        "changes": 4,
+        "deletions": 0
+      },
+      "functions/models/organization.model.js": {
+        "additions": 9,
+        "changes": 14,
+        "deletions": 5
+      },
+      "functions/package.json": {
+        "additions": 1,
+        "changes": 2,
+        "deletions": 1
+      },
+      "src/App.js": {
+        "additions": 1,
+        "changes": 2,
+        "deletions": 1
+      },
+      "src/Components/Carousel.js": {
+        "additions": 9,
+        "changes": 169,
+        "deletions": 160
+      },
+      "src/Components/ChatBubbleArrival.js": {
+        "additions": 2,
+        "changes": 2,
+        "deletions": 0
+      },
+      "src/Components/ChatBubbleDept.js": {
+        "additions": 4,
+        "changes": 4,
+        "deletions": 0
+      },
+      "src/Components/ChatContextProvider.js": {
+        "additions": 4,
+        "changes": 5,
+        "deletions": 1
+      },
+      "src/Components/ChatLeftBar.js": {
+        "additions": 6,
+        "changes": 12,
+        "deletions": 6
+      },
+      "src/Components/ChatRightBar.js": {
+        "additions": 8,
+        "changes": 16,
+        "deletions": 8
+      },
+      "src/Components/Chatbar.js": {
+        "additions": 3,
+        "changes": 4,
+        "deletions": 1
+      },
+      "src/Components/CreateCampaigns.js": {
+        "additions": 75,
+        "changes": 144,
+        "deletions": 69
+      },
+      "src/Components/JoinUs.js": {
+        "additions": 53,
+        "changes": 103,
+        "deletions": 50
+      },
+      "src/Components/Maps_Campaign.js": {
+        "additions": 1,
+        "changes": 2,
+        "deletions": 1
+      },
+      "src/Components/Maps_Dashboard.js": {
+        "additions": 3,
+        "changes": 6,
+        "deletions": 3
+      },
+      "src/Components/New_User_Dashboard.js": {
+        "additions": 2206,
+        "changes": 3910,
+        "deletions": 1704
+      },
+      "src/Components/Parallax.js": {
+        "additions": 6,
+        "changes": 12,
+        "deletions": 6
+      },
+      "src/Components/User_dash3.js": {
+        "additions": 8,
+        "changes": 8,
+        "deletions": 0
+      },
+      "src/Components/Video.js": {
+        "additions": 3,
+        "changes": 3,
+        "deletions": 0
+      },
+      "src/Pages/Activity_log.js": {
+        "additions": 5,
+        "changes": 7,
+        "deletions": 2
+      },
+      "src/Pages/AddDesc.js": {
+        "additions": 154,
+        "changes": 160,
+        "deletions": 6
+      },
+      "src/Pages/Admin.js": {
+        "additions": 41,
+        "changes": 57,
+        "deletions": 16
+      },
+      "src/Pages/All_User_Communities.js": {
+        "additions": 397,
+        "changes": 573,
+        "deletions": 176
+      },
+      "src/Pages/Badha_Campaigns.js": {
+        "additions": 3,
+        "changes": 3,
+        "deletions": 0
+      },
+      "src/Pages/BasicDetails.js": {
+        "additions": 418,
+        "changes": 1078,
+        "deletions": 660
+      },
+      "src/Pages/CampaignProfile.js": {
+        "additions": 606,
+        "changes": 1611,
+        "deletions": 1005
+      },
+      "src/Pages/Change_banner.js": {
+        "additions": 49,
+        "changes": 102,
+        "deletions": 53
+      },
+      "src/Pages/Change_profile.js": {
+        "additions": 49,
+        "changes": 102,
+        "deletions": 53
+      },
+      "src/Pages/Change_profile_org.js": {
+        "additions": 49,
+        "changes": 102,
+        "deletions": 53
+      },
+      "src/Pages/Communities.js": {
+        "additions": 3,
+        "changes": 3,
+        "deletions": 0
+      },
+      "src/Pages/CommunityChat.js": {
+        "additions": 1,
+        "changes": 1,
+        "deletions": 0
+      },
+      "src/Pages/Community_Joined_Card.js": {
+        "additions": 33,
+        "changes": 66,
+        "deletions": 33
+      },
+      "src/Pages/CreateCampaign.js": {
+        "additions": 163,
+        "changes": 303,
+        "deletions": 140
+      },
+      "src/Pages/Create_Account_Card.js": {
+        "additions": 3,
+        "changes": 6,
+        "deletions": 3
+      },
+      "src/Pages/Create_Campaign_Card.js": {
+        "additions": 22,
+        "changes": 44,
+        "deletions": 22
+      },
+      "src/Pages/EditPassword.js": {
+        "additions": 71,
+        "changes": 295,
+        "deletions": 224
+      },
+      "src/Pages/EditPasswordOrg.js": {
+        "additions": 71,
+        "changes": 295,
+        "deletions": 224
+      },
+      "src/Pages/Edit_Profile_Org.js": {
+        "additions": 3,
+        "changes": 3,
+        "deletions": 0
+      },
+      "src/Pages/FreshOrgSignUp.js": {
+        "additions": 245,
+        "changes": 299,
+        "deletions": 54
+      },
+      "src/Pages/FreshUserSignUp.js": {
+        "additions": 429,
+        "changes": 833,
+        "deletions": 404
+      },
+      "src/Pages/Home.js": {
+        "additions": 510,
+        "changes": 966,
+        "deletions": 456
+      },
+      "src/Pages/HomePage.js": {
+        "additions": 1,
+        "changes": 2,
+        "deletions": 1
+      },
+      "src/Pages/LeaveCommCard.js": {
+        "additions": 29,
+        "changes": 58,
+        "deletions": 29
+      },
+      "src/Pages/Login.js": {
+        "additions": 1232,
+        "changes": 2434,
+        "deletions": 1202
+      },
+      "src/Pages/Map_Card.js": {
+        "additions": 32,
+        "changes": 64,
+        "deletions": 32
+      },
+      "src/Pages/MultiStep.css": {
+        "additions": 107,
+        "changes": 217,
+        "deletions": 110
+      },
+      "src/Pages/MultiStep.js": {
+        "additions": 5,
+        "changes": 21,
+        "deletions": 16
+      },
+      "src/Pages/New_User_Dashboard.js": {
+        "additions": 0,
+        "changes": 50,
+        "deletions": 50
+      },
+      "src/Pages/OrgBasicDetails.js": {
+        "additions": 536,
+        "changes": 734,
+        "deletions": 198
+      },
+      "src/Pages/OrgCampaignProfile.js": {
+        "additions": 40,
+        "changes": 67,
+        "deletions": 27
+      },
+      "src/Pages/Orgdashboard.js": {
+        "additions": 1487,
+        "changes": 2844,
+        "deletions": 1357
+      },
+      "src/Pages/Orgprofile.js": {
+        "additions": 12,
+        "changes": 20,
+        "deletions": 8
+      },
+      "src/Pages/Quiz.js": {
+        "additions": 6,
+        "changes": 6,
+        "deletions": 0
+      },
+      "src/Pages/SignupInitial.js": {
+        "additions": 29,
+        "changes": 45,
+        "deletions": 16
+      },
+      "src/Pages/Store.js": {
+        "additions": 4,
+        "changes": 5,
+        "deletions": 1
+      },
+      "src/Pages/Store_Error.js": {
+        "additions": 30,
+        "changes": 62,
+        "deletions": 32
+      },
+      "src/Pages/Terms_Conditions.js": {
+        "additions": 344,
+        "changes": 479,
+        "deletions": 135
+      },
+      "src/Pages/Update_Contact_Number.js": {
+        "additions": 70,
+        "changes": 277,
+        "deletions": 207
+      },
+      "src/Pages/UploadDocs.js": {
+        "additions": 221,
+        "changes": 237,
+        "deletions": 16
+      },
+      "src/Pages/UploadPhoto.js": {
+        "additions": 122,
+        "changes": 224,
+        "deletions": 102
+      },
+      "src/Pages/UserDashboard.js": {
+        "additions": 3,
+        "changes": 5,
+        "deletions": 2
+      },
+      "src/Pages/UserProfile.js": {
+        "additions": 3,
+        "changes": 3,
+        "deletions": 0
+      },
+      "src/Pages/Verfication.js": {
+        "additions": 33,
+        "changes": 66,
+        "deletions": 33
+      },
+      "src/Pages/VerifyDummy.js": {
+        "additions": 228,
+        "changes": 860,
+        "deletions": 632
+      },
+      "src/Pages/VerifyUsers.js": {
+        "additions": 3,
+        "changes": 18,
+        "deletions": 15
+      },
+      "src/Pages/Verify_Email.js": {
+        "additions": 35,
+        "changes": 70,
+        "deletions": 35
+      },
+      "src/Pages/VideoCard.js": {
+        "additions": 14,
+        "changes": 28,
+        "deletions": 14
+      },
+      "src/Pages/logout_pop.js": {
+        "additions": 35,
+        "changes": 70,
+        "deletions": 35
+      },
+      "src/assets/images/Animation2.gif": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/Campbg.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/bannerorg.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/campaignbanner.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/hill5.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/leftArrow.svg": {
+        "additions": 7,
+        "changes": 7,
+        "deletions": 0
+      },
+      "src/assets/images/map_img.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/member.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p2.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p3.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p4.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p5.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/p6.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/question.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/roots.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/rootz.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/rootz1.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/assets/images/rrootz.png": {
+        "additions": 0,
+        "changes": 0,
+        "deletions": 0
+      },
+      "src/output.css": {
+        "additions": 7134,
+        "changes": 14091,
+        "deletions": 6957
+      }
+    }
+  },
+  "commits": [
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-11-15T12:10:01+00:00",
+      "message": "Progress check",
+      "sha": "fdcb83a1d125a70384b8b273d8a5248e02886307",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/fdcb83a1d125a70384b8b273d8a5248e02886307"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:38:05+00:00",
+      "message": "update",
+      "sha": "b8159caf972b339c3bdc37c52599eab2826abad4",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/b8159caf972b339c3bdc37c52599eab2826abad4"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:19:46+00:00",
+      "message": "Update firebase-hosting-merge.yml",
+      "sha": "b768ba5c16da4eec43d34ff0f3dd22c063df816f",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/b768ba5c16da4eec43d34ff0f3dd22c063df816f"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:15:16+00:00",
+      "message": "Update firebase-hosting-merge.yml",
+      "sha": "2db5353d6d9f796fd27d933bfa09f1d19bd31d06",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/2db5353d6d9f796fd27d933bfa09f1d19bd31d06"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:14:26+00:00",
+      "message": "Update firebase-hosting-merge.yml",
+      "sha": "0669d72e2a578f75424562832a3ac02738381323",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0669d72e2a578f75424562832a3ac02738381323"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:12:20+00:00",
+      "message": "Update firebase-hosting-merge.yml",
+      "sha": "3dfeb9139cb188f20543dc997220817e731d7779",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/3dfeb9139cb188f20543dc997220817e731d7779"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-09-07T04:09:04+00:00",
+      "message": "docker, file changes",
+      "sha": "5f4ce5f7acace911e9c239fdb9cd1ce64ea1c556",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/5f4ce5f7acace911e9c239fdb9cd1ce64ea1c556"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-27T18:56:06+00:00",
+      "message": "Update README.md",
+      "sha": "5017657ef92d8026f42be9c15b739d4a9c2255fd",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/5017657ef92d8026f42be9c15b739d4a9c2255fd"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-24T09:02:46+00:00",
+      "message": "--working--",
+      "sha": "332aa337c0160991af6021e3f109576e18584fd8",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/332aa337c0160991af6021e3f109576e18584fd8"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-05T17:42:00+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "0862b52554394c3dad338f7bd887126586e543f6",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0862b52554394c3dad338f7bd887126586e543f6"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-05T17:40:48+00:00",
+      "message": "fix",
+      "sha": "aa5ab337d384728f57c14c113db8f0e830ed70f0",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/aa5ab337d384728f57c14c113db8f0e830ed70f0"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T17:01:33+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "a812a465b5b0441a5ba63aa4cd7f9f89836235c8",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/a812a465b5b0441a5ba63aa4cd7f9f89836235c8"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T17:01:15+00:00",
+      "message": "fixes in org dashboard",
+      "sha": "bec50ef65100275fa77dd8b1376f541d786fd4d6",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/bec50ef65100275fa77dd8b1376f541d786fd4d6"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-05T12:05:59+00:00",
+      "message": "Test. fixed",
+      "sha": "b28da5631602887c986a6800a0176efedc512de7",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/b28da5631602887c986a6800a0176efedc512de7"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T11:52:06+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "3dbca91fc4c4fe51f5f34293287dfa0954d75257",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/3dbca91fc4c4fe51f5f34293287dfa0954d75257"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T11:52:02+00:00",
+      "message": "campaign profile fixed",
+      "sha": "a57087eaf30c1390a260b2b162122c0631965612",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/a57087eaf30c1390a260b2b162122c0631965612"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T11:38:33+00:00",
+      "message": "WORKING!",
+      "sha": "0d775b6db46cd121d8648ad47f2cd7620497bd34",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0d775b6db46cd121d8648ad47f2cd7620497bd34"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T11:38:18+00:00",
+      "message": "fix logo and banner uploads, and name beside profile",
+      "sha": "4e05a4b3edd4c5ba337ad82847f9c9ffb46c5d09",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/4e05a4b3edd4c5ba337ad82847f9c9ffb46c5d09"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T10:57:46+00:00",
+      "message": "admin page fixed",
+      "sha": "8f3129f6c3c87e7d9f8ea56f9864e9b7d7b230b6",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/8f3129f6c3c87e7d9f8ea56f9864e9b7d7b230b6"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T10:57:04+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "0a36789ded6d08e57162aa8dce811819f6705d4d",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0a36789ded6d08e57162aa8dce811819f6705d4d"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T10:39:44+00:00",
+      "message": "WORKING AFTER MAJOR CHANGES",
+      "sha": "17d9e660ce3c995608cd9ac0ae028a72d9b58e4e",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/17d9e660ce3c995608cd9ac0ae028a72d9b58e4e"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T10:35:10+00:00",
+      "message": "chat frontend changed",
+      "sha": "22bdffc185421d4d0af774294c2c6a00f58444b0",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/22bdffc185421d4d0af774294c2c6a00f58444b0"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T10:20:30+00:00",
+      "message": "sign up pages fixed",
+      "sha": "eed7a0085fcf6ad077ae74d9f182c9d26af6e8a1",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/eed7a0085fcf6ad077ae74d9f182c9d26af6e8a1"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-05T10:17:36+00:00",
+      "message": "All cards modified",
+      "sha": "b68af41cf24bb3674cc3ce3cfcdd02f60d4b3717",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/b68af41cf24bb3674cc3ce3cfcdd02f60d4b3717"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T09:42:03+00:00",
+      "message": "changes",
+      "sha": "80a1d6dfcd1dc2721a541dd2c2f4a4706ecc3976",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/80a1d6dfcd1dc2721a541dd2c2f4a4706ecc3976"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T09:17:16+00:00",
+      "message": "signup pages completed",
+      "sha": "3580300ba2e951dae3f03ad13adf57ef8115e865",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/3580300ba2e951dae3f03ad13adf57ef8115e865"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T09:25:48+00:00",
+      "message": "chat name not displaying fix",
+      "sha": "2d02a36ae815bb6f5e3a32126f227c04821a9f58",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/2d02a36ae815bb6f5e3a32126f227c04821a9f58"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T09:17:16+00:00",
+      "message": "signup pages completed",
+      "sha": "0fa8a494a88cb10ad86a03be77bf9157aa79d44c",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0fa8a494a88cb10ad86a03be77bf9157aa79d44c"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-05T09:13:48+00:00",
+      "message": "minor changes",
+      "sha": "89c9d3fbb926473e114596c468618d7b47ed22af",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/89c9d3fbb926473e114596c468618d7b47ed22af"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T08:04:46+00:00",
+      "message": "minor fixes",
+      "sha": "193064c48a43b339143fd28903ceb2222ad9a55f",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/193064c48a43b339143fd28903ceb2222ad9a55f"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T08:02:51+00:00",
+      "message": "minor fixes",
+      "sha": "2f39da1b6934b12dad0110994459f9838c859ea8",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/2f39da1b6934b12dad0110994459f9838c859ea8"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T08:02:24+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "5b514110a7c153aa5a7b16c2d2cdaccfcc6f75bb",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/5b514110a7c153aa5a7b16c2d2cdaccfcc6f75bb"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T08:00:17+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "fb8f05fe8eb887fabcea3cae2b8450ccf0b374e1",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/fb8f05fe8eb887fabcea3cae2b8450ccf0b374e1"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T08:00:03+00:00",
+      "message": "user signup page done and duplicates folder created",
+      "sha": "8b315cea2208ef5683b524f2eae7f0f4b0a80aa5",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/8b315cea2208ef5683b524f2eae7f0f4b0a80aa5"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T08:00:03+00:00",
+      "message": "fixes in user dashboard, create campaign (map button), org campaign profile (impressions)",
+      "sha": "f0493dd6e5d0fcf490e4693adfa5c47a766410ae",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/f0493dd6e5d0fcf490e4693adfa5c47a766410ae"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-05T07:58:44+00:00",
+      "message": "minor fixes",
+      "sha": "ba5a8e074032a82e177d6ac6ede3fc4335f635d6",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/ba5a8e074032a82e177d6ac6ede3fc4335f635d6"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T07:38:52+00:00",
+      "message": "revert user dashboard",
+      "sha": "5da5314069ff992953c284af403d53c43ee2730f",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/5da5314069ff992953c284af403d53c43ee2730f"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T07:32:18+00:00",
+      "message": "fixes",
+      "sha": "4b16a1768e618323d66fa736f792f47c770d6cee",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/4b16a1768e618323d66fa736f792f47c770d6cee"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T07:12:42+00:00",
+      "message": "changes",
+      "sha": "db633d9718a681080480e53f55945ccffba51468",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/db633d9718a681080480e53f55945ccffba51468"
+    },
+    {
+      "author": "Rishi Upadhyay",
+      "date": "2024-05-05T07:02:43+00:00",
+      "message": "login page updated and fixed",
+      "sha": "2deb048e466455aa4a74fe4186aef873c093cbf2",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/2deb048e466455aa4a74fe4186aef873c093cbf2"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T06:54:23+00:00",
+      "message": "default banner logo urls, user dashboard",
+      "sha": "a7e305add56f4985750a2d50e28c7e05774e7ba8",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/a7e305add56f4985750a2d50e28c7e05774e7ba8"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T06:35:43+00:00",
+      "message": "fix campaign profile pages",
+      "sha": "ed1501613385b652a5e1e3e676794427bef5aec2",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/ed1501613385b652a5e1e3e676794427bef5aec2"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T06:29:45+00:00",
+      "message": "add map to user dashboard",
+      "sha": "0350c13fe5e75131425edf16487c7889558d01dd",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/0350c13fe5e75131425edf16487c7889558d01dd"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T06:15:39+00:00",
+      "message": "desc and photo and docs optional in auth",
+      "sha": "24f22deae200865b7c440c70ca8ce96e73c82c7c",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/24f22deae200865b7c440c70ca8ce96e73c82c7c"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T05:57:22+00:00",
+      "message": "fixes",
+      "sha": "2cda73227b41ad1dd8df100d94dea6b0897110fb",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/2cda73227b41ad1dd8df100d94dea6b0897110fb"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2024-05-05T05:31:06+00:00",
+      "message": "ORG AUTH DONE.",
+      "sha": "feca1f624ec251bd0b22fb720c3b6387ef014892",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/feca1f624ec251bd0b22fb720c3b6387ef014892"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-04T22:16:10+00:00",
+      "message": "ALL user communities page created, integrated and routed",
+      "sha": "d16944490d7d25c6696e5c61540dab738aa889e9",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/d16944490d7d25c6696e5c61540dab738aa889e9"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-04T22:15:24+00:00",
+      "message": "ALL user communities page created, integrated and routed",
+      "sha": "e3261b4d0d3cff0df8cef1252c2fa6759b28cb6f",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/e3261b4d0d3cff0df8cef1252c2fa6759b28cb6f"
+    },
+    {
+      "author": "nijval21",
+      "date": "2024-05-04T21:25:36+00:00",
+      "message": "New_dashboard Integrated and Routed",
+      "sha": "b553e7a95a8092cc8a23a38e7a98e440b22ccd53",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/b553e7a95a8092cc8a23a38e7a98e440b22ccd53"
+    },
+    {
+      "author": "rishika-g31",
+      "date": "2024-05-04T20:44:20+00:00",
+      "message": "Merge branch 'main' of https://github.com/VatsalBhuva11/EcoBloom",
+      "sha": "e9f33d51752c030493a54d6d95bfab9b78df9964",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/commit/e9f33d51752c030493a54d6d95bfab9b78df9964"
+    }
+  ],
+  "contributors": [
+    {
+      "contributions": 231,
+      "login": "VatsalBhuva11",
+      "url": "https://github.com/VatsalBhuva11"
+    },
+    {
+      "contributions": 70,
+      "login": "Rishi2674",
+      "url": "https://github.com/Rishi2674"
+    },
+    {
+      "contributions": 67,
+      "login": "nijval21",
+      "url": "https://github.com/nijval21"
+    },
+    {
+      "contributions": 56,
+      "login": "rishika-g31",
+      "url": "https://github.com/rishika-g31"
+    },
+    {
+      "contributions": 1,
+      "login": "dependabot[bot]",
+      "url": "https://github.com/apps/dependabot"
+    }
+  ],
+  "created_at": "2023-12-27T18:02:22+00:00",
+  "default_branch": "main",
+  "dependencies": [],
+  "description": "organise/join cleaning campaigns around the world! [Global Top 100 in Google Solution Challenge 2024] ",
+  "extraction_provenance": {
+    "extracted_at": "2025-09-11T14:19:03.138514+00:00",
+    "extracted_by": "github-metadata-extractor",
+    "extraction_id": "eb09605424a7",
+    "schema_version": "1",
+    "source": "github",
+    "saved_at": "2025-09-11T14:20:02.713383+00:00",
+    "file_path": "extracted_metadata/VatsalBhuva11_EcoBloom_schema1_eb09605424a7_20250911T142002Z.json"
+  },
+  "forks": 4,
+  "html_url": "https://github.com/VatsalBhuva11/EcoBloom",
+  "is_fork": false,
+  "issues": [
+    {
+      "author": "VatsalBhuva11",
+      "closed_at": "2024-12-11T10:05:54+00:00",
+      "created_at": "2024-12-11T09:47:00+00:00",
+      "labels": [],
+      "number": 3,
+      "state": "closed",
+      "title": "test",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/issues/3"
+    },
+    {
+      "author": "dependabot[bot]",
+      "closed_at": "2024-05-04T08:04:29+00:00",
+      "created_at": "2024-03-26T21:36:21+00:00",
+      "labels": [
+        "dependencies"
+      ],
+      "number": 2,
+      "state": "closed",
+      "title": "Bump webpack-dev-middleware from 5.3.3 to 5.3.4",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/pull/2"
+    },
+    {
+      "author": "VatsalBhuva11",
+      "closed_at": "2024-01-20T07:31:22+00:00",
+      "created_at": "2024-01-20T07:31:07+00:00",
+      "labels": [],
+      "number": 1,
+      "state": "closed",
+      "title": "New home",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/pull/1"
+    }
+  ],
+  "languages": {
+    "CSS": 79777,
+    "Dockerfile": 1429,
+    "HTML": 4149,
+    "JavaScript": 807507
+  },
+  "last_updated": "2025-09-07T06:06:48+00:00",
+  "license": "MIT",
+  "open_issues": 0,
+  "primary_language": "JavaScript",
+  "pull_requests": [
+    {
+      "author": "dependabot[bot]",
+      "closed_at": "2024-05-04T08:04:29+00:00",
+      "created_at": "2024-03-26T21:36:21+00:00",
+      "merged": true,
+      "merged_at": "2024-05-04T08:04:29+00:00",
+      "number": 2,
+      "state": "closed",
+      "title": "Bump webpack-dev-middleware from 5.3.3 to 5.3.4",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/pull/2"
+    },
+    {
+      "author": "VatsalBhuva11",
+      "closed_at": "2024-01-20T07:31:22+00:00",
+      "created_at": "2024-01-20T07:31:07+00:00",
+      "merged": true,
+      "merged_at": "2024-01-20T07:31:22+00:00",
+      "number": 1,
+      "state": "closed",
+      "title": "New home",
+      "url": "https://github.com/VatsalBhuva11/EcoBloom/pull/1"
+    }
+  ],
+  "repository": "VatsalBhuva11/EcoBloom",
+  "stars": 63,
+  "url": "https://github.com/VatsalBhuva11/EcoBloom"
+}

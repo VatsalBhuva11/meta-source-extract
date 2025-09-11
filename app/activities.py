@@ -4,6 +4,7 @@ import re
 import asyncio
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
+from collections import defaultdict
 
 import aiofiles
 from application_sdk.activities import ActivitiesInterface
@@ -483,4 +484,115 @@ class GitHubMetadataActivities(ActivitiesInterface):
             return filepath
         except Exception as e:
             logger.error("Error saving metadata to file", exc_info=e, extra={"repo_url": repo_url})
+            raise
+
+    @activity.defn
+    @auto_heartbeater
+    async def calculate_code_lineage(self, args: List[Any]) -> str:
+        """
+        Calculate code lineage based on commit history and present it in a readable format.
+        args: [repo_url, commits, extraction_id]
+        """
+        repo_url, commits, extraction_id = args
+        logger.info("Calculating code lineage", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+
+        if not commits:
+            return "No commit history available to generate lineage."
+
+        try:
+            owner, repo_name = self._extract_repo_info_from_url(repo_url)
+            repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
+
+            file_lineage = defaultdict(list)
+            for c in commits:
+                commit_sha = c.get("sha")
+                if not commit_sha:
+                    continue
+
+                commit = await asyncio.to_thread(repo.get_commit, commit_sha)
+                if commit and commit.files:
+                    for file in commit.files:
+                        file_lineage[file.filename].append({
+                            "sha": commit.sha,
+                            "author": c.get("author"),
+                            "date": c.get("date"),
+                            "additions": file.additions,
+                            "deletions": file.deletions,
+                            "message": commit.commit.message.split('\n')[0] # First line of commit message
+                        })
+
+            # Format the output
+            lineage_str = ""
+            for filename, history in file_lineage.items():
+                lineage_str += f"--- File: {filename} ---\n"
+                sorted_history = sorted(history, key=lambda x: x['date'], reverse=True)
+                for entry in sorted_history:
+                    date_str = entry['date']
+                    if date_str:
+                        try:
+                            date = datetime.fromisoformat(date_str).strftime('%Y-%m-%d %H:%M:%S')
+                        except (ValueError, TypeError):
+                            date = date_str # Keep original if parsing fails
+                    else:
+                        date = "Unknown date"
+
+                    lineage_str += (
+                        f"  - Commit: {entry['sha'][:7]} by {entry['author']} on {date}\n"
+                        f"    Message: {entry['message']}\n"
+                        f"    Changes: +{entry['additions']} / -{entry['deletions']}\n"
+                    )
+                lineage_str += "\n"
+
+            return lineage_str if lineage_str else "Could not generate lineage information."
+        except Exception as e:
+            logger.error("Error calculating code lineage", exc_info=e, extra={"repo_url": repo_url})
+            raise
+        
+    @activity.defn
+    @auto_heartbeater
+    async def calculate_code_quality_metrics(self, args: List[Any]) -> Dict[str, Any]:
+        """
+        Calculate code quality metrics.
+        args: [repo_url, commits, issues, extraction_id]
+        """
+        repo_url, commits, issues, extraction_id = args
+        logger.info("Calculating code quality metrics", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+
+        if not commits:
+            return {}
+
+        try:
+            owner, repo_name = self._extract_repo_info_from_url(repo_url)
+            repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
+
+            # 1. Code Churn
+            file_churn = defaultdict(lambda: {"additions": 0, "deletions": 0, "changes": 0})
+            for c in commits:
+                commit_sha = c.get("sha")
+                if not commit_sha:
+                    continue
+                
+                commit = await asyncio.to_thread(repo.get_commit, commit_sha)
+                if commit and commit.files:
+                    for file in commit.files:
+                        file_churn[file.filename]["additions"] += file.additions
+                        file_churn[file.filename]["deletions"] += file.deletions
+                        file_churn[file.filename]["changes"] += file.changes
+            
+            # 2. Bug Proneness (simple heuristic)
+            bug_labels = {"bug", "fix", "error"}
+            buggy_commits = set()
+            if issues:
+                for issue in issues:
+                    if any(label in bug_labels for label in issue.get("labels", [])):
+                        # This is a simplification. In a real-world scenario, you'd need to
+                        # link issues to commits more reliably, e.g., via closing events.
+                        pass
+            
+            metrics = {
+                "file_churn": dict(file_churn),
+            }
+            return metrics
+        except Exception as e:
+            logger.error("Error calculating code quality metrics", exc_info=e, extra={"repo_url": repo_url})
             raise

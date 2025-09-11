@@ -117,6 +117,27 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         contributors = _unwrap(contributors, "contributors")
         dependencies = _unwrap(dependencies, "dependencies")
 
+        # Now, run the new activities with the results from the previous ones
+        if commits:
+            lineage_and_quality_activities = [
+                workflow.execute_activity_method(
+                    activities_instance.calculate_code_lineage,
+                    [repo_url, commits, extraction_id],
+                    start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+                ),
+                workflow.execute_activity_method(
+                    activities_instance.calculate_code_quality_metrics,
+                    [repo_url, commits, issues, extraction_id],
+                    start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+                ),
+            ]
+            lineage_and_quality_results = await asyncio.gather(*lineage_and_quality_activities, return_exceptions=True)
+            code_lineage, code_quality_metrics = lineage_and_quality_results
+            code_lineage = _unwrap(code_lineage, "code_lineage")
+            code_quality_metrics = _unwrap(code_quality_metrics, "code_quality_metrics")
+        else:
+            code_lineage, code_quality_metrics = None, None
+
         combined_metadata = {
             **repo_metadata,
             "commits": commits or [],
@@ -124,6 +145,8 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             "pull_requests": pull_requests or [],
             "contributors": contributors or [],
             "dependencies": dependencies or [],
+            "code_lineage": code_lineage or {},
+            "code_quality_metrics": code_quality_metrics or {},
         }
 
         try:
@@ -164,4 +187,6 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             activities.extract_dependencies_from_repo,
             activities.save_metadata_to_file,
             activities.get_extraction_summary,
+            activities.calculate_code_lineage,
+            activities.calculate_code_quality_metrics,
         ]
