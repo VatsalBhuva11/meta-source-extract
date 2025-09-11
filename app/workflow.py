@@ -42,7 +42,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
 
         activities_instance = GitHubMetadataActivities()
 
-        # Get the workflow configuration from the state store
+        # get the workflow configuration from the state store
         workflow_args: Dict[str, Any] = await workflow.execute_activity_method(
             activities_instance.get_workflow_args,
             workflow_config,
@@ -51,14 +51,50 @@ class GitHubMetadataWorkflow(WorkflowInterface):
 
         logger.info(f"Workflow args from activity: {workflow_args}", extra={"extraction_id": extraction_id})
 
+        # extract and validate parameters
+        repo_url, commit_limit, issues_limit, pr_limit, normalized_selections = self._extract_parameters(workflow_args, workflow_config)
+
+        logger.info(f"Extracted parameters - repo_url: {repo_url}, commit_limit: {commit_limit}, issues_limit: {issues_limit}, pr_limit: {pr_limit}", extra={"extraction_id": extraction_id})
+        logger.info(f"Selections: {normalized_selections}", extra={"extraction_id": extraction_id})
+
+        # validate inputs
+        self._validate_inputs(repo_url, normalized_selections, extraction_id)
+
+        logger.info(f"Starting GitHub metadata extraction workflow for: {repo_url}", extra={"extraction_id": extraction_id})
+
+        # extract repository metadata if selected
+        repo_metadata = await self._extract_repository_metadata(activities_instance, repo_url, normalized_selections, extraction_id)
+
+        # phase 1: Core data activities
+        commits, issues, pull_requests, contributors, dependencies = await self._execute_core_activities(
+            activities_instance, repo_url, commit_limit, issues_limit, pr_limit, normalized_selections, extraction_id
+        )
+
+        # phase 2: Derived metrics
+        fork_lineage, commit_lineage, bus_factor, pr_metrics, issue_metrics, commit_activity, release_cadence = await self._execute_derived_activities(
+            activities_instance, repo_url, commits, issues, pull_requests, normalized_selections, extraction_id
+        )
+
+        # build and save combined metadata
+        combined_metadata = self._build_combined_metadata(
+            repo_metadata, commits, issues, pull_requests, contributors, dependencies,
+            fork_lineage, commit_lineage, bus_factor, pr_metrics, issue_metrics, 
+            commit_activity, release_cadence, normalized_selections
+        )
+
+        await self._save_and_summarize(activities_instance, combined_metadata, repo_url, extraction_id)
+
+        logger.info(f"GitHub metadata extraction workflow completed for: {repo_url}", extra={"extraction_id": extraction_id})
+
+    def _extract_parameters(self, workflow_args: Dict[str, Any], workflow_config: Dict[str, Any]) -> tuple:
+        """Extract and normalize workflow parameters."""
         repo_url: str = workflow_args.get("repo_url", workflow_config.get("repo_url", "https://github.com/VatsalBhuva11/EcoBloom"))
         commit_limit: int = workflow_args.get("commit_limit", workflow_config.get("commit_limit", WORKFLOW_DEFAULT_COMMIT_LIMIT))
         issues_limit: int = workflow_args.get("issues_limit", workflow_config.get("issues_limit", WORKFLOW_DEFAULT_ISSUES_LIMIT))
         pr_limit: int = workflow_args.get("pr_limit", workflow_config.get("pr_limit", WORKFLOW_DEFAULT_PR_LIMIT))
         selections: Dict[str, bool] = workflow_args.get("selections", {})
 
-        # Use the actual selections from frontend, don't override with defaults
-        # This ensures only selected items are processed
+        # Normalize selections with defaults
         normalized_selections = {
             "repository": selections.get("repository", False),
             "commits": selections.get("commits", False),
@@ -75,35 +111,41 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             "release_cadence": selections.get("release_cadence", False),
         }
 
-        logger.info(f"Extracted parameters - repo_url: {repo_url}, commit_limit: {commit_limit}, issues_limit: {issues_limit}, pr_limit: {pr_limit}", extra={"extraction_id": extraction_id})
-        logger.info(f"Selections: {normalized_selections}", extra={"extraction_id": extraction_id})
+        return repo_url, commit_limit, issues_limit, pr_limit, normalized_selections
 
+    def _validate_inputs(self, repo_url: str, normalized_selections: Dict[str, bool], extraction_id: str) -> None:
+        """Validate workflow inputs."""
         if not repo_url:
-            logger.error("No repo_url found in workflow_args", extra={"workflow_args": workflow_args})
+            logger.error("No repo_url found in workflow_args", extra={"extraction_id": extraction_id})
             raise ValueError("Repository URL is required")
 
-        # Check if at least one selection is made
         if not any(normalized_selections.values()):
             logger.error("No metadata types selected for extraction", extra={"extraction_id": extraction_id})
             raise ValueError("At least one metadata type must be selected")
 
-        logger.info(f"Starting GitHub metadata extraction workflow for: {repo_url}", extra={"extraction_id": extraction_id})
+    async def _extract_repository_metadata(self, activities_instance: GitHubMetadataActivities, repo_url: str, 
+                                         normalized_selections: Dict[str, bool], extraction_id: str) -> Dict[str, Any]:
+        """Extract repository metadata if selected."""
+        if not normalized_selections.get("repository", False):
+            return None
 
-        # Extract repository metadata if selected
-        repo_metadata = None
-        if normalized_selections.get("repository", False):
-            try:
-                repo_metadata = await workflow.execute_activity_method(
-                    activities_instance.extract_repository_metadata,
-                    [repo_url, extraction_id],
-                    start_to_close_timeout=timedelta(seconds=120),
-                )
-            except Exception as e:
-                logger.error("Failed to extract repository metadata", exc_info=e, extra={"extraction_id": extraction_id})
-                raise
+        try:
+            return await workflow.execute_activity_method(
+                activities_instance.extract_repository_metadata,
+                [repo_url, extraction_id],
+                start_to_close_timeout=timedelta(seconds=120),
+            )
+        except Exception as e:
+            logger.error("Failed to extract repository metadata", exc_info=e, extra={"extraction_id": extraction_id})
+            raise
 
-        # Phase 1: Core data activities
+    async def _execute_core_activities(self, activities_instance: GitHubMetadataActivities, repo_url: str, 
+                                     commit_limit: int, issues_limit: int, pr_limit: int, 
+                                     normalized_selections: Dict[str, bool], extraction_id: str) -> tuple:
+        """Execute core data extraction activities."""
         activities: List[Coroutine[Any, Any, Any]] = []
+        
+        # commits
         if normalized_selections.get("commits", False):
             activities.append(
                 workflow.execute_activity_method(
@@ -115,6 +157,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             activities.append(asyncio.sleep(0, result=None))
             
+        # issues
         if normalized_selections.get("issues", False):
             activities.append(
                 workflow.execute_activity_method(
@@ -126,6 +169,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             activities.append(asyncio.sleep(0, result=None))
             
+        # pull requests
         if normalized_selections.get("pull_requests", False):
             activities.append(
                 workflow.execute_activity_method(
@@ -137,6 +181,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             activities.append(asyncio.sleep(0, result=None))
             
+        # contributors
         if normalized_selections.get("contributors", False):
             activities.append(
                 workflow.execute_activity_method(
@@ -148,6 +193,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             activities.append(asyncio.sleep(0, result=None))
             
+        # dependencies
         if normalized_selections.get("dependencies", False):
             activities.append(
                 workflow.execute_activity_method(
@@ -159,25 +205,32 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             activities.append(asyncio.sleep(0, result=None))
 
-        # Execute phase 1 activities
+        # execute all core activities
         results = await asyncio.gather(*activities, return_exceptions=True)
         commits, issues, pull_requests, contributors, dependencies = results
 
+        # unwrap results
         def _unwrap(result, name):
             if isinstance(result, Exception):
                 logger.error(f"Activity {name} failed", extra={"extraction_id": extraction_id, "error": str(result)})
                 return None
             return result
 
-        commits = _unwrap(commits, "commits") if normalized_selections.get("commits", False) else None
-        issues = _unwrap(issues, "issues") if normalized_selections.get("issues", False) else None
-        pull_requests = _unwrap(pull_requests, "pull_requests") if normalized_selections.get("pull_requests", False) else None
-        contributors = _unwrap(contributors, "contributors") if normalized_selections.get("contributors", False) else None
-        dependencies = _unwrap(dependencies, "dependencies") if normalized_selections.get("dependencies", False) else None
+        return (
+            _unwrap(commits, "commits") if normalized_selections.get("commits", False) else None,
+            _unwrap(issues, "issues") if normalized_selections.get("issues", False) else None,
+            _unwrap(pull_requests, "pull_requests") if normalized_selections.get("pull_requests", False) else None,
+            _unwrap(contributors, "contributors") if normalized_selections.get("contributors", False) else None,
+            _unwrap(dependencies, "dependencies") if normalized_selections.get("dependencies", False) else None
+        )
 
-        # Phase 2: Derived metrics (depend on phase 1 results)
+    async def _execute_derived_activities(self, activities_instance: GitHubMetadataActivities, repo_url: str,
+                                        commits: List[Dict], issues: List[Dict], pull_requests: List[Dict],
+                                        normalized_selections: Dict[str, bool], extraction_id: str) -> tuple:
+        """Execute derived metrics activities."""
         derived_activities: List[Coroutine[Any, Any, Any]] = []
         
+        # fork lineage
         if normalized_selections.get("fork_lineage", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -189,6 +242,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # commit lineage
         if normalized_selections.get("commit_lineage", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -200,6 +254,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # bus factor
         if normalized_selections.get("bus_factor", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -211,6 +266,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # PR metrics
         if normalized_selections.get("pr_metrics", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -222,6 +278,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # issue metrics
         if normalized_selections.get("issue_metrics", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -233,6 +290,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # commit activity
         if normalized_selections.get("commit_activity", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -244,6 +302,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
             
+        # release cadence
         if normalized_selections.get("release_cadence", False):
             derived_activities.append(
                 workflow.execute_activity_method(
@@ -255,23 +314,40 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         else:
             derived_activities.append(asyncio.sleep(0, result=None))
 
-        # Execute phase 2 activities
+        # execute all derived activities
         derived_results = await asyncio.gather(*derived_activities, return_exceptions=True)
         fork_lineage, commit_lineage, bus_factor, pr_metrics, issue_metrics, commit_activity, release_cadence = derived_results
 
-        fork_lineage = _unwrap(fork_lineage, "fork_lineage") if normalized_selections.get("fork_lineage", False) else None
-        commit_lineage = _unwrap(commit_lineage, "commit_lineage") if normalized_selections.get("commit_lineage", False) else None
-        bus_factor = _unwrap(bus_factor, "bus_factor") if normalized_selections.get("bus_factor", False) else None
-        pr_metrics = _unwrap(pr_metrics, "pr_metrics") if normalized_selections.get("pr_metrics", False) else None
-        issue_metrics = _unwrap(issue_metrics, "issue_metrics") if normalized_selections.get("issue_metrics", False) else None
-        commit_activity = _unwrap(commit_activity, "commit_activity") if normalized_selections.get("commit_activity", False) else None
-        release_cadence = _unwrap(release_cadence, "release_cadence") if normalized_selections.get("release_cadence", False) else None
+        # unwrap results
+        def _unwrap(result, name):
+            if isinstance(result, Exception):
+                logger.error(f"Activity {name} failed", extra={"extraction_id": extraction_id, "error": str(result)})
+                return None
+            return result
 
-        # Build combined metadata with only selected items
+        return (
+            _unwrap(fork_lineage, "fork_lineage") if normalized_selections.get("fork_lineage", False) else None,
+            _unwrap(commit_lineage, "commit_lineage") if normalized_selections.get("commit_lineage", False) else None,
+            _unwrap(bus_factor, "bus_factor") if normalized_selections.get("bus_factor", False) else None,
+            _unwrap(pr_metrics, "pr_metrics") if normalized_selections.get("pr_metrics", False) else None,
+            _unwrap(issue_metrics, "issue_metrics") if normalized_selections.get("issue_metrics", False) else None,
+            _unwrap(commit_activity, "commit_activity") if normalized_selections.get("commit_activity", False) else None,
+            _unwrap(release_cadence, "release_cadence") if normalized_selections.get("release_cadence", False) else None
+        )
+
+    def _build_combined_metadata(self, repo_metadata: Dict[str, Any], commits: List[Dict], issues: List[Dict], 
+                               pull_requests: List[Dict], contributors: List[Dict], dependencies: List[Dict],
+                               fork_lineage: Dict[str, Any], commit_lineage: Dict[str, Any], bus_factor: Dict[str, Any],
+                               pr_metrics: Dict[str, Any], issue_metrics: Dict[str, Any], commit_activity: Dict[str, Any],
+                               release_cadence: Dict[str, Any], normalized_selections: Dict[str, bool]) -> Dict[str, Any]:
+        """Build the final combined metadata dictionary with only selected items."""
         combined_metadata = {}
         
+        # add repository metadata if available
         if repo_metadata is not None:
             combined_metadata.update(repo_metadata)
+            
+        # add core data if selected
         if normalized_selections.get("commits", False):
             combined_metadata["commits"] = commits or []
         if normalized_selections.get("issues", False):
@@ -282,6 +358,8 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             combined_metadata["contributors"] = contributors or []
         if normalized_selections.get("dependencies", False):
             combined_metadata["dependencies"] = dependencies or []
+            
+        # add derived metrics if selected
         if normalized_selections.get("fork_lineage", False):
             combined_metadata["fork_lineage"] = fork_lineage or {}
         if normalized_selections.get("commit_lineage", False):
@@ -297,6 +375,12 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         if normalized_selections.get("release_cadence", False):
             combined_metadata["release_cadence"] = release_cadence or {}
 
+        return combined_metadata
+
+    async def _save_and_summarize(self, activities_instance: GitHubMetadataActivities, combined_metadata: Dict[str, Any], 
+                                repo_url: str, extraction_id: str) -> None:
+        """Save metadata to file and generate summary."""
+        # save to file
         try:
             file_path = await workflow.execute_activity_method(
                 activities_instance.save_metadata_to_file,
@@ -307,17 +391,6 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         except Exception as e:
             logger.error("Failed saving metadata to file", extra={"extraction_id": extraction_id, "error": str(e)})
 
-        try:
-            summary = await workflow.execute_activity_method(
-                activities_instance.get_extraction_summary,
-                [repo_url, combined_metadata, extraction_id],
-                start_to_close_timeout=timedelta(seconds=10),
-            )
-        except Exception as e:
-            logger.error("Failed generating extraction summary", extra={"extraction_id": extraction_id, "error": str(e)})
-            summary = {"error": str(e)}
-
-        logger.info(f"GitHub metadata extraction workflow completed for: {repo_url}", extra={"extraction_id": extraction_id, "summary": summary})
 
     @staticmethod
     def get_activities(activities: ActivitiesInterface) -> Sequence[Callable[..., Any]]:
