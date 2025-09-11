@@ -1,4 +1,3 @@
-import asyncio
 import time
 from typing import Any, Callable, Dict, Optional, TypeVar
 import threading
@@ -70,39 +69,6 @@ class CircuitBreaker:
                 self.state = CircuitState.OPEN
                 logger.warning(f"Circuit breaker {self.name} opened after {self.failure_count} failures")
 
-# Rate Limiter Implementation
-class RateLimiter:
-    def __init__(self, rate=2.0, capacity=5, name="default"):
-        self.rate = rate
-        self.capacity = capacity
-        self.name = name
-        self.tokens = capacity
-        self.last_update = time.time()
-        self._lock = threading.Lock()
-    
-    async def acquire(self, tokens=1) -> bool:
-        with self._lock:
-            now = time.time()
-            elapsed = now - self.last_update
-            self.tokens = min(self.capacity, self.tokens + elapsed * self.rate)
-            self.last_update = now
-            
-            if self.tokens >= tokens:
-                self.tokens -= tokens
-                return True
-            else:
-                logger.warning(f"Rate limiter {self.name} blocked request - insufficient tokens")
-                return False
-    
-    async def wait_for_tokens(self, tokens=1, max_wait=5.0) -> None:
-        start_time = time.time()
-        while not await self.acquire(tokens):
-            wait_time = min((tokens - self.tokens) / self.rate, 1.0)
-            if time.time() - start_time > max_wait:
-                logger.warning(f"Rate limiter {self.name} exceeded max wait time, proceeding anyway")
-                break
-            await asyncio.sleep(wait_time)
-
 # Cache Implementation
 _cache: Dict[str, Dict[str, Any]] = {}
 _cache_lock = threading.Lock()
@@ -141,51 +107,5 @@ def _set_cache(repo_url: str, activity_type: str, data: Any, ttl: int = 600, **k
         }
         logger.debug(f"Cached {activity_type} for {repo_url} (TTL: {ttl}s)")
 
-# Global instances
+# Global instance
 circuit_breaker = CircuitBreaker(failure_threshold=3, recovery_timeout=30, name="github_api")
-rate_limiter = RateLimiter(rate=2.0, capacity=5, name="github_api")
-
-def with_resilience(activity_type: str, cache_ttl: int = 600):
-    """
-    Complete resilience decorator with caching, rate limiting, and circuit breaker.
-    """
-    def decorator(func: Callable[..., T]) -> Callable[..., T]:
-        @functools.wraps(func)
-        async def wrapper(*args, **kwargs) -> T:
-            # Extract repo_url from args
-            repo_url = args[1] if len(args) > 1 else None
-            
-            # 1. Check cache first (fastest)
-            if repo_url:
-                cached_result = _get_from_cache(repo_url, activity_type, **kwargs)
-                if cached_result is not None:
-                    return cached_result
-            
-            # 2. Apply rate limiting
-            try:
-                await asyncio.wait_for(
-                    rate_limiter.wait_for_tokens(max_wait=5.0),
-                    timeout=6.0
-                )
-            except asyncio.TimeoutError:
-                logger.warning(f"Rate limiter timeout for {activity_type}, proceeding anyway")
-            
-            # 3. Apply circuit breaker
-            @circuit_breaker
-            async def _wrapped_func():
-                return await func(*args, **kwargs)
-            
-            try:
-                result = await _wrapped_func()
-                
-                # 4. Cache successful results
-                if repo_url:
-                    _set_cache(repo_url, activity_type, result, cache_ttl, **kwargs)
-                
-                return result
-            except Exception as e:
-                logger.error(f"Activity {activity_type} failed", extra={"repo_url": repo_url, "error": str(e)})
-                raise
-        
-        return wrapper
-    return decorator
