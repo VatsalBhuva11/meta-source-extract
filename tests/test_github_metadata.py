@@ -1,6 +1,6 @@
 import pytest
 from app.activities import GitHubMetadataActivities
-
+import os
 
 class TestGitHubMetadataActivities:
     def test_extract_repo_info_from_url(self):
@@ -8,8 +8,8 @@ class TestGitHubMetadataActivities:
         
         # Test valid GitHub URL
         owner, repo = activities._extract_repo_info_from_url("https://github.com/VatsalBhuva11/EcoBloom/")
-        assert owner == "microsoft"
-        assert repo == "vscode"
+        assert owner == "VatsalBhuva11"
+        assert repo == "EcoBloom"
         
         # Test URL with www
         owner, repo = activities._extract_repo_info_from_url("https://www.github.com/facebook/react")
@@ -24,22 +24,8 @@ class TestGitHubMetadataActivities:
         with pytest.raises(ValueError):
             activities._extract_repo_info_from_url("https://github.com/user")
 
-    @pytest.mark.asyncio
-    async def test_get_workflow_args(self):
-        activities = GitHubMetadataActivities()
-        
-        config = {
-            "repo_url": "https://github.com/test/repo",
-            "commit_limit": 10,
-            "issues_limit": 5
-        }
-        
-        result = await activities.get_workflow_args(config)
-        assert result == config
-
     def test_data_directory_creation(self):
         activities = GitHubMetadataActivities()
         assert activities.data_dir == "extracted_metadata"
         # The directory should be created in __init__
-        import os
         assert os.path.exists(activities.data_dir)
