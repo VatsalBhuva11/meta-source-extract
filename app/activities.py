@@ -56,7 +56,7 @@ from app.utils import (
     generate_extraction_id,
 )
 # Only import caching, not circuit breaker or rate limiting
-from app.resilience import _get_from_cache, _set_cache
+from app.resilience import _get_from_cache, _set_cache, circuit_breaker
 
 logger = get_logger(__name__)
 activity.logger = logger
@@ -153,8 +153,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Paginator error", exc_info=e)
             raise
 
-    @activity.defn
-    # Only caching, no circuit breaker or rate limiting
+    # Only caching, circuit breaker enabled
+    @activity.defn(name="extract_commit_metadata")
+    @circuit_breaker
     async def extract_commit_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -194,8 +195,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Error extracting commits", exc_info=e, extra={"repo_url": repo_url})
             raise
 
-    @activity.defn
-    # Only caching, no circuit breaker or rate limiting
+    # Only caching, circuit breaker enabled
+    @activity.defn(name="extract_issues_metadata")
+    @circuit_breaker
     async def extract_issues_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -234,8 +236,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Error extracting issues", exc_info=e, extra={"repo_url": repo_url})
             raise
 
-    @activity.defn
-    # Only caching, no circuit breaker or rate limiting
+    # Only caching, circuit breaker enabled
+    @activity.defn(name="extract_pull_requests_metadata")
+    @circuit_breaker
     async def extract_pull_requests_metadata(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, limit, extraction_id]
@@ -275,8 +278,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Error extracting PRs", exc_info=e, extra={"repo_url": repo_url})
             raise
 
-    @activity.defn
-    # Only caching, no circuit breaker or rate limiting
+    # Only caching, circuit breaker enabled
+    @activity.defn(name="extract_contributors")
+    @circuit_breaker
     async def extract_contributors(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         args: [repo_url, extraction_id]
@@ -307,8 +311,9 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Error extracting contributors", exc_info=e, extra={"repo_url": repo_url})
             raise
 
-    @activity.defn
-    # Only caching, no circuit breaker or rate limiting
+    # Only caching, circuit breaker enabled
+    @activity.defn(name="extract_dependencies_from_repo")
+    @circuit_breaker
     async def extract_dependencies_from_repo(self, args: List[Any]) -> List[Dict[str, Any]]:
         """
         Best-effort: try to detect and fetch common manifest files from the default branch:

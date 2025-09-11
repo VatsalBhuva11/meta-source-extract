@@ -32,21 +32,22 @@ class CircuitBreaker:
     def __call__(self, func: Callable[..., T]) -> Callable[..., T]:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs) -> T:
+            # Snapshot state under lock, then release before awaiting
             with self._lock:
-                if self.state == CircuitState.OPEN:
-                    if self._should_attempt_reset():
-                        self.state = CircuitState.HALF_OPEN
-                        logger.info(f"Circuit breaker {self.name} transitioning to HALF_OPEN")
-                    else:
-                        raise Exception(f"Circuit breaker {self.name} is OPEN - service unavailable")
-                
-                try:
-                    result = await func(*args, **kwargs)
-                    self._on_success()
-                    return result
-                except Exception as e:
-                    self._on_failure()
-                    raise e
+                state = self.state
+                if state == CircuitState.OPEN and not self._should_attempt_reset():
+                    raise Exception(f"Circuit breaker {self.name} is OPEN - service unavailable")
+                if state == CircuitState.OPEN and self._should_attempt_reset():
+                    self.state = CircuitState.HALF_OPEN
+                    logger.info(f"Circuit breaker {self.name} transitioning to HALF_OPEN")
+            
+            try:
+                result = await func(*args, **kwargs)
+                self._on_success()
+                return result
+            except Exception as e:
+                self._on_failure()
+                raise e
         return wrapper
     
     def _should_attempt_reset(self) -> bool:
