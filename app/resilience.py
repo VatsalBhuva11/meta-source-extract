@@ -12,7 +12,7 @@ logger = get_logger(__name__)
 
 T = TypeVar('T')
 
-# Circuit Breaker Implementation
+# circuit breaker
 class CircuitState(Enum):
     CLOSED = "closed"
     OPEN = "open"
@@ -31,7 +31,7 @@ class CircuitBreaker:
     def __call__(self, func: Callable[..., T]) -> Callable[..., T]:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs) -> T:
-            # Snapshot state under lock, then release before awaiting
+            # check/open/half_open state without holding lock across await
             with self._lock:
                 state = self.state
                 if state == CircuitState.OPEN and not self._should_attempt_reset():
@@ -44,9 +44,9 @@ class CircuitBreaker:
                 result = await func(*args, **kwargs)
                 self._on_success()
                 return result
-            except Exception as e:
+            except Exception:
                 self._on_failure()
-                raise e
+                raise
         return wrapper
     
     def _should_attempt_reset(self) -> bool:
@@ -69,7 +69,7 @@ class CircuitBreaker:
                 self.state = CircuitState.OPEN
                 logger.warning(f"Circuit breaker {self.name} opened after {self.failure_count} failures")
 
-# Cache Implementation
+# cache
 _cache: Dict[str, Dict[str, Any]] = {}
 _cache_lock = threading.Lock()
 
@@ -84,28 +84,25 @@ def _generate_cache_key(repo_url: str, activity_type: str, **kwargs) -> str:
 
 def _get_from_cache(repo_url: str, activity_type: str, **kwargs) -> Optional[Any]:
     key = _generate_cache_key(repo_url, activity_type, **kwargs)
-    
     with _cache_lock:
         if key in _cache:
             entry = _cache[key]
             if time.time() < entry["expires_at"]:
-                logger.debug(f"Cache hit for {activity_type} - {repo_url}")
+                logger.debug(f"cache hit for {activity_type} - {repo_url}")
                 return entry["data"]
             else:
                 del _cache[key]
-    
-    logger.debug(f"Cache miss for {activity_type} - {repo_url}")
+    logger.debug(f"cache miss for {activity_type} - {repo_url}")
     return None
 
 def _set_cache(repo_url: str, activity_type: str, data: Any, ttl: int = 600, **kwargs) -> None:
     key = _generate_cache_key(repo_url, activity_type, **kwargs)
-    
     with _cache_lock:
         _cache[key] = {
             "data": data,
             "expires_at": time.time() + ttl
         }
-        logger.debug(f"Cached {activity_type} for {repo_url} (TTL: {ttl}s)")
+        logger.debug(f"cached {activity_type} for {repo_url} (ttl: {ttl}s)")
 
-# Global instance
+# shared breaker instance
 circuit_breaker = CircuitBreaker(failure_threshold=3, recovery_timeout=30, name="github_api")

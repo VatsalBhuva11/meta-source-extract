@@ -34,7 +34,7 @@ async def main():
     # start worker
     await app.start_worker()
 
-    # Setup the application server (health endpoints + readiness)
+    # setup server (health + readiness)
     await app.setup_server(workflow_class=GitHubMetadataWorkflow)
 
     # start server
