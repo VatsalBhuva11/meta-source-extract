@@ -486,113 +486,221 @@ class GitHubMetadataActivities(ActivitiesInterface):
             logger.error("Error saving metadata to file", exc_info=e, extra={"repo_url": repo_url})
             raise
 
-    @activity.defn
+    # lineage metrics
+    @activity.defn(name="extract_fork_lineage")
     @auto_heartbeater
-    async def calculate_code_lineage(self, args: List[Any]) -> str:
+    @circuit_breaker
+    async def extract_fork_lineage(self, args: List[Any]) -> Dict[str, Any]:
         """
-        Calculate code lineage based on commit history and present it in a readable format.
+        args: [repo_url, extraction_id]
+        """
+        repo_url, extraction_id = args
+        logger.info("Extracting fork lineage", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+        cached = _get_from_cache(repo_url, "fork_lineage")
+        if cached is not None:
+            return cached
+        try:
+            owner, repo_name = self._extract_repo_info_from_url(repo_url)
+            repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
+            parent = None
+            source = None
+            try:
+                if getattr(repo, "parent", None):
+                    parent = getattr(repo.parent, "full_name", None)
+                if getattr(repo, "source", None):
+                    source = getattr(repo.source, "full_name", None)
+            except Exception:
+                pass
+            result = {
+                "is_fork": bool(getattr(repo, "fork", False)),
+                "parent": parent,
+                "source": source,
+            }
+            _set_cache(repo_url, "fork_lineage", result, ttl=1800)
+            return result
+        except Exception as e:
+            logger.error("Error extracting fork lineage", exc_info=e, extra={"repo_url": repo_url})
+            raise
+
+    @activity.defn(name="extract_commit_lineage")
+    @auto_heartbeater
+    @circuit_breaker
+    async def extract_commit_lineage(self, args: List[Any]) -> Dict[str, Any]:
+        """
         args: [repo_url, commits, extraction_id]
+        returns parent mapping and merge commit shas
         """
         repo_url, commits, extraction_id = args
-        logger.info("Calculating code lineage", extra={"repo_url": repo_url, "extraction_id": extraction_id})
-
-        if not commits:
-            return "No commit history available to generate lineage."
-
+        logger.info("Extracting commit lineage", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+        cached = _get_from_cache(repo_url, "commit_lineage")
+        if cached is not None:
+            return cached
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
-
-            file_lineage = defaultdict(list)
-            for c in commits:
-                commit_sha = c.get("sha")
-                if not commit_sha:
+            parents_map: Dict[str, List[str]] = {}
+            merge_commits: List[str] = []
+            # cap to reasonable number to avoid rate overuse
+            for c in (commits or [])[:300]:
+                sha = c.get("sha")
+                if not sha:
                     continue
-
-                commit = await asyncio.to_thread(repo.get_commit, commit_sha)
-                if commit and commit.files:
-                    for file in commit.files:
-                        file_lineage[file.filename].append({
-                            "sha": commit.sha,
-                            "author": c.get("author"),
-                            "date": c.get("date"),
-                            "additions": file.additions,
-                            "deletions": file.deletions,
-                            "message": commit.commit.message.split('\n')[0] # First line of commit message
-                        })
-
-            # Format the output
-            lineage_str = ""
-            for filename, history in file_lineage.items():
-                lineage_str += f"--- File: {filename} ---\n"
-                sorted_history = sorted(history, key=lambda x: x['date'], reverse=True)
-                for entry in sorted_history:
-                    date_str = entry['date']
-                    if date_str:
-                        try:
-                            date = datetime.fromisoformat(date_str).strftime('%Y-%m-%d %H:%M:%S')
-                        except (ValueError, TypeError):
-                            date = date_str # Keep original if parsing fails
-                    else:
-                        date = "Unknown date"
-
-                    lineage_str += (
-                        f"  - Commit: {entry['sha'][:7]} by {entry['author']} on {date}\n"
-                        f"    Message: {entry['message']}\n"
-                        f"    Changes: +{entry['additions']} / -{entry['deletions']}\n"
-                    )
-                lineage_str += "\n"
-
-            return lineage_str if lineage_str else "Could not generate lineage information."
+                gh_commit = await asyncio.to_thread(repo.get_commit, sha)
+                pshas = [p.sha for p in getattr(gh_commit, "parents", [])]
+                parents_map[sha] = pshas
+                if len(pshas) >= 2:
+                    merge_commits.append(sha)
+            result = {"parents": parents_map, "merge_commits": merge_commits}
+            _set_cache(repo_url, "commit_lineage", result, ttl=1800)
+            return result
         except Exception as e:
-            logger.error("Error calculating code lineage", exc_info=e, extra={"repo_url": repo_url})
+            logger.error("Error extracting commit lineage", exc_info=e, extra={"repo_url": repo_url})
             raise
-        
-    @activity.defn
+
+    # quality metrics
+    @activity.defn(name="extract_bus_factor")
     @auto_heartbeater
-    async def calculate_code_quality_metrics(self, args: List[Any]) -> Dict[str, Any]:
+    @circuit_breaker
+    async def extract_bus_factor(self, args: List[Any]) -> Dict[str, Any]:
         """
-        Calculate code quality metrics.
-        args: [repo_url, commits, issues, extraction_id]
+        args: [commits, extraction_id]
         """
-        repo_url, commits, issues, extraction_id = args
-        logger.info("Calculating code quality metrics", extra={"repo_url": repo_url, "extraction_id": extraction_id})
-
+        commits, extraction_id = args
+        logger.info("Extracting bus factor", extra={"extraction_id": extraction_id})
         if not commits:
-            return {}
+            return {"top1_pct": None, "top2_pct": None}
+        author_counts: Dict[str, int] = {}
+        total = 0
+        for c in commits:
+            author = c.get("author") or "unknown"
+            author_counts[author] = author_counts.get(author, 0) + 1
+            total += 1
+        ranked = sorted(author_counts.values(), reverse=True)
+        top1 = ranked[0] if ranked else 0
+        top2 = (ranked[0] + ranked[1]) if len(ranked) > 1 else top1
+        return {
+            "top1_pct": (top1 / total) if total else None,
+            "top2_pct": (top2 / total) if total else None,
+        }
 
+    @activity.defn(name="extract_pr_metrics")
+    @auto_heartbeater
+    @circuit_breaker
+    async def extract_pr_metrics(self, args: List[Any]) -> Dict[str, Any]:
+        """
+        args: [pull_requests, extraction_id]
+        """
+        prs, extraction_id = args
+        logger.info("Extracting PR metrics", extra={"extraction_id": extraction_id})
+        if not prs:
+            return {"merge_rate": None, "median_merge_days": None, "avg_merge_days": None}
+        closed = [p for p in prs if p.get("state") == "closed"]
+        merged = [p for p in prs if p.get("merged")]
+        merge_durations = []
+        for p in merged:
+            opened = p.get("created_at")
+            merged_at = p.get("merged_at")
+            if opened and merged_at:
+                try:
+                    dt_o = datetime.fromisoformat(opened)
+                    dt_m = datetime.fromisoformat(merged_at)
+                    merge_durations.append((dt_m - dt_o).total_seconds() / 86400.0)
+                except Exception:
+                    pass
+        med = None
+        avg = None
+        if merge_durations:
+            s = sorted(merge_durations)
+            n = len(s)
+            med = s[n//2] if n % 2 == 1 else (s[n//2-1] + s[n//2]) / 2
+            avg = sum(s) / n
+        return {"merge_rate": (len(merged) / len(closed)) if closed else None, "median_merge_days": med, "avg_merge_days": avg}
+
+    @activity.defn(name="extract_issue_metrics")
+    @auto_heartbeater
+    @circuit_breaker
+    async def extract_issue_metrics(self, args: List[Any]) -> Dict[str, Any]:
+        """
+        args: [issues, extraction_id]
+        """
+        issues, extraction_id = args
+        logger.info("Extracting issue metrics", extra={"extraction_id": extraction_id})
+        if not issues:
+            return {"closure_rate": None, "median_resolution_days": None, "avg_resolution_days": None}
+        closed = [i for i in issues if i.get("closed_at")]
+        durations = []
+        for i in closed:
+            c = i.get("closed_at")
+            o = i.get("created_at")
+            if c and o:
+                try:
+                    dt_c = datetime.fromisoformat(c)
+                    dt_o = datetime.fromisoformat(o)
+                    durations.append((dt_c - dt_o).total_seconds() / 86400.0)
+                except Exception:
+                    pass
+        med = None
+        avg = None
+        if durations:
+            s = sorted(durations)
+            n = len(s)
+            med = s[n//2] if n % 2 == 1 else (s[n//2-1] + s[n//2]) / 2
+            avg = sum(s) / n
+        return {"closure_rate": (len(closed) / len(issues)) if issues else None, "median_resolution_days": med, "avg_resolution_days": avg}
+
+    @activity.defn(name="extract_commit_activity")
+    @auto_heartbeater
+    @circuit_breaker
+    async def extract_commit_activity(self, args: List[Any]) -> Dict[str, Any]:
+        """
+        args: [commits, extraction_id]
+        returns per-week and per-month counts
+        """
+        commits, extraction_id = args
+        logger.info("Extracting commit activity", extra={"extraction_id": extraction_id})
+        from collections import Counter
+        by_week = Counter()
+        by_month = Counter()
+        for c in commits or []:
+            d = c.get("date")
+            if not d:
+                continue
+            try:
+                dt = datetime.fromisoformat(d)
+                by_week[dt.strftime("%Y-W%U")] += 1
+                by_month[dt.strftime("%Y-%m")] += 1
+            except Exception:
+                pass
+        return {"per_week": dict(by_week), "per_month": dict(by_month)}
+
+    @activity.defn(name="extract_release_cadence")
+    @auto_heartbeater
+    @circuit_breaker
+    async def extract_release_cadence(self, args: List[Any]) -> Dict[str, Any]:
+        """
+        args: [repo_url, extraction_id]
+        """
+        repo_url, extraction_id = args
+        logger.info("Extracting release cadence", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+        cached = _get_from_cache(repo_url, "release_cadence")
+        if cached is not None:
+            return cached
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
-
-            # 1. Code Churn
-            file_churn = defaultdict(lambda: {"additions": 0, "deletions": 0, "changes": 0})
-            for c in commits:
-                commit_sha = c.get("sha")
-                if not commit_sha:
-                    continue
-                
-                commit = await asyncio.to_thread(repo.get_commit, commit_sha)
-                if commit and commit.files:
-                    for file in commit.files:
-                        file_churn[file.filename]["additions"] += file.additions
-                        file_churn[file.filename]["deletions"] += file.deletions
-                        file_churn[file.filename]["changes"] += file.changes
-            
-            # 2. Bug Proneness (simple heuristic)
-            bug_labels = {"bug", "fix", "error"}
-            buggy_commits = set()
-            if issues:
-                for issue in issues:
-                    if any(label in bug_labels for label in issue.get("labels", [])):
-                        # This is a simplification. In a real-world scenario, you'd need to
-                        # link issues to commits more reliably, e.g., via closing events.
-                        pass
-            
-            metrics = {
-                "file_churn": dict(file_churn),
-            }
-            return metrics
+            tags = []
+            releases = []
+            try:
+                tags = [t.name for t in repo.get_tags()[:100]]
+            except Exception:
+                pass
+            try:
+                releases = [r.tag_name or r.name for r in repo.get_releases()[:100]]
+            except Exception:
+                pass
+            result = {"tag_count_100": len(tags), "release_count_100": len(releases)}
+            _set_cache(repo_url, "release_cadence", result, ttl=3600)
+            return result
         except Exception as e:
-            logger.error("Error calculating code quality metrics", exc_info=e, extra={"repo_url": repo_url})
+            logger.error("Error extracting release cadence", exc_info=e, extra={"repo_url": repo_url})
             raise

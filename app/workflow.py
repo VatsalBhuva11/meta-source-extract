@@ -101,6 +101,7 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             ),
         ]
 
+        # phase 1: core data
         results = await asyncio.gather(*activities, return_exceptions=True)
 
         commits, issues, pull_requests, contributors, dependencies = results
@@ -117,26 +118,56 @@ class GitHubMetadataWorkflow(WorkflowInterface):
         contributors = _unwrap(contributors, "contributors")
         dependencies = _unwrap(dependencies, "dependencies")
 
-        # Now, run the new activities with the results from the previous ones
-        if commits:
-            lineage_and_quality_activities = [
-                workflow.execute_activity_method(
-                    activities_instance.calculate_code_lineage,
-                    [repo_url, commits, extraction_id],
-                    start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
-                ),
-                workflow.execute_activity_method(
-                    activities_instance.calculate_code_quality_metrics,
-                    [repo_url, commits, issues, extraction_id],
-                    start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
-                ),
-            ]
-            lineage_and_quality_results = await asyncio.gather(*lineage_and_quality_activities, return_exceptions=True)
-            code_lineage, code_quality_metrics = lineage_and_quality_results
-            code_lineage = _unwrap(code_lineage, "code_lineage")
-            code_quality_metrics = _unwrap(code_quality_metrics, "code_quality_metrics")
-        else:
-            code_lineage, code_quality_metrics = None, None
+        # phase 2: derived metrics (depend on phase 1 results)
+        derived_activities: List[Coroutine[Any, Any, Any]] = [
+            workflow.execute_activity_method(
+                activities_instance.extract_fork_lineage,
+                [repo_url, extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_commit_lineage,
+                [repo_url, commits or [], extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_bus_factor,
+                [commits or [], extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_pr_metrics,
+                [pull_requests or [], extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_issue_metrics,
+                [issues or [], extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_commit_activity,
+                [commits or [], extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+            workflow.execute_activity_method(
+                activities_instance.extract_release_cadence,
+                [repo_url, extraction_id],
+                start_to_close_timeout=timedelta(seconds=WORKFLOW_ACTIVITY_TIMEOUT_SECONDS),
+            ),
+        ]
+
+        derived_results = await asyncio.gather(*derived_activities, return_exceptions=True)
+
+        fork_lineage, commit_lineage, bus_factor, pr_metrics, issue_metrics, commit_activity, release_cadence = derived_results
+
+        fork_lineage = _unwrap(fork_lineage, "fork_lineage")
+        commit_lineage = _unwrap(commit_lineage, "commit_lineage")
+        bus_factor = _unwrap(bus_factor, "bus_factor")
+        pr_metrics = _unwrap(pr_metrics, "pr_metrics")
+        issue_metrics = _unwrap(issue_metrics, "issue_metrics")
+        commit_activity = _unwrap(commit_activity, "commit_activity")
+        release_cadence = _unwrap(release_cadence, "release_cadence")
 
         combined_metadata = {
             **repo_metadata,
@@ -145,8 +176,13 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             "pull_requests": pull_requests or [],
             "contributors": contributors or [],
             "dependencies": dependencies or [],
-            "code_lineage": code_lineage or {},
-            "code_quality_metrics": code_quality_metrics or {},
+            "fork_lineage": fork_lineage or {},
+            "commit_lineage": commit_lineage or {},
+            "bus_factor": bus_factor or {},
+            "pr_metrics": pr_metrics or {},
+            "issue_metrics": issue_metrics or {},
+            "commit_activity": commit_activity or {},
+            "release_cadence": release_cadence or {},
         }
 
         try:
@@ -185,8 +221,13 @@ class GitHubMetadataWorkflow(WorkflowInterface):
             activities.extract_pull_requests_metadata,
             activities.extract_contributors,
             activities.extract_dependencies_from_repo,
+            activities.extract_fork_lineage,
+            activities.extract_commit_lineage,
+            activities.extract_bus_factor,
+            activities.extract_pr_metrics,
+            activities.extract_issue_metrics,
+            activities.extract_commit_activity,
+            activities.extract_release_cadence,
             activities.save_metadata_to_file,
             activities.get_extraction_summary,
-            activities.calculate_code_lineage,
-            activities.calculate_code_quality_metrics,
         ]
