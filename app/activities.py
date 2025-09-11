@@ -90,16 +90,6 @@ class GitHubMetadataActivities(ActivitiesInterface):
         # Use PyGithub to get repo, will raise on errors and be retried
         return self.github.get_repo(full_name)
 
-    # ---------- Activities ----------
-    @activity.defn
-    async def get_workflow_args(self, workflow_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Return workflow args (could be used to fetch persisted config).
-        For now: return the config unchanged, but add defaults.
-        """
-        # Add default extraction id if not present
-        workflow_config.setdefault("extraction_id", generate_extraction_id())
-        return workflow_config
 
     @activity.defn
     # No resilience decorator - critical path

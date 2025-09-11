@@ -34,13 +34,11 @@ async function handleSubmit(event) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        input: {
           repo_url: repoUrl,
           commit_limit: commitLimit,
           issues_limit: issuesLimit,
           pr_limit: prLimit,
-        }
-      }),      
+        }),      
     });
 
     if (response.ok) {

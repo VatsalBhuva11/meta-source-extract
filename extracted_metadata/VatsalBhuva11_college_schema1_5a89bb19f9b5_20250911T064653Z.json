@@ -1,0 +1,67 @@
+{
+  "commits": [
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2025-08-31T05:17:31+00:00",
+      "message": "Rename LAL assignment  to LAL assignment - 2.pdf",
+      "sha": "7473ee02201168b265ae83bf5c19e3ceef79e396",
+      "url": "https://github.com/VatsalBhuva11/college/commit/7473ee02201168b265ae83bf5c19e3ceef79e396"
+    },
+    {
+      "author": "Vatsal Bhuva",
+      "date": "2025-08-31T05:17:13+00:00",
+      "message": "Rename LAL assignment to LAL assignment - 1.pdf",
+      "sha": "d140c22a6a7fc2826f91ce615d65f31ddc7b7be3",
+      "url": "https://github.com/VatsalBhuva11/college/commit/d140c22a6a7fc2826f91ce615d65f31ddc7b7be3"
+    }
+  ],
+  "contributors": [
+    {
+      "contributions": 74,
+      "login": "VatsalBhuva11",
+      "url": "https://github.com/VatsalBhuva11"
+    }
+  ],
+  "created_at": "2023-05-28T21:23:39+00:00",
+  "default_branch": "main",
+  "dependencies": [],
+  "description": null,
+  "extraction_provenance": {
+    "extracted_at": "2025-09-11T06:46:45.309541+00:00",
+    "extracted_by": "github-metadata-extractor",
+    "extraction_id": "5a89bb19f9b5",
+    "schema_version": "1",
+    "source": "github",
+    "saved_at": "2025-09-11T06:46:53.784285+00:00",
+    "file_path": "extracted_metadata/VatsalBhuva11_college_schema1_5a89bb19f9b5_20250911T064653Z.json"
+  },
+  "forks": 3,
+  "html_url": "https://github.com/VatsalBhuva11/college",
+  "is_fork": false,
+  "issues": [],
+  "languages": {
+    "Assembly": 5017,
+    "C": 401597,
+    "C++": 185944,
+    "CMake": 14971,
+    "Java": 31788,
+    "Jupyter Notebook": 2975118,
+    "Lex": 3289,
+    "MATLAB": 12325,
+    "Makefile": 101685,
+    "Python": 42979,
+    "SWIG": 35953,
+    "Shell": 1054,
+    "TeX": 70637,
+    "TypeScript": 232,
+    "Yacc": 488
+  },
+  "last_updated": "2025-08-31T05:17:34+00:00",
+  "license": null,
+  "open_issues": 0,
+  "primary_language": "Jupyter Notebook",
+  "pull_requests": [],
+  "repository": "VatsalBhuva11/college",
+  "stars": 8,
+  "url": "https://github.com/VatsalBhuva11/college"
+}
