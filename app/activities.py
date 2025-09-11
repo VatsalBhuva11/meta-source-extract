@@ -527,34 +527,69 @@ class GitHubMetadataActivities(ActivitiesInterface):
     @circuit_breaker
     async def extract_commit_lineage(self, args: List[Any]) -> Dict[str, Any]:
         """
+        Calculate code lineage metrics from commit history for the top 20 most active files.
         args: [repo_url, commits, extraction_id]
-        returns parent mapping and merge commit shas
         """
         repo_url, commits, extraction_id = args
-        logger.info("Extracting commit lineage", extra={"repo_url": repo_url, "extraction_id": extraction_id})
-        cached = _get_from_cache(repo_url, "commit_lineage")
-        if cached is not None:
-            return cached
+        logger.info("Calculating code lineage metrics", extra={"repo_url": repo_url, "extraction_id": extraction_id})
+
+        if not commits:
+            return {}
+
         try:
             owner, repo_name = self._extract_repo_info_from_url(repo_url)
             repo = await asyncio.to_thread(self._get_repo, f"{owner}/{repo_name}")
-            parents_map: Dict[str, List[str]] = {}
-            merge_commits: List[str] = []
-            # cap to reasonable number to avoid rate overuse
-            for c in (commits or [])[:300]:
-                sha = c.get("sha")
-                if not sha:
+
+            file_lineage_raw = defaultdict(list)
+            # Limit the number of commits to inspect to avoid excessive API calls
+            for c in (commits or [])[:500]: # Cap inspection to the latest 500 commits
+                commit_sha = c.get("sha")
+                if not commit_sha:
                     continue
-                gh_commit = await asyncio.to_thread(repo.get_commit, sha)
-                pshas = [p.sha for p in getattr(gh_commit, "parents", [])]
-                parents_map[sha] = pshas
-                if len(pshas) >= 2:
-                    merge_commits.append(sha)
-            result = {"parents": parents_map, "merge_commits": merge_commits}
-            _set_cache(repo_url, "commit_lineage", result, ttl=1800)
-            return result
+                
+                commit = await asyncio.to_thread(repo.get_commit, commit_sha)
+                if commit and commit.files:
+                    for file in commit.files:
+                        file_lineage_raw[file.filename].append({
+                            "author": c.get("author"),
+                            "date": c.get("date"),
+                            "additions": file.additions,
+                            "deletions": file.deletions,
+                        })
+
+            # Identify the top 20 most committed-to files
+            top_files = sorted(file_lineage_raw.items(), key=lambda item: len(item[1]), reverse=True)[:20]
+
+            # Compute logical metrics from the raw data for the top files
+            computed_lineage = {}
+            for filename, history in top_files:
+                if not history:
+                    continue
+
+                sorted_history = sorted(history, key=lambda x: x['date'])
+                
+                # Aggregate contributor stats
+                contributors = defaultdict(int)
+                for entry in sorted_history:
+                    if entry['author']:
+                        contributors[entry['author']] += 1
+                
+                # Sort contributors by commit count
+                top_contributors = sorted(contributors.items(), key=lambda item: item[1], reverse=True)
+
+                computed_lineage[filename] = {
+                    "total_commits": len(sorted_history),
+                    "first_commit_date": sorted_history[0]['date'],
+                    "last_commit_date": sorted_history[-1]['date'],
+                    "last_modified_by": sorted_history[-1]['author'],
+                    "top_contributors": [{"author": author, "commits": count} for author, count in top_contributors[:5]], # Top 5
+                    "lines_added": sum(e['additions'] for e in sorted_history),
+                    "lines_deleted": sum(e['deletions'] for e in sorted_history),
+                }
+
+            return computed_lineage
         except Exception as e:
-            logger.error("Error extracting commit lineage", exc_info=e, extra={"repo_url": repo_url})
+            logger.error("Error calculating code lineage", exc_info=e, extra={"repo_url": repo_url})
             raise
 
     # quality metrics
