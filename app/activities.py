@@ -42,6 +42,10 @@ from app.config import (
     SCHEMA_VERSION,
     GITHUB_API_PER_PAGE,
     DEFAULT_USER_AGENT,
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_REGION,
+    AWS_SESSION_TOKEN,
 )
 from app.utils import (
     safe_isoformat,
@@ -61,7 +65,24 @@ class GitHubMetadataActivities(ActivitiesInterface):
         os.makedirs(self.data_dir, exist_ok=True)
         # optional s3 client
         if METADATA_UPLOAD_TO_S3 and boto3:
-            self.s3 = boto3.client("s3")
+            # Configure AWS credentials
+            s3_config = {
+                "region_name": AWS_REGION
+            }
+            
+            # Add credentials if provided
+            if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+                s3_config["aws_access_key_id"] = AWS_ACCESS_KEY_ID
+                s3_config["aws_secret_access_key"] = AWS_SECRET_ACCESS_KEY
+                if AWS_SESSION_TOKEN:
+                    s3_config["aws_session_token"] = AWS_SESSION_TOKEN
+            
+            try:
+                self.s3 = boto3.client("s3", **s3_config)
+                logger.info("S3 client initialized successfully", extra={"region": AWS_REGION})
+            except Exception as e:
+                logger.error("Failed to initialize S3 client", exc_info=e, extra={"error": str(e)})
+                self.s3 = None
         else:
             self.s3 = None
 

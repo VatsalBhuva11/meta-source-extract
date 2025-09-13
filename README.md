@@ -1,206 +1,135 @@
 # GitHub Metadata Extractor
 
-A powerful application built with Atlan's Application SDK that extracts comprehensive metadata from GitHub repositories. This tool can extract repository information, commits, issues, pull requests, and other valuable data, saving it locally for analysis.
+A powerful application built with the Atlan SDK that extracts comprehensive metadata from GitHub repositories. This tool can extract repository information, commits, issues, and pull requests, saving the data locally for analysis.
 
 ## Features
 
-- **Repository Metadata**: Extract basic repository information including stars, forks, languages, topics, and more
-- **Commit Analysis**: Get detailed commit history with author information, statistics, and messages
-- **Issues Tracking**: Extract issues and pull requests with labels, assignees, and status information
-- **Data Storage**: Save all extracted metadata to JSON files for further analysis
-- **Configurable Limits**: Set custom limits for commits, issues, and pull requests to extract
-- **Modern UI**: Clean, responsive web interface for easy interaction
-- **Rate Limiting**: Respects GitHub API rate limits with optional authentication
+-   **Repository Metadata**: Extracts basic repository information, including stars, forks, languages, and topics.
+-   **Commit Analysis**: Retrieves detailed commit history with author information, statistics, and messages.
+-   **Issue and Pull Request Tracking**: Extracts issues and pull requests with their labels, assignees, and statuses.
+-   **Data Storage**: Saves all extracted metadata to JSON files for further analysis.
+-   **Configurable Limits**: Allows you to set custom limits for the number of commits, issues, and pull requests to extract.
+-   **Modern UI**: A clean and responsive web interface for easy interaction.
+-   **Resilience**: Implements a circuit breaker to handle GitHub API rate limiting gracefully.
 
 ## Prerequisites
 
-- Python 3.11+
-- GitHub account (optional, for higher rate limits)
-- Docker (for Dapr and Temporal)
+-   Python 3.11+
+-   Temporal
+-   Dapr
+-   uv
+-   A GitHub account (optional, for higher rate limits)
 
 ## Installation
 
-1. **Clone the repository** (if not already done):
-   ```bash
-   git clone <repository-url>
-   cd hello_world
-   ```
+1.  **Clone the repository**:
+    ```bash
+    git clone <repository-url>
+    cd meta-source-extract
+    ```
 
-2. **Install dependencies**:
-   ```bash
-   uv sync
-   ```
+2.  **Install dependencies**:
+    ```bash
+    uv run poe download-components
+    ```
 
-3. **Set up environment variables**:
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your GitHub token if desired
-   ```
+3.  **Set up environment variables**:
+    ```bash
+    cp .env.example .env
+    ```
+    Edit the `.env` file to add your GitHub token if you have one.
 
-4. **Download required components**:
-   ```bash
-   poe download-components
-   ```
 
-## Configuration
+## Demo Instructions
 
-### GitHub API Token (Optional but Recommended)
+1.  **Start the application's dependencies**:
+    ```bash
+    uv run poe start-deps
+    ```
 
-For unauthenticated requests, you're limited to 60 requests per hour. To increase this limit:
+2.  **Run the application**:
+    ```bash
+    uv run main.py
+    ```
 
-1. Go to [GitHub Settings > Personal Access Tokens](https://github.com/settings/tokens)
-2. Generate a new token with appropriate permissions
-3. Add it to your `.env` file:
-   ```
-   GITHUB_TOKEN=your_token_here
-   ```
+3.  **Access the web interface**:
+    Open your browser and go to `http://localhost:8000`.
 
-### Repository Limits
+4.  **Use the application**:
+    -   Enter a GitHub repository URL (e.g., `https://github.com/atlanhq/atlan`).
+    -   Optionally, adjust the limits for commits, issues, and pull requests. You can even select which metadata to be extracted by selecting the required checkboxes.
+    -   Click "Extract Metadata".
+    -   Once the process is complete, you can view the results and download the generated JSON file.
 
-You can configure how much data to extract:
-- **Commits**: 1-1000 (default: 50)
-- **Issues**: 1-1000 (default: 50)  
-- **Pull Requests**: 1-1000 (default: 50)
+5.  **To stop the dependencies**:
+    ```bash
+    uv run poe stop-deps
+    ```
+## Framework Notes
 
-## Usage
+The Atlan SDK simplifies the development of this application by providing a robust framework for building data-driven apps. Some key takeaways from using it in this project:
 
-### Start the Application
+-   **Workflow Orchestration**: The SDK's workflow management capabilities, powered by Temporal, make it easy to define and manage complex, long-running processes like metadata extraction. The `@workflow` and `@activity` decorators provide a clean and intuitive way to structure the code.
+-   **Service Integration**: The SDK's integration with Dapr for service communication simplifies the interaction between the web server and the background workflow.
+-   **Configuration Management**: The framework provides a straightforward way to manage configuration through environment variables, making it easy to switch between development and production settings.
 
-1. **Start dependencies**:
-   ```bash
-   poe start-deps
-   ```
+## Architecture Notes
 
-2. **Run the application**:
-   ```bash
-   python main.py
-   ```
+### High-Level Overview
 
-3. **Access the web interface**:
-   Open your browser and go to `http://localhost:3000`
+This application is designed to be a resilient and scalable solution for extracting metadata from GitHub repositories. It is built on a microservices-based architecture, with distinct components for the user interface, API, and background processing.
 
-### Using the Web Interface
+### Component Breakdown
 
-1. Enter a GitHub repository URL (e.g., `https://github.com/VatsalBhuva11/EcoBloom/`)
-2. Configure extraction limits (optional)
-3. Click "Extract Metadata"
-4. Wait for the extraction to complete
-5. View results and download the generated JSON file
+-   **FastAPI**: Provides the web interface and API endpoints for user interaction. It is responsible for accepting user requests and initiating the metadata extraction workflow.
+-   **Temporal**: The core of the application's backend, used for orchestrating the metadata extraction workflow. It ensures that the extraction process is reliable and can recover from failures.
+-   **Dapr**: Facilitates communication between the FastAPI server and the Temporal workflow, enabling a decoupled and scalable architecture.
+-   **PyGithub**: A Python library used to interact with the GitHub API and retrieve the required metadata.
 
-### Using the API Directly
+### Workflow
 
-You can also trigger extractions programmatically:
+1.  A user submits a request through the web interface or API.
+2.  The FastAPI server receives the request and starts a new Temporal workflow.
+3.  The workflow orchestrates a series of activities to extract the requested metadata from the GitHub API.
+4.  The extracted data is saved to a JSON file in the `extracted_metadata/` directory.
 
-```bash
-curl -X POST http://localhost:3000/workflows/v1/start \
-  -H "Content-Type: application/json" \
-  -d '{
-    "repo_url": "https://github.com/VatsalBhuva11/EcoBloom/",
-    "commit_limit": 100,
-    "issues_limit": 50,
-    "pr_limit": 50
-  }'
-```
+### Data Flow
 
-## Extracted Data
+The data flows from the GitHub API to the application, where it is processed and stored. The application does not store any user data beyond the extracted metadata, which is saved locally.
 
-The application extracts the following metadata:
+There is an optional configuration of saving the data to AWS S3, but that has not been tested yet because of lack of access to an AWS S3 environment. The function for that is ready and can be configured by setting up the appropriate environment variables
+## AWS S3 Configuration (Optional)
 
-### Repository Information
-- Basic details (name, description, language, etc.)
-- Statistics (stars, forks, watchers, issues)
-- Topics and labels
-- License information
-- Creation and update timestamps
-
-### Commits
-- Commit SHA and message
-- Author and committer information
-- Timestamps
-- File change statistics
-- HTML URLs
-
-### Issues
-- Issue number, title, and body
-- State (open/closed)
-- Labels and assignees
-- Milestone information
-- Creation and update timestamps
-
-### Pull Requests
-- PR number, title, and body
-- State (open/closed/merged)
-- Head and base branch information
-- Labels and assignees
-- Merge information
-- File change statistics
-
-## Output
-
-All extracted metadata is saved to the `extracted_metadata/` directory as JSON files with the format:
-```
-{owner}_{repository}_metadata.json
-```
-
-## Development
-
-### Running Tests
+To enable S3 upload of extracted metadata, set the following environment variables:
 
 ```bash
-poe test
+# Required for S3 upload
+export METADATA_UPLOAD_TO_S3=true
+export S3_BUCKET=your-bucket-name
+
+# AWS Credentials (choose one method)
+# Method 1: Environment variables
+export AWS_ACCESS_KEY_ID=your-access-key
+export AWS_SECRET_ACCESS_KEY=your-secret-key
+export AWS_REGION=us-east-1
+
+# Method 2: AWS CLI configuration
+aws configure
+
+# Method 3: IAM roles (if running on EC2)
+# No additional configuration needed
+
+# Method 4: Temporary credentials (for STS)
+export AWS_SESSION_TOKEN=your-session-token
 ```
 
-### Code Quality
+### AWS Credentials Priority
 
-```bash
-poe lint
-```
+The application will use credentials in this order:
+1. Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
+2. AWS CLI configuration (`~/.aws/credentials`)
+3. IAM roles (if running on EC2)
+4. Default credential provider chain
 
-## Troubleshooting
+If no credentials are found, S3 upload will be disabled and metadata will only be saved locally.
 
-### Common Issues
-
-1. **Rate Limit Exceeded**: 
-   - Add a GitHub token to increase rate limits
-   - Reduce extraction limits
-   - Wait for rate limit reset
-
-2. **Repository Not Found**:
-   - Verify the repository URL is correct
-   - Check if the repository is private (requires authentication)
-
-3. **Permission Denied**:
-   - Ensure your GitHub token has appropriate permissions
-   - Check if the repository requires special access
-
-### Logs
-
-Check the application logs for detailed error information. The application uses structured logging with different levels.
-
-## Architecture
-
-This application is built using:
-- **Atlan Application SDK**: For workflow orchestration
-- **Temporal**: For reliable workflow execution
-- **Dapr**: For service communication
-- **PyGithub**: For GitHub API integration
-- **FastAPI**: For the web interface
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the Apache-2.0 License - see the LICENSE file for details.
-
-## Support
-
-For issues and questions:
-- Check the [GitHub Issues](https://github.com/your-repo/issues)
-- Contact the development team
-- Review the [Atlan Application SDK documentation](https://docs.atlan.com)
