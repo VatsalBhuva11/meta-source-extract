@@ -57,8 +57,27 @@ for file_info in response.json():
 """
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--disable-warnings",
+    "--color=yes"
+]
+markers = [
+    "unit: Unit tests for individual components",
+    "component: Component tests for integration between components",
+    "integration: Integration tests for end-to-end functionality",
+    "slow: Tests that take a long time to run"
+]
 filterwarnings = [
-    "ignore::pydantic.warnings.PydanticDeprecatedSince20"
+    "ignore::pydantic.warnings.PydanticDeprecatedSince20",
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning"
 ]
 
 [build-system]
@@ -78,3 +97,35 @@ packages = [
 [tool.uv.sources]
 # atlan-application-sdk = { path = "../application-sdk", editable = true }
 # atlan-application-sdk = { git = "https://github.com/atlanhq/application-sdk", rev = "349e45a1ee273315a4474f645332e2ef4c8569a9" }
+
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod"
+]
+show_missing = true
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"

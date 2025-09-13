@@ -2,6 +2,9 @@
 
 A powerful application built with the Atlan SDK that extracts comprehensive metadata from GitHub repositories. This tool can extract repository information, commits, issues, and pull requests, saving the data locally for analysis.
 
+Note: I've built this project after reading documentations provided by Atlan and analyzing the Hello-World sample app built on top of Atlan's SDK, along with usage of AI tools to save time.
+Most of the debugging was done by me manually, but the selection of activities was done by ChatGPT as was suggested in the document. The testcases were also written by AI and verified by me to save time, but the core activities and workflow logic was written by me.
+
 ## Features
 
 -   **Repository Metadata**: Extracts basic repository information, including stars, forks, languages, and topics.
