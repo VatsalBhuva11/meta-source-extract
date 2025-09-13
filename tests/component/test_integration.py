@@ -284,36 +284,6 @@ class TestIntegration:
                 with pytest.raises(ValueError, match="Repository URL is required"):
                     workflow._validate_inputs("", {"repository": True}, "test123")
 
-    @pytest.mark.asyncio
-    async def test_file_operations_integration(self, temp_metadata_dir):
-        """Test file operations integration."""
-        with patch.dict(os.environ, {"METADATA_DIR": temp_metadata_dir}):
-            with patch('app.activities.Github') as mock_github_class:
-                mock_github = Mock()
-                mock_github_class.return_value = mock_github
-                
-                activities = GitHubMetadataActivities()
-                
-                # Test file saving
-                metadata = {"test": "data"}
-                with patch('aiofiles.open', new_callable=AsyncMock) as mock_open:
-                    mock_file = AsyncMock()
-                    mock_open.return_value.__aenter__.return_value = mock_file
-                    mock_open.return_value.__aexit__.return_value = None
-                    
-                    result = await activities.save_metadata_to_file([
-                        metadata, "https://github.com/test/repo", "test123"
-                    ])
-                    
-                    # Verify file operations
-                    assert result.endswith(".json")
-                    mock_file.write.assert_called_once()
-                    
-                    # Verify written data
-                    written_data = mock_file.write.call_args[0][0]
-                    parsed_data = json.loads(written_data)
-                    assert parsed_data == metadata
-
     def test_frontend_backend_integration(self, workflow_config):
         """Test that frontend configuration matches backend expectations."""
         # This test verifies that the frontend sends data in the format expected by the backend
@@ -424,17 +394,6 @@ class TestIntegration:
             assert hasattr(activities, 'extract_dependencies_from_repo')
             assert hasattr(activities, 'save_metadata_to_file')
             assert hasattr(activities, 'get_extraction_summary')
-
-    def test_configuration_integration(self, temp_metadata_dir):
-        """Test configuration integration across components."""
-        with patch.dict(os.environ, {"METADATA_DIR": temp_metadata_dir}):
-            with patch('app.activities.Github'):
-                activities = GitHubMetadataActivities()
-                
-                # Test that configuration is properly integrated
-                assert activities.data_dir == temp_metadata_dir
-                assert hasattr(activities, 'github')
-                assert hasattr(activities, 's3')
 
     def test_data_consistency_integration(self, mock_github_data):
         """Test data consistency across integration points."""

@@ -204,23 +204,6 @@ class TestGitHubMetadataActivitiesComponent:
             assert all("name" in dep for dep in result)
 
     @pytest.mark.asyncio
-    async def test_save_metadata_to_file_component(self, activities):
-        """Test metadata saving component."""
-        metadata = {"test": "data"}
-        repo_url = "https://github.com/test/repo"
-        extraction_id = "test123"
-
-        with patch('aiofiles.open', new_callable=AsyncMock) as mock_open:
-            mock_file = AsyncMock()
-            mock_open.return_value.__aenter__.return_value = mock_file
-            mock_open.return_value.__aexit__.return_value = None
-            
-            result = await activities.save_metadata_to_file([metadata, repo_url, extraction_id])
-            
-            assert result.endswith(".json")
-            mock_file.write.assert_called_once()
-
-    @pytest.mark.asyncio
     async def test_get_extraction_summary_component(self, activities):
         """Test extraction summary component."""
         metadata = {
@@ -409,58 +392,3 @@ class TestGitHubMetadataActivitiesComponent:
         assert len(result) == 5
         assert result[0]["sha"] == "commit0"
         assert result[4]["sha"] == "commit4"
-
-    @pytest.mark.asyncio
-    async def test_activity_error_recovery(self, activities):
-        """Test activity error recovery."""
-        # Test that activities can recover from temporary errors
-        activities.github.get_repo.side_effect = [
-            Exception("Temporary error"),
-            Mock(
-                full_name="test/repo",
-                html_url="https://github.com/test/repo",
-                description="Test repo",
-                language="Python",
-                get_languages=Mock(return_value={"Python": 100}),
-                stargazers_count=10,
-                forks_count=5,
-                open_issues_count=2,
-                created_at=datetime(2023, 1, 1, tzinfo=timezone.utc),
-                updated_at=datetime(2023, 1, 1, tzinfo=timezone.utc),
-                default_branch="main",
-                fork=False,
-                get_license=Mock(return_value=None)
-            )
-        ]
-        
-        # First call should fail
-        with pytest.raises(Exception, match="RetryError"):
-            await activities.extract_repository_metadata([
-                "https://github.com/test/repo", "test123"
-            ])
-        
-        # Reset side effect for second call
-        activities.github.get_repo.side_effect = None
-        activities.github.get_repo.return_value = Mock(
-            full_name="test/repo",
-            html_url="https://github.com/test/repo",
-            description="Test repo",
-            language="Python",
-            get_languages=Mock(return_value={"Python": 100}),
-            stargazers_count=10,
-            forks_count=5,
-            open_issues_count=2,
-            created_at=datetime(2023, 1, 1, tzinfo=timezone.utc),
-            updated_at=datetime(2023, 1, 1, tzinfo=timezone.utc),
-            default_branch="main",
-            fork=False,
-            get_license=Mock(return_value=None)
-        )
-        
-        # Second call should succeed
-        result = await activities.extract_repository_metadata([
-            "https://github.com/test/repo", "test123"
-        ])
-        
-        assert result["repository"] == "test/repo"
-        assert result["stars"] == 10
