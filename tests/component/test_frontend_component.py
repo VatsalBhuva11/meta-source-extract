@@ -1,404 +1,356 @@
 """
 Component tests for frontend integration.
-Tests the integration between frontend and backend API.
+Tests frontend HTML, JavaScript, and CSS components.
 """
 import pytest
-import json
-from unittest.mock import Mock, patch, AsyncMock
-from datetime import datetime, timezone
-
-from app.workflow import GitHubMetadataWorkflow
-from app.activities import GitHubMetadataActivities
+import os
+from pathlib import Path
+from unittest.mock import patch, Mock
 
 
 class TestFrontendComponent:
-    """Component tests for frontend integration."""
+    """Component tests for frontend components."""
 
     @pytest.fixture
-    def sample_frontend_request(self):
-        """Sample frontend request data."""
-        return {
-            "repoUrl": "https://github.com/facebook/react",
-            "commitLimit": 50,
-            "issuesLimit": 30,
-            "prLimit": 20,
-            "selections": {
-                "repository": True,
-                "commits": True,
-                "issues": False,
-                "pullRequests": True,
-                "contributors": False,
-                "dependencies": True,
-                "forkLineage": False,
-                "commitLineage": False,
-                "busFactor": False,
-                "prMetrics": False,
-                "issueMetrics": False,
-                "commitActivity": False,
-                "releaseCadence": False
-            }
-        }
+    def frontend_dir(self):
+        """Get frontend directory path."""
+        return Path(__file__).parent.parent.parent / "frontend"
 
     @pytest.fixture
-    def sample_workflow_response(self):
-        """Sample workflow response data."""
-        return {
-            "repository": "facebook/react",
-            "url": "https://github.com/facebook/react",
-            "description": "A declarative, efficient, and flexible JavaScript library",
-            "stars": 200000,
-            "forks": 40000,
-            "commits": [
-                {
-                    "sha": "abc123",
-                    "message": "Initial commit",
-                    "author": "testuser",
-                    "date": "2023-01-01T00:00:00Z"
-                }
-            ],
-            "pull_requests": [
-                {
-                    "number": 1,
-                    "title": "Feature PR",
-                    "state": "merged",
-                    "author": "testuser"
-                }
-            ],
-            "dependencies": [
-                {
-                    "manifest": "package.json",
-                    "dependencies": [
-                        {"name": "react", "version": "^18.0.0"}
-                    ]
-                }
-            ],
-            "extraction_provenance": {
-                "extraction_id": "test123",
-                "extracted_by": "github-metadata-extractor",
-                "extracted_at": "2023-12-01T00:00:00Z",
-                "schema_version": "1",
-                "source": "github"
-            }
-        }
+    def index_html(self, frontend_dir):
+        """Load index.html content."""
+        html_file = frontend_dir / "templates" / "index.html"
+        return html_file.read_text()
 
-    def test_frontend_request_parameter_mapping(self, sample_frontend_request):
-        """Test that frontend request parameters are correctly mapped."""
-        # Test camelCase to snake_case conversion
-        selections = sample_frontend_request["selections"]
-        
-        # Verify camelCase keys are present
-        assert "pullRequests" in selections
-        assert "forkLineage" in selections
-        assert "commitLineage" in selections
-        assert "busFactor" in selections
-        assert "prMetrics" in selections
-        assert "issueMetrics" in selections
-        assert "commitActivity" in selections
-        assert "releaseCadence" in selections
-        
-        # Verify boolean values
-        assert selections["repository"] is True
-        assert selections["commits"] is True
-        assert selections["issues"] is False
-        assert selections["pullRequests"] is True
-        assert selections["contributors"] is False
-        assert selections["dependencies"] is True
+    @pytest.fixture
+    def script_js(self, frontend_dir):
+        """Load script.js content."""
+        js_file = frontend_dir / "static" / "script.js"
+        return js_file.read_text()
 
-    def test_frontend_request_validation(self, sample_frontend_request):
-        """Test frontend request validation."""
-        # Test valid request
-        assert sample_frontend_request["repoUrl"].startswith("https://github.com/")
-        assert isinstance(sample_frontend_request["commitLimit"], int)
-        assert isinstance(sample_frontend_request["issuesLimit"], int)
-        assert isinstance(sample_frontend_request["prLimit"], int)
-        
-        # Test selections validation
-        selections = sample_frontend_request["selections"]
-        assert any(selections.values())  # At least one selection should be True
-        
-        # Test individual selection types
-        boolean_selections = [
-            "repository", "commits", "issues", "pullRequests", "contributors",
-            "dependencies", "forkLineage", "commitLineage", "busFactor",
-            "prMetrics", "issueMetrics", "commitActivity", "releaseCadence"
+    @pytest.fixture
+    def styles_css(self, frontend_dir):
+        """Load styles.css content."""
+        css_file = frontend_dir / "static" / "styles.css"
+        return css_file.read_text()
+
+    def test_html_structure(self, index_html):
+        """Test HTML structure and required elements."""
+        # Check for basic HTML structure
+        assert "<!DOCTYPE html>" in index_html
+        assert "<html" in index_html
+        assert "<head>" in index_html
+        assert "<body>" in index_html
+        assert "</html>" in index_html
+
+    def test_form_elements(self, index_html):
+        """Test form elements are present."""
+        # Check for form
+        assert '<form id="extractionForm"' in index_html
+        assert 'onsubmit="handleSubmit(event)"' in index_html
+
+        # Check for repository URL input
+        assert 'id="repoUrl"' in index_html
+        assert 'name="repoUrl"' in index_html
+        assert 'type="url"' in index_html
+        assert 'placeholder="https://github.com/owner/repository"' in index_html
+
+        # Check for limits inputs
+        assert 'id="commitLimit"' in index_html
+        assert 'id="issuesLimit"' in index_html
+        assert 'id="prLimit"' in index_html
+
+    def test_metadata_selection_checkboxes(self, index_html):
+        """Test metadata selection checkboxes are present."""
+        # Check for fieldset
+        assert '<fieldset class="form-group">' in index_html
+        assert '<legend>Choose metadata to extract:</legend>' in index_html
+
+        # Check for all metadata type checkboxes
+        metadata_types = [
+            ("optRepo", "Repository"),
+            ("optCommits", "Commits"),
+            ("optIssues", "Issues"),
+            ("optPRs", "Pull Requests"),
+            ("optContributors", "Contributors"),
+            ("optDependencies", "Dependencies"),
+            ("optForkLineage", "Fork lineage"),
+            ("optCommitLineage", "Commit lineage"),
+            ("optBusFactor", "Bus factor"),
+            ("optPrMetrics", "PR metrics"),
+            ("optIssueMetrics", "Issue metrics"),
+            ("optCommitActivity", "Commit activity"),
+            ("optReleaseCadence", "Release cadence")
         ]
         
-        for selection in boolean_selections:
-            assert selection in selections
-            assert isinstance(selections[selection], bool)
+        for checkbox_id, label_text in metadata_types:
+            assert f'id="{checkbox_id}"' in index_html
+            assert f'type="checkbox"' in index_html
+            assert label_text in index_html
 
-    def test_frontend_request_parameter_limits(self, sample_frontend_request):
-        """Test frontend request parameter limits."""
-        # Test reasonable limits
-        assert 0 < sample_frontend_request["commitLimit"] <= 1000
-        assert 0 < sample_frontend_request["issuesLimit"] <= 1000
-        assert 0 < sample_frontend_request["prLimit"] <= 1000
-        
-        # Test URL format
-        repo_url = sample_frontend_request["repoUrl"]
-        assert repo_url.startswith("https://github.com/")
-        assert "/" in repo_url.split("github.com/")[1]  # Should have owner/repo format
+        # Check that core metadata types are checked by default
+        core_types = ["optRepo", "optCommits", "optIssues", "optPRs", "optContributors", "optDependencies"]
+        for core_type in core_types:
+            assert f'id="{core_type}" checked' in index_html
 
-    def test_frontend_response_structure(self, sample_workflow_response):
-        """Test frontend response structure."""
-        # Test required fields
-        assert "repository" in sample_workflow_response
-        assert "url" in sample_workflow_response
-        assert "extraction_provenance" in sample_workflow_response
-        
-        # Test extraction provenance structure
-        provenance = sample_workflow_response["extraction_provenance"]
-        assert "extraction_id" in provenance
-        assert "extracted_by" in provenance
-        assert "extracted_at" in provenance
-        assert "schema_version" in provenance
-        assert "source" in provenance
-        
-        # Test data types
-        assert isinstance(sample_workflow_response["repository"], str)
-        assert isinstance(sample_workflow_response["stars"], int)
-        assert isinstance(sample_workflow_response["forks"], int)
-        assert isinstance(sample_workflow_response["commits"], list)
-        assert isinstance(sample_workflow_response["pull_requests"], list)
-        assert isinstance(sample_workflow_response["dependencies"], list)
+    def test_submit_button(self, index_html):
+        """Test submit button is present."""
+        assert 'id="extractButton"' in index_html
+        assert 'type="submit"' in index_html
+        assert 'Extract Metadata' in index_html
 
-    def test_frontend_response_metadata_filtering(self, sample_workflow_response):
-        """Test that frontend response only includes selected metadata."""
-        # Based on the sample request, only repository, commits, pull_requests, and dependencies should be present
-        assert "repository" in sample_workflow_response
-        assert "commits" in sample_workflow_response
-        assert "pull_requests" in sample_workflow_response
-        assert "dependencies" in sample_workflow_response
-        
-        # These should not be present based on the sample request
-        assert "issues" not in sample_workflow_response
-        assert "contributors" not in sample_workflow_response
-        assert "fork_lineage" not in sample_workflow_response
-        assert "commit_lineage" not in sample_workflow_response
-        assert "bus_factor" not in sample_workflow_response
-        assert "pr_metrics" not in sample_workflow_response
-        assert "issue_metrics" not in sample_workflow_response
-        assert "commit_activity" not in sample_workflow_response
-        assert "release_cadence" not in sample_workflow_response
+    def test_loading_indicator(self, index_html):
+        """Test loading indicator is present."""
+        assert 'id="progressSection"' in index_html
+        assert 'style="display: none;"' in index_html
+        assert 'Extracting metadata from repository...' in index_html
 
-    def test_frontend_error_handling(self):
-        """Test frontend error handling scenarios."""
-        # Test invalid repository URL
-        invalid_request = {
-            "repoUrl": "https://gitlab.com/user/repo",
-            "selections": {"repository": True}
-        }
-        
-        # Should raise ValueError for invalid URL
-        with pytest.raises(ValueError):
-            from app.utils import parse_repo_url
-            parse_repo_url(invalid_request["repoUrl"])
-        
-        # Test empty selections
-        empty_selections_request = {
-            "repoUrl": "https://github.com/test/repo",
-            "selections": {
-                "repository": False,
-                "commits": False,
-                "issues": False,
-                "pullRequests": False,
-                "contributors": False,
-                "dependencies": False,
-                "forkLineage": False,
-                "commitLineage": False,
-                "busFactor": False,
-                "prMetrics": False,
-                "issueMetrics": False,
-                "commitActivity": False,
-                "releaseCadence": False
-            }
-        }
-        
-        # Should raise ValueError for empty selections
-        selections = empty_selections_request["selections"]
-        assert not any(selections.values())
+    def test_results_modal(self, index_html):
+        """Test results modal is present."""
+        assert 'id="successModal"' in index_html
+        assert 'class="modal"' in index_html
 
-    def test_frontend_parameter_conversion(self, sample_frontend_request):
-        """Test frontend parameter conversion to backend format."""
-        # Simulate the conversion that happens in get_workflow_args
-        frontend_data = sample_frontend_request
-        
-        # Convert camelCase to snake_case for selections
-        selections = frontend_data["selections"]
-        converted_selections = {
-            "repository": selections["repository"],
-            "commits": selections["commits"],
-            "issues": selections["issues"],
-            "pull_requests": selections["pullRequests"],
-            "contributors": selections["contributors"],
-            "dependencies": selections["dependencies"],
-            "fork_lineage": selections["forkLineage"],
-            "commit_lineage": selections["commitLineage"],
-            "bus_factor": selections["busFactor"],
-            "pr_metrics": selections["prMetrics"],
-            "issue_metrics": selections["issueMetrics"],
-            "commit_activity": selections["commitActivity"],
-            "release_cadence": selections["releaseCadence"]
-        }
-        
-        # Verify conversion
-        assert converted_selections["pull_requests"] == selections["pullRequests"]
-        assert converted_selections["fork_lineage"] == selections["forkLineage"]
-        assert converted_selections["commit_lineage"] == selections["commitLineage"]
-        assert converted_selections["bus_factor"] == selections["busFactor"]
-        assert converted_selections["pr_metrics"] == selections["prMetrics"]
-        assert converted_selections["issue_metrics"] == selections["issueMetrics"]
-        assert converted_selections["commit_activity"] == selections["commitActivity"]
-        assert converted_selections["release_cadence"] == selections["releaseCadence"]
+    def test_javascript_structure(self, script_js):
+        """Test JavaScript structure and functions."""
+        # Check for main functions
+        assert "function handleSubmit(event)" in script_js
+        assert "function showError" in script_js
+        assert "function showSuccessModal" in script_js
+        assert "function isValidGitHubUrl" in script_js
 
-    def test_frontend_response_serialization(self, sample_workflow_response):
-        """Test frontend response serialization."""
-        # Test JSON serialization
-        json_response = json.dumps(sample_workflow_response)
-        assert isinstance(json_response, str)
-        
-        # Test deserialization
-        deserialized_response = json.loads(json_response)
-        assert deserialized_response == sample_workflow_response
-        
-        # Test datetime serialization
-        provenance = sample_workflow_response["extraction_provenance"]
-        assert "extracted_at" in provenance
-        assert isinstance(provenance["extracted_at"], str)
+    def test_form_validation(self, script_js):
+        """Test form validation logic."""
+        # Check for URL validation
+        assert "repoUrl" in script_js
+        assert "isValidGitHubUrl" in script_js
+        assert "Please enter a valid GitHub repository URL" in script_js
 
-    def test_frontend_request_validation_edge_cases(self):
-        """Test frontend request validation edge cases."""
-        # Test with None values
-        request_with_none = {
-            "repoUrl": "https://github.com/test/repo",
-            "commitLimit": None,
-            "issuesLimit": None,
-            "prLimit": None,
-            "selections": {"repository": True}
-        }
-        
-        # Should handle None values gracefully
-        assert request_with_none["repoUrl"] is not None
-        assert request_with_none["selections"]["repository"] is True
-        
-        # Test with empty string
-        request_with_empty = {
-            "repoUrl": "",
-            "selections": {"repository": True}
-        }
-        
-        # Should be invalid
-        assert not request_with_empty["repoUrl"]
-        
-        # Test with negative limits
-        request_with_negative = {
-            "repoUrl": "https://github.com/test/repo",
-            "commitLimit": -1,
-            "issuesLimit": -1,
-            "prLimit": -1,
-            "selections": {"repository": True}
-        }
-        
-        # Should be invalid
-        assert request_with_negative["commitLimit"] < 0
-        assert request_with_negative["issuesLimit"] < 0
-        assert request_with_negative["prLimit"] < 0
+        # Check for selections validation
+        assert "selections" in script_js
+        assert "Please select at least one metadata category" in script_js
 
-    def test_frontend_response_metadata_completeness(self, sample_workflow_response):
-        """Test frontend response metadata completeness."""
-        # Test that all selected metadata is present and complete
-        assert "repository" in sample_workflow_response
-        assert sample_workflow_response["repository"] == "facebook/react"
-        
-        # Test commits metadata
-        if "commits" in sample_workflow_response:
-            commits = sample_workflow_response["commits"]
-            assert isinstance(commits, list)
-            if commits:
-                commit = commits[0]
-                assert "sha" in commit
-                assert "message" in commit
-                assert "author" in commit
-                assert "date" in commit
-        
-        # Test pull requests metadata
-        if "pull_requests" in sample_workflow_response:
-            prs = sample_workflow_response["pull_requests"]
-            assert isinstance(prs, list)
-            if prs:
-                pr = prs[0]
-                assert "number" in pr
-                assert "title" in pr
-                assert "state" in pr
-                assert "author" in pr
-        
-        # Test dependencies metadata
-        if "dependencies" in sample_workflow_response:
-            deps = sample_workflow_response["dependencies"]
-            assert isinstance(deps, list)
-            if deps:
-                dep = deps[0]
-                assert "manifest" in dep
-                assert "dependencies" in dep
+    def test_api_call_structure(self, script_js):
+        """Test API call structure."""
+        # Check for fetch call
+        assert "fetch" in script_js
+        assert "/workflows/v1/start" in script_js
+        assert "POST" in script_js
+        assert "Content-Type" in script_js
 
-    def test_frontend_response_error_handling(self):
-        """Test frontend response error handling."""
-        # Test error response structure
-        error_response = {
-            "error": "Repository not found",
-            "code": "REPO_NOT_FOUND",
-            "message": "The specified repository could not be found"
-        }
-        
-        assert "error" in error_response
-        assert "code" in error_response
-        assert "message" in error_response
-        
-        # Test JSON serialization of error response
-        json_error = json.dumps(error_response)
-        assert isinstance(json_error, str)
-        
-        # Test deserialization
-        deserialized_error = json.loads(json_error)
-        assert deserialized_error == error_response
+        # Check for request body construction
+        assert "JSON.stringify" in script_js
+        assert "repo_url" in script_js
+        assert "commit_limit" in script_js
+        assert "issues_limit" in script_js
+        assert "pr_limit" in script_js
+        assert "selections" in script_js
 
-    def test_frontend_request_parameter_types(self, sample_frontend_request):
-        """Test frontend request parameter types."""
-        # Test URL type
-        assert isinstance(sample_frontend_request["repoUrl"], str)
-        
-        # Test limit types
-        assert isinstance(sample_frontend_request["commitLimit"], int)
-        assert isinstance(sample_frontend_request["issuesLimit"], int)
-        assert isinstance(sample_frontend_request["prLimit"], int)
-        
-        # Test selections type
-        assert isinstance(sample_frontend_request["selections"], dict)
-        
-        # Test individual selection types
-        for key, value in sample_frontend_request["selections"].items():
-            assert isinstance(key, str)
-            assert isinstance(value, bool)
+    def test_error_handling(self, script_js):
+        """Test error handling in JavaScript."""
+        # Check for error handling
+        assert "catch" in script_js
+        assert "error" in script_js
+        assert "console" in script_js
 
-    def test_frontend_response_metadata_consistency(self, sample_workflow_response):
-        """Test frontend response metadata consistency."""
-        # Test that repository name is consistent
-        if "repository" in sample_workflow_response:
-            repo_name = sample_workflow_response["repository"]
-            assert isinstance(repo_name, str)
-            assert "/" in repo_name  # Should be in owner/repo format
+    def test_success_handling(self, script_js):
+        """Test success handling in JavaScript."""
+        # Check for success response handling
+        assert "response" in script_js
+        assert "json" in script_js
+        assert "showSuccessModal" in script_js
+
+    def test_modal_functionality(self, script_js):
+        """Test modal functionality."""
+        # Check for modal show/hide
+        assert "modal" in script_js
+        assert "display" in script_js
+        assert "block" in script_js
+        assert "none" in script_js
+
+    def test_css_structure(self, styles_css):
+        """Test CSS structure and basic styles."""
+        # Check for basic CSS rules
+        assert "body" in styles_css
+        assert "font-family" in styles_css
+        assert "margin" in styles_css
+        assert "padding" in styles_css
+
+    def test_form_styling(self, styles_css):
+        """Test form styling."""
+        # Check for form styles
+        assert "input" in styles_css
+        assert "button" in styles_css
+
+    def test_modal_styling(self, styles_css):
+        """Test modal styling."""
+        # Check for modal styles
+        assert "modal" in styles_css
+        assert "display" in styles_css
+        assert "position" in styles_css
+
+    def test_checkbox_styling(self, styles_css):
+        """Test checkbox styling."""
+        # Check for checkbox styles
+        assert "fieldset" in styles_css
+        assert "legend" in styles_css
+        assert "checkbox" in styles_css
+
+    def test_responsive_design(self, styles_css):
+        """Test responsive design elements."""
+        # Check for responsive elements
+        assert "max-width" in styles_css
+        assert "width" in styles_css
+
+    def test_loading_indicator_styling(self, styles_css):
+        """Test loading indicator styling."""
+        # Check for loading styles
+        assert "progress" in styles_css
+        assert "text-align" in styles_css
+        assert "margin" in styles_css
+
+    def test_button_styling(self, styles_css):
+        """Test button styling."""
+        # Check for button styles
+        assert "button" in styles_css
+        assert "background" in styles_css
+        assert "cursor" in styles_css
+
+    def test_accessibility_features(self, index_html):
+        """Test accessibility features."""
+        # Check for accessibility attributes
+        assert 'for=' in index_html  # Label associations
+        assert 'id=' in index_html   # Element IDs
+        assert 'type=' in index_html # Input types
+
+    def test_metadata_type_labels(self, index_html):
+        """Test metadata type labels are descriptive."""
+        # Check for descriptive labels
+        assert "Repository" in index_html
+        assert "Commits" in index_html
+        assert "Issues" in index_html
+        assert "Pull Requests" in index_html
+        assert "Contributors" in index_html
+        assert "Dependencies" in index_html
+        assert "Fork" in index_html
+        assert "Commit" in index_html
+        assert "Bus" in index_html
+        assert "PR" in index_html
+        assert "Issue" in index_html
+        assert "Activity" in index_html
+        assert "Release" in index_html
+
+    def test_default_values(self, index_html):
+        """Test default values for form inputs."""
+        # Check for default values
+        assert 'value="50"' in index_html  # Default limits
+
+    def test_javascript_event_listeners(self, script_js):
+        """Test JavaScript event listeners."""
+        # Check for event listeners
+        assert "addEventListener" in script_js
+        assert "click" in script_js
+
+    def test_data_processing(self, script_js):
+        """Test data processing in JavaScript."""
+        # Check for data processing
+        assert "parseInt" in script_js  # Number parsing
+        assert "JSON.stringify" in script_js  # JSON serialization
+
+    def test_user_feedback(self, script_js):
+        """Test user feedback mechanisms."""
+        # Check for user feedback
+        assert "showError" in script_js  # Error messages
+        assert "console" in script_js  # Console logging
+        assert "innerHTML" in script_js  # DOM updates
+
+    def test_file_integrity(self, frontend_dir):
+        """Test that all required frontend files exist."""
+        # Check that all required files exist
+        assert (frontend_dir / "templates" / "index.html").exists()
+        assert (frontend_dir / "static" / "script.js").exists()
+        assert (frontend_dir / "static" / "styles.css").exists()
+
+    def test_file_permissions(self, frontend_dir):
+        """Test that frontend files are readable."""
+        # Check file permissions
+        html_file = frontend_dir / "templates" / "index.html"
+        js_file = frontend_dir / "static" / "script.js"
+        css_file = frontend_dir / "static" / "styles.css"
         
-        # Test that URL is consistent with repository name
-        if "url" in sample_workflow_response and "repository" in sample_workflow_response:
-            url = sample_workflow_response["url"]
-            repo_name = sample_workflow_response["repository"]
-            assert url.endswith(repo_name)
+        assert os.access(html_file, os.R_OK)
+        assert os.access(js_file, os.R_OK)
+        assert os.access(css_file, os.R_OK)
+
+    def test_html_validation(self, index_html):
+        """Test HTML validation basics."""
+        # Check for proper HTML structure
+        assert index_html.count("<html") == 1
+        assert index_html.count("</html>") == 1
+        assert index_html.count("<head>") == 1
+        assert index_html.count("</head>") == 1
+        assert index_html.count("<body>") == 1
+        assert index_html.count("</body>") == 1
+
+    def test_javascript_syntax(self, script_js):
+        """Test JavaScript syntax basics."""
+        # Check for proper JavaScript structure
+        assert script_js.count("{") == script_js.count("}")  # Balanced braces
+        assert script_js.count("(") == script_js.count(")")  # Balanced parentheses
+
+    def test_css_syntax(self, styles_css):
+        """Test CSS syntax basics."""
+        # Check for proper CSS structure
+        assert styles_css.count("{") == styles_css.count("}")  # Balanced braces
+        assert ";" in styles_css  # CSS declarations should end with semicolons
+
+    def test_frontend_backend_integration(self, index_html, script_js):
+        """Test that frontend integrates properly with backend."""
+        # Check that form action matches backend endpoint
+        assert "/workflows/v1/start" in script_js
         
-        # Test that extraction provenance is consistent
-        if "extraction_provenance" in sample_workflow_response:
-            provenance = sample_workflow_response["extraction_provenance"]
-            assert "extraction_id" in provenance
-            assert "extracted_at" in provenance
-            assert "schema_version" in provenance
-            assert provenance["schema_version"] == "1"
-            assert provenance["source"] == "github"
+        # Check that JavaScript sends POST request
+        assert "POST" in script_js
+
+    def test_metadata_selection_integration(self, index_html, script_js):
+        """Test that metadata selection integrates between HTML and JavaScript."""
+        # Check that HTML has checkboxes for all metadata types
+        metadata_types = [
+            "optRepo", "optCommits", "optIssues", "optPRs", "optContributors",
+            "optDependencies", "optForkLineage", "optCommitLineage", "optBusFactor",
+            "optPrMetrics", "optIssueMetrics", "optCommitActivity", "optReleaseCadence"
+        ]
+        
+        for checkbox_id in metadata_types:
+            assert f'id="{checkbox_id}"' in index_html
+        
+        # Check that JavaScript processes these selections
+        assert "selections" in script_js
+        assert "getElementById" in script_js
+
+    def test_form_validation_integration(self, index_html, script_js):
+        """Test that form validation integrates between HTML and JavaScript."""
+        # Check that HTML has required fields
+        assert 'id="repoUrl"' in index_html
+        assert 'type="url"' in index_html
+        
+        # Check that JavaScript validates these fields
+        assert "repoUrl" in script_js
+        assert "isValidGitHubUrl" in script_js
+
+    def test_error_handling_integration(self, script_js):
+        """Test that error handling is properly integrated."""
+        # Check for comprehensive error handling
+        assert "try" in script_js
+        assert "catch" in script_js
+        assert "error" in script_js
+        assert "console" in script_js
+
+    def test_ui_feedback_integration(self, index_html, script_js):
+        """Test that UI feedback is properly integrated."""
+        # Check that HTML has loading indicators
+        assert "progress" in index_html.lower()
+        assert "extracting" in index_html.lower()
+        
+        # Check that JavaScript manages these indicators
+        assert "showError" in script_js
+        assert "showSuccessModal" in script_js

@@ -75,7 +75,6 @@ markers = [
     "slow: Tests that take a long time to run"
 ]
 filterwarnings = [
-    "ignore::pydantic.warnings.PydanticDeprecatedSince20",
     "ignore::DeprecationWarning",
     "ignore::PendingDeprecationWarning"
 ]

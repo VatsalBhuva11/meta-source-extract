@@ -178,6 +178,49 @@ The application will use credentials in this order:
 
 If no credentials are found, S3 upload will be disabled and metadata will only be saved locally.
 
+
+### **Test Coverage by Category:**
+
+1. **Unit Tests** (`tests/unit/`):
+
+2. **Component Tests** (`tests/component/`):
+
+### **How to Run Tests:**
+
+```bash
+# Run all unit tests
+uv run python -m pytest tests/unit/ -v
+
+# Run specific test categories
+uv run python -m pytest tests/unit/test_activities_unit.py -v
+uv run python -m pytest tests/unit/test_workflow_unit.py -v
+uv run python -m pytest tests/unit/test_utils_unit.py -v
+uv run python -m pytest tests/unit/test_resilience_unit.py -v
+
+# Run with coverage
+uv run python -m pytest tests/unit/ --cov=app --cov-report=html
+
+# Run component tests
+uv run python -m pytest tests/component/ -v
+```
+
+### **Test Structure:**
+```
+tests/
+├── unit/                          # Unit tests (71 tests) 
+│   ├── test_activities_unit.py    # Activities unit tests
+│   ├── test_workflow_unit.py      # Workflow unit tests  
+│   ├── test_utils_unit.py         # Utility function tests
+│   └── test_resilience_unit.py    # Circuit breaker & caching tests
+├── component/                     # Component tests (ready)
+│   ├── test_workflow_component.py # Workflow integration tests
+│   ├── test_activities_component.py # Activities integration tests
+│   ├── test_frontend_component.py # Frontend integration tests
+│   └── test_integration.py        # End-to-end integration tests
+├── conftest.py                    # Shared fixtures and configuration
+├── README.md                      # Comprehensive test documentation
+└── run_tests.py                   # Test runner script
+```
+
+
 <hr>
-
-
