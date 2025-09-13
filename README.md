@@ -15,16 +15,16 @@ A powerful application built with the Atlan SDK that extracts comprehensive meta
 ## Prerequisites
 
 -   Python 3.11+
--   Temporal
--   Dapr
--   uv
+-   Temporal CLI
+-   Dapr CLI
+-   uv package manager
 -   A GitHub account (optional, for higher rate limits)
 
 ## Installation
 
 1.  **Clone the repository**:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/VatsalBhuva11/meta-source-extract.git
     cd meta-source-extract
     ```
 
@@ -72,6 +72,48 @@ The Atlan SDK simplifies the development of this application by providing a robu
 -   **Workflow Orchestration**: The SDK's workflow management capabilities, powered by Temporal, make it easy to define and manage complex, long-running processes like metadata extraction. The `@workflow` and `@activity` decorators provide a clean and intuitive way to structure the code.
 -   **Service Integration**: The SDK's integration with Dapr for service communication simplifies the interaction between the web server and the background workflow.
 -   **Configuration Management**: The framework provides a straightforward way to manage configuration through environment variables, making it easy to switch between development and production settings.
+
+Some interesting roadblocks that I came across when building this project were:
+
+1. ***Workflow Parameter Passing Complexity***
+
+    The framework's workflow parameter passing wasn't immediately obvious. The workflow_config parameter in the run() method doesn't directly map to HTTP request body.
+
+    **Pattern Discovered:**
+    Need to use get_workflow_args activity to properly destructure HTTP request data
+    The activity acts as a "normalizer" between HTTP layer and workflow logic
+    This separation allows for validation and transformation of input data
+
+    **Framework Note:** Consider documenting this pattern as it's not immediately obvious that you need an intermediate activity for parameter processing.
+    <br>
+    <br>
+
+2. ***Activity Registration Requirements***
+    
+    Activities must be explicitly registered in the get_activities() method, including helper activities like get_workflow_args.
+
+    **Framework Note:** The registration system could benefit from auto-discovery or at least clearer error messages when activities are missing.
+    <br>
+    <br>
+
+3. ***Caching Strategy***
+
+    **Challenge:** Cache keys need to include all relevant parameters (like limit) to avoid cache pollution.
+    <br>
+    <br>
+
+4. ***Observability Integration***
+
+    **Interesting Aspect:** The framework provides structured logging, metrics, and tracing out of the box, but you need to pass the observability objects explicitly.
+    <br>
+    <br>
+
+5. ***Frontend Integration***
+
+    **Challenge:** The framework provides HTTP endpoints (/workflows/v1/start) but the integration between frontend and workflow parameters requires careful mapping.
+
+    **Pattern:** The frontend sends JSON, but the workflow expects structured parameters through the activity layer.
+
 
 ## Architecture Notes
 
@@ -132,4 +174,7 @@ The application will use credentials in this order:
 4. Default credential provider chain
 
 If no credentials are found, S3 upload will be disabled and metadata will only be saved locally.
+
+<hr>
+
 
